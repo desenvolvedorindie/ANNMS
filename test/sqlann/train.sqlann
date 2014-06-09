@@ -1,0 +1,22 @@
+TRAIN neuralnetwork1 LEARNRULE = ALGORITHM1, DATA = data1, INPUT = {attr1, attr2, attr3}, OUTPUT = {attr4};
+
+TRAIN neuralnetwork1 LEARNRULE = ALGORITHM1, DATA = data1, INPUT = {attr1, attr2, attr3};
+
+TRAIN neuralnetwork1 (
+	param1 TRUE,
+	param2 FALSE,
+	param3 NULL
+	param4 10,
+	param5 10.2,
+	param6 "String"
+) LEARNRULE = ALGORITHM1, DATA = data1, INPUT = {attr1, attr2, attr3};
+
+TRAIN neuralnetwork1 (
+	param1 TRUE FALSE NULL,
+	param2 10 10.2 "String"
+) LEARNRULE = ALGORITHM1, DATA = data1, INPUT = {attr1, attr2, attr3};
+
+TRAIN neuralnetwork1 (
+	param1 TRUE {TRUE, FALSE} {NULL},
+	param2 {{10, 10.2}, "String", {TRUE, FALSE}} TRUE {"String", {10, 10.2}}
+) LEARNRULE = ALGORITHM1, DATA = data1, INPUT = {attr1, attr2}, OUTPUT = {attr3, attr4};

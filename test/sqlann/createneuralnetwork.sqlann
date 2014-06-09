@@ -1,0 +1,31 @@
+CREATE NEURALNETWORK IF NOT EXISTS neuralnetwork1 MODEL = MLP;
+
+CREATE NEURALNETWORK IF NOT EXISTS neuralnetwork1 MODEL MLP;
+
+CREATE NEURALNETWORK neuralnetwork1 MODEL = MLP;
+
+CREATE NEURALNETWORK neuralnetwork1 MODEL MLP;
+
+CREATE NEURALNETWORK neuralnetwork1 LIKE neuralnetwork2;
+
+CREATE NEURALNETWORK IF NOT EXISTS neuralnetwork1 LIKE neuralnetwork2;
+
+CREATE NEURALNETWORK neuralnetwork1 (
+	param1 TRUE,
+	param2 FALSE,
+	param3 NULL
+	param4 10,
+	param5 10.2,
+	param6 "String"
+) MODEL MLP;
+
+CREATE NEURALNETWORK IF NOT EXISTS neuralnetwork1 (
+	param1 TRUE FALSE NULL,
+	param2 10 10.2 "String"
+) MODEL MLP;
+
+
+CREATE NEURALNETWORK IF NOT EXISTS neuralnetwork1 (
+	param1 TRUE {TRUE, FALSE} {NULL},
+	param2 {{10, 10.2}, "String", {TRUE, FALSE}} TRUE {"String", {10, 10.2}}
+) MODEL MLP;

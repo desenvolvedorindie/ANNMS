@@ -1,0 +1,7 @@
+DROP NEURALNETWORKS IF EXISTS neuralnetwork1;
+
+DROP NEURALNETWORKS neuralnetwork1;
+
+DROP NEURALNETWORKS IF EXISTS neuralnetwork1, neuralnetwork2, neuralnetwork3;
+
+DROP NEURALNETWORKS neuralnetwork1, neuralnetwork2, neuralnetwork3;

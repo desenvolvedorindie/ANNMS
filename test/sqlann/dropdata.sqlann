@@ -1,0 +1,7 @@
+DROP DATA IF EXISTS data1;
+
+DROP DATA data1;
+
+DROP DATA IF EXISTS data1, data2, data3;
+
+DROP DATA data1, data2, data3;

@@ -1,0 +1,17 @@
+INSERT INTO data1 VALUES (TRUE);
+
+INSERT INTO data1 VALUES (FALSE);
+
+INSERT INTO data1 VALUES (NULL);
+
+INSERT INTO data1 VALUES (10);
+
+INSERT INTO data1 VALUES (10.2);
+
+INSERT INTO data1 VALUES ("String");
+
+INSERT INTO data1 VALUES (identifier1);
+
+INSERT INTO data1 VALUES (TRUE, FALSE, NULL, 10, 10.2, "String", identifier1);
+
+INSERT INTO data1 VALUES (identifier1, identifier2, TRUE, FALSE, NULL, 10, 10.2, "String");

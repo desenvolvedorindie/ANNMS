@@ -1,0 +1,15 @@
+CREATE DATA IF NOT EXISTS test;
+
+CREATE DATA IF NOT EXISTS test LIKE teste2;
+
+CREATE DATA test;
+
+CREATE DATA IF NOT EXISTS test;
+
+CREATE DATA test (
+	attr1 BOOLEAN,
+	attr2 INTEGER,
+	attr3 REAL,
+	attr4 STRING,
+	attr5 {element1, element2, element3}
+);
