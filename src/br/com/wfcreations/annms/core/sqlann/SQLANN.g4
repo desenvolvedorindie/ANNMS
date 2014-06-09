@@ -96,7 +96,7 @@ DATE                :   D_ A_ T_ E_;
 CREATE              :   C_ R_ E_ A_ T_ E_;
 DATA                :   D_ A_ T_ A_;
 DROP                :   D_ R_ O_ P_;
-TYPE                :   T_ Y_ P_ E_;
+MODEL               :   M_ O_ D_ E_ L_;
 INSERT              :   I_ N_ S_ E_ R_ T_;
 INTO                :   I_ N_ T_ O_;
 NEURALNETWORK       :   N_ E_ U_ R_ A_ L_ N_ E_ T_ W_ O_ R_ K_;
@@ -151,18 +151,18 @@ statements
     :   statement (';' statement)* ';'?;
 
 statement
-    :   CREATE DATA (IF NOT EXISTS)? ID ('(' dataAttributes ')' | LIKE ID)?                     #createDataStatement
-    |   CREATE NEURALNETWORK (IF NOT EXISTS)? ID ('(' params ')' TYPE ('=')? ID | LIKE ID)?     #createNeuralNetworkStatement
-    |   DROP DATA (IF EXISTS)? ID (',' ID)*                                                     #dropDataStatement
-    |   DROP NEURALNETWORK ID                                                                   #dropNeuralNetworkStatement
-    |   INSERT INTO ID VALUES '(' values ')'                                                    #insertIntoStatement
-    |   RUN ID VALUES '(' values ')'                                                            #runStatement
-    |   SHOW DATA                                                                               #showDataStatemen
-    |   SHOW DATA STATUS ID                                                                     #showDataStatusStatement
-    |   SHOW NEURALNETWORKS                                                                     #showNeuralNetworksStatement
-    |   SHOW NEURALNETWORK STATUS ID                                                            #showNeuralNetworkStatusStatement
-    |   SHOW STATUS                                                                             #showStatusStatement
-    |   TRAIN ID ('(' params ')')? trainConfigs?                                                #trainStatement
+    :   CREATE DATA (IF NOT EXISTS)? ID ('(' dataAttributes ')' | LIKE ID)?                                                 #createDataStatement
+    |   CREATE NEURALNETWORK (IF NOT EXISTS)? ID (('(' params ')')? MODEL ('=')? ID | LIKE ID)?                             #createNeuralNetworkStatement
+    |   DROP DATA (IF EXISTS)? ID (',' ID)*                                                                                 #dropDataStatement
+    |   DROP NEURALNETWORKS (IF EXISTS)? ID (',' ID)*                                                                       #dropNeuralNetworkStatement
+    |   INSERT INTO ID VALUES '(' values ')'                                                                                #insertIntoStatement
+    |   RUN ID VALUES '(' values ')'                                                                                        #runStatement
+    |   SHOW DATA                                                                                                           #showDataStatemen
+    |   SHOW DATA STATUS ID                                                                                                 #showDataStatusStatement
+    |   SHOW NEURALNETWORKS                                                                                                 #showNeuralNetworksStatement
+    |   SHOW NEURALNETWORK STATUS ID                                                                                        #showNeuralNetworkStatusStatement
+    |   SHOW STATUS                                                                                                         #showStatusStatement
+    |   TRAIN ID ('(' params ')')? LEARNRULE ('=')? ID ',' DATA ('=')? ID ',' INPUT ('=')? list (',' OUTPUT ('=') list)?    #trainStatement
     ;
 
 dataAttributes
@@ -203,6 +203,7 @@ value
     |   Integer                                                                 #integerValue
     |   Real                                                                    #realValue
     |   String                                                                  #stringValue
+    |   ID                                                                      #idValue
     ;
 
 values
@@ -213,12 +214,3 @@ values
 complexList
     :   '{' paramValue (',' paramValue)* '}'
     ;
-
-trainConfigs
-    :   trainConfig (',' trainConfig)*;
-
-trainConfig
-    :   LEARNRULE ('=')? ID
-    |   DATA ('=')? ID
-    |   INPUT ('=')? list
-    |   OUTPUT ('=') list;
