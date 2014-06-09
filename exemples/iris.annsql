@@ -3,7 +3,7 @@ CREATE DATA iris IF NOT EXISTS (
 	sepalwidth REAL,
 	petallength REAL,
 	petalwidth REAL,
-	class {Iris-setosa,Iris-versicolor,Iris-virginica}
+	class {Iris-setosa, Iris-versicolor, Iris-virginica}
 );
 
 INSERT INTO iris VALUES (5.1, 3.5, 1.4, 0.2, Iris-setosa);
