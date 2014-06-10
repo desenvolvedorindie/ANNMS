@@ -27,40 +27,16 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.sqlann.statements;
+package br.com.wfcreations.annms.core.sqlann;
 
-import br.com.wfcreations.annms.core.exception.RequestExecutionException;
+import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.RequestValidationException;
-import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
-import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 
-public class ShowNeuralNetworksStatement implements SQLANNStatement {
+public class SQLANNSyntaxException extends RequestValidationException {
 
-	public final String query;
-	
-	public ShowNeuralNetworksStatement(String query) {
-		this.query = query;
-	}
+	private static final long serialVersionUID = 1L;
 
-	@Override
-	public void checkAccess() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void validate() throws RequestValidationException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public ResultMessage execute() throws RequestValidationException, RequestExecutionException {
-		return null;
-	}
-
-	@Override
-	public String getId() {
-		return "ShowNeuralNetworksStatement";
+	protected SQLANNSyntaxException(String msg) {
+		super(ANNMSExceptionCode.SYNTAXE_ERROR, msg);
 	}
 }

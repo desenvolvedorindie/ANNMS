@@ -32,9 +32,7 @@ package br.com.wfcreations.annms.core.sqlann;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 
-public class SQLANNSytaxError extends Exception {
-
-	private static final long serialVersionUID = 1L;
+public class SQLANNSytaxError {
 
 	private Recognizer<?, ?> recognizer;
 	
@@ -48,12 +46,13 @@ public class SQLANNSytaxError extends Exception {
 	
 	private RecognitionException cause;
 	
-	public SQLANNSytaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-		super(msg, e);
+	public SQLANNSytaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException cause) {
 		this.recognizer = recognizer;
 		this.offendingSymbol = offendingSymbol;
 		this.line = line;
 		this.charPositionInLine = charPositionInLine;
+		this.msg = msg;
+		this.cause = cause;
 	}
 
 	public Recognizer<?, ?> getRecognizer() {

@@ -30,9 +30,12 @@
 package br.com.wfcreations.annms.core.sqlann.statements;
 
 import br.com.wfcreations.annms.core.data.Param;
-import br.com.wfcreations.annms.core.sqlann.IStatement;
+import br.com.wfcreations.annms.core.exception.RequestExecutionException;
+import br.com.wfcreations.annms.core.exception.RequestValidationException;
+import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
+import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 
-public class CreateNeuralNetworkStatement implements IStatement {
+public class CreateNeuralNetworkStatement implements SQLANNStatement {
 
 	public final String name;
 
@@ -62,15 +65,14 @@ public class CreateNeuralNetworkStatement implements IStatement {
 	}
 
 	@Override
-	public void validate() {
+	public void validate() throws RequestValidationException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-
+	public ResultMessage execute() throws RequestValidationException, RequestExecutionException {
+		return null;
 	}
 
 	@Override

@@ -31,15 +31,42 @@ package br.com.wfcreations.annms.core.sqlann;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import br.com.wfcreations.annms.core.exception.RequestExecutionException;
+import br.com.wfcreations.annms.core.exception.RequestValidationException;
+import br.com.wfcreations.annms.core.transport.message.ResultMessage;
+
 public class SQLANNProcessor {
 
-	public SQLANN process(String query) throws IOException {
-		if(query != null) {
+	private static SQLANNProcessor instance;
+
+	public static SQLANNProcessor getInstance() {
+		if (instance == null) {
+			instance = new SQLANNProcessor();
+		}
+		return instance;
+	}
+
+	private SQLANNProcessor() {
+	}
+
+	public ResultMessage[] process(String query) throws RequestExecutionException, RequestValidationException {
+		SQLANNStatement[] statements = getStatements(query);
+		return processStatements(statements);
+	}
+
+	public SQLANNStatement[] getStatements(String query) throws RequestValidationException {
+		SQLANNStatement[] statements = parseStatements(query);
+		return statements;
+	}
+
+	public SQLANNStatement[] parseStatements(String query) throws SQLANNSyntaxException {
+		try {
 			ANTLRInputStream input = new ANTLRInputStream(new ByteArrayInputStream(query.getBytes()));
 
 			SQLANNLexer lexer = new SQLANNLexer(input);
@@ -54,11 +81,28 @@ public class SQLANNProcessor {
 
 			ParseTree tree = parser.statements();
 
-			SQLANN annsql = new SQLANN();
-			annsql.visit(tree);
+			SQLANN sqlann = new SQLANN();
+			sqlann.visit(tree);
 
-			return annsql;
+			if (errorListener.getErrors().size() > 0) {
+				throw new SQLANNSyntaxException(errorListener.getErrors().get(0).getMsg());
+			}
+
+			return sqlann.statements();
+		} catch (IOException e) {
+			throw new SQLANNSyntaxException(e.getMessage());
 		}
-		return null;
+	}
+
+	public ResultMessage[] processStatements(SQLANNStatement[] statements) throws RequestExecutionException, RequestValidationException {
+		ArrayList<ResultMessage> resultMessages = new ArrayList<>();
+
+		for (int i = 0; i < statements.length; i++) {
+			statements[i].checkAccess();
+			statements[i].validate();
+			resultMessages.add(statements[i].execute());
+		}
+
+		return resultMessages.toArray(new ResultMessage[resultMessages.size()]);
 	}
 }

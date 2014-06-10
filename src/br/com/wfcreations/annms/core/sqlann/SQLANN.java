@@ -85,26 +85,24 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 		return sb.toString();
 	}
 
-	private ArrayList<IStatement> statements = new ArrayList<>();
-
-	public void execute() {
-		for (int i = 0; i < statements.size(); i++) {
-			statements.get(i).checkAccess();
-			statements.get(i).validate();
-			statements.get(i).execute();
-		}
+	private SQLANNStatement[] statements;
+	
+	public SQLANNStatement[] statements() {
+		return this.statements;
 	}
 
 	@Override
 	public Void visitStatements(@NotNull SQLANNParser.StatementsContext ctx) {
 		if (ctx != null) {
-			IStatement stm = null;
+			ArrayList<SQLANNStatement> stms = new ArrayList<>();
+			SQLANNStatement stm = null;
 			for (int i = 0; i < ctx.statement().size(); i++) {
-				stm = (IStatement) visit(ctx.statement(i));
+				stm = (SQLANNStatement) visit(ctx.statement(i));
 				if (stm != null) {
-					statements.add(stm);
+					stms.add(stm);
 				}
 			}
+			statements = stms.toArray(new SQLANNStatement[stms.size()]);
 		}
 		return null;
 	}

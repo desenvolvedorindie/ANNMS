@@ -27,40 +27,32 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.sqlann.statements;
+package br.com.wfcreations.annms.core.exception;
 
-import br.com.wfcreations.annms.core.exception.RequestExecutionException;
-import br.com.wfcreations.annms.core.exception.RequestValidationException;
-import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
-import br.com.wfcreations.annms.core.transport.message.ResultMessage;
+import java.util.HashMap;
+import java.util.Map;
 
-public class ShowNeuralNetworksStatement implements SQLANNStatement {
+public enum ANNMSExceptionCode {
 
-	public final String query;
+	SERVER_ERROR(0x0000),
+
+	SYNTAXE_ERROR(0x0001);
 	
-	public ShowNeuralNetworksStatement(String query) {
-		this.query = query;
+	public final int value;
+
+	private static final Map<Integer, ANNMSExceptionCode> valueToCode = new HashMap<Integer, ANNMSExceptionCode>(ANNMSExceptionCode.values().length);
+
+	static {
+		for (ANNMSExceptionCode code : ANNMSExceptionCode.values())
+			valueToCode.put(code.value, code);
 	}
 
-	@Override
-	public void checkAccess() {
-		// TODO Auto-generated method stub
-
+	private ANNMSExceptionCode(int value) {
+		this.value = value;
 	}
 
-	@Override
-	public void validate() throws RequestValidationException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public ResultMessage execute() throws RequestValidationException, RequestExecutionException {
-		return null;
-	}
-
-	@Override
-	public String getId() {
-		return "ShowNeuralNetworksStatement";
+	public static ANNMSExceptionCode fromValue(int value) {
+		ANNMSExceptionCode code = valueToCode.get(value);
+		return code;
 	}
 }
