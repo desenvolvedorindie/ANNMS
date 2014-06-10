@@ -33,20 +33,20 @@ import br.com.wfcreations.annms.core.data.IValue;
 
 public class StringValue implements IValue {
 
-    private static final long serialVersionUID = 1L;
-    
-    private final String value;
+	private static final long serialVersionUID = 1L;
 
-    public StringValue(String value) {
-	this.value = value;
-    }
+	private final String value;
 
-    public String getValue() {
-	return this.value;
-    }
+	public StringValue(String value) {
+		this.value = value;
+	}
 
-    @Override
-    public String toString() {
-	return this.value;
-    }
+	public String getValue() {
+		return this.value;
+	}
+
+	@Override
+	public String toString() {
+		return this.value;
+	}
 }

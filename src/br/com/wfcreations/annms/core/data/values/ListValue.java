@@ -34,23 +34,22 @@ import java.util.Arrays;
 import br.com.wfcreations.annms.core.data.IList;
 import br.com.wfcreations.annms.core.data.IValue;
 
-
 public class ListValue implements IList {
 
-    private static final long serialVersionUID = 1L;
-    
-    private final IValue[] values;
+	private static final long serialVersionUID = 1L;
 
-    public ListValue(IValue[] values) {
-	this.values = values;
-    }
+	private final IValue[] values;
 
-    public IValue[] getValue() {
-	return this.values;
-    }
+	public ListValue(IValue[] values) {
+		this.values = values;
+	}
 
-    @Override
-    public String toString() {
-	return Arrays.toString(values);
-    }
+	public IValue[] getValue() {
+		return this.values;
+	}
+
+	@Override
+	public String toString() {
+		return Arrays.toString(values);
+	}
 }

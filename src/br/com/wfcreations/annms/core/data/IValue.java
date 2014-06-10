@@ -32,6 +32,6 @@ package br.com.wfcreations.annms.core.data;
 import java.io.Serializable;
 
 public interface IValue extends Serializable {
-    
-    public Object getValue();
+
+	public Object getValue();
 }

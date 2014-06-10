@@ -33,31 +33,31 @@ import java.io.Serializable;
 
 public class Attribute implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final String name;
+	private final String name;
 
-    private final DataType type;
+	private final DataType type;
 
-    public Attribute(String name, DataType type) {
-	this.name = name;
-	this.type = type;
-    };
-    
-    public String getName() {
-        return name;
-    }
+	public Attribute(String name, DataType type) {
+		this.name = name;
+		this.type = type;
+	};
 
-    public DataType getType() {
-        return type;
-    }
-    
-    public boolean validate(IValue value) {
-	return type.validate(value);
-    }
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public String toString() {
-	return "Attribute [name=" + name + ", type=" + type + "]";
-    }
+	public DataType getType() {
+		return type;
+	}
+
+	public boolean validate(IValue value) {
+		return type.validate(value);
+	}
+
+	@Override
+	public String toString() {
+		return "Attribute [name=" + name + ", type=" + type + "]";
+	}
 }

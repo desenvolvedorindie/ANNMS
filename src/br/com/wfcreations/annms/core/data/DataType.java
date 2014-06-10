@@ -41,100 +41,99 @@ import br.com.wfcreations.annms.core.data.values.StringValue;
 
 public interface DataType extends Serializable {
 
-    public boolean validate(IValue value);
+	public boolean validate(IValue value);
 
-    public enum Native implements DataType {
-	BOOLEAN(BooleanValue.class), INTEGER(IntegerValue.class), REAL(RealValue.class), STRING(StringValue.class);
+	public enum Native implements DataType {
+		BOOLEAN(BooleanValue.class), INTEGER(IntegerValue.class), REAL(RealValue.class), STRING(StringValue.class);
 
-	private Class<?> representation;
+		private Class<?> representation;
 
-	Native(Class<?> representation) {
-	    this.representation = representation;
-	}
+		Native(Class<?> representation) {
+			this.representation = representation;
+		}
 
-	@Override
-	public boolean validate(IValue value) {
-	    return (value.getClass().equals(representation));
-	}
-    };
-
-    public class DateDataType implements DataType {
-	
-	private static final long serialVersionUID = 1L;
-	
-	private final String dateFormat;
-
-	public DateDataType(String dateFormat) {
-	    this.dateFormat = dateFormat;
-	}
-
-	public String getDateFormat() {
-	    return dateFormat;
-	}
-
-	public static DateDataType create(String dateFormat) {
-	    return new DateDataType(dateFormat);
-	}
-
-	@Override
-	public boolean validate(IValue value) {
-	    if (!value.getClass().equals(StringValue.class)) {
-		System.out.println("lol");
-		return false;
-	    }
-	    SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-	    sdf.setLenient(false);
-	    try {
-		sdf.parse((String) value.getValue());
-		return true;
-	    }
-	    catch (ParseException e) {
-		return false;
-	    }
-	}
-
-	@Override
-	public String toString() {
-	    return "DATE(" + dateFormat + ")";
-	}
-    }
-
-    public class ListDataType implements DataType {
-	
-	private static final long serialVersionUID = 1L;
-	
-	private final String[] listValues;
-
-	public ListDataType(String[] listValues) {
-	    this.listValues = listValues;
-	}
-
-	public String[] getListValues() {
-	    return listValues;
+		@Override
+		public boolean validate(IValue value) {
+			return (value.getClass().equals(representation));
+		}
 	};
 
-	@Override
-	public boolean validate(IValue value) {
-	    return value.getClass().equals(StringValue.class) && Arrays.asList(listValues).contains(value.getValue());
+	public class DateDataType implements DataType {
+
+		private static final long serialVersionUID = 1L;
+
+		private final String dateFormat;
+
+		public DateDataType(String dateFormat) {
+			this.dateFormat = dateFormat;
+		}
+
+		public String getDateFormat() {
+			return dateFormat;
+		}
+
+		public static DateDataType create(String dateFormat) {
+			return new DateDataType(dateFormat);
+		}
+
+		@Override
+		public boolean validate(IValue value) {
+			if (!value.getClass().equals(StringValue.class)) {
+				System.out.println("lol");
+				return false;
+			}
+			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+			sdf.setLenient(false);
+			try {
+				sdf.parse((String) value.getValue());
+				return true;
+			} catch (ParseException e) {
+				return false;
+			}
+		}
+
+		@Override
+		public String toString() {
+			return "DATE(" + dateFormat + ")";
+		}
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-	    if (this == obj)
-		return true;
-	    if (obj == null)
-		return false;
-	    if (getClass() != obj.getClass())
-		return false;
-	    ListDataType other = (ListDataType) obj;
-	    if (!Arrays.equals(listValues, other.listValues))
-		return false;
-	    return true;
-	}
+	public class ListDataType implements DataType {
 
-	@Override
-	public String toString() {
-	    return "LIST " + Arrays.toString(listValues);
+		private static final long serialVersionUID = 1L;
+
+		private final String[] listValues;
+
+		public ListDataType(String[] listValues) {
+			this.listValues = listValues;
+		}
+
+		public String[] getListValues() {
+			return listValues;
+		};
+
+		@Override
+		public boolean validate(IValue value) {
+			return value.getClass().equals(StringValue.class) && Arrays.asList(listValues).contains(value.getValue());
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			ListDataType other = (ListDataType) obj;
+			if (!Arrays.equals(listValues, other.listValues))
+				return false;
+			return true;
+		}
+
+		@Override
+		public String toString() {
+			return "LIST " + Arrays.toString(listValues);
+		}
 	}
-    }
 }

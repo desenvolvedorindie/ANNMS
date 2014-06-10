@@ -33,22 +33,22 @@ import java.io.Serializable;
 
 public class Param implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final String name;
+	private final String name;
 
-    private final IValue[] values;
+	private final IValue[] values;
 
-    public Param(String name, IValue[] values) {
-	this.name = name;
-	this.values = values;
-    };
+	public Param(String name, IValue[] values) {
+		this.name = name;
+		this.values = values;
+	};
 
-    public String getName() {
-        return name;
-    };
+	public String getName() {
+		return name;
+	};
 
-    public IValue[] getValues() {
-        return values;
-    };
+	public IValue[] getValues() {
+		return values;
+	};
 }

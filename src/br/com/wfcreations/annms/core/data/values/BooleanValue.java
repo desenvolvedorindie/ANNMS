@@ -33,21 +33,21 @@ import br.com.wfcreations.annms.core.data.IValue;
 
 public class BooleanValue implements IValue {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final boolean value;
+	private final boolean value;
 
-    public BooleanValue(boolean value) {
-	this.value = value;
-    }
+	public BooleanValue(boolean value) {
+		this.value = value;
+	}
 
-    @Override
-    public Boolean getValue() {
-	return this.value;
-    }
+	@Override
+	public Boolean getValue() {
+		return this.value;
+	}
 
-    @Override
-    public String toString() {
-	return String.valueOf(this.value);
-    }
+	@Override
+	public String toString() {
+		return String.valueOf(this.value);
+	}
 }

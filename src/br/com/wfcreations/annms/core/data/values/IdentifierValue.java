@@ -31,20 +31,23 @@ package br.com.wfcreations.annms.core.data.values;
 
 import br.com.wfcreations.annms.core.data.IValue;
 
-public class NullValue implements IValue {
+public class IdentifierValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public NullValue() {
+	private final String value;
+
+	public IdentifierValue(String value) {
+		this.value = value;
 	}
 
 	@Override
 	public Object getValue() {
-		return null;
+		return this.value;
 	}
 
 	@Override
 	public String toString() {
-		return "NULL";
+		return String.valueOf(this.value);
 	}
 }
