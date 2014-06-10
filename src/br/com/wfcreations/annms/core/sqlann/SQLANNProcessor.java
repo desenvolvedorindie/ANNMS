@@ -27,10 +27,38 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.data;
+package br.com.wfcreations.annms.core.sqlann;
 
-import java.io.Serializable;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
-public interface IList extends IValue, Serializable {
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 
+public class SQLANNProcessor {
+
+	public SQLANN process(String query) throws IOException {
+		if(query != null) {
+			ANTLRInputStream input = new ANTLRInputStream(new ByteArrayInputStream(query.getBytes()));
+
+			SQLANNLexer lexer = new SQLANNLexer(input);
+
+			CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+			SQLANNErrorListener errorListener = new SQLANNErrorListener();
+
+			SQLANNParser parser = new SQLANNParser(tokens);
+			parser.removeErrorListeners();
+			parser.addErrorListener(errorListener);
+
+			ParseTree tree = parser.statements();
+
+			SQLANN annsql = new SQLANN();
+			annsql.visit(tree);
+
+			return annsql;
+		}
+		return null;
+	}
 }
