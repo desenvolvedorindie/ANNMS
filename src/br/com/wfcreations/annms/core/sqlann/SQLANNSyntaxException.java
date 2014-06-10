@@ -30,9 +30,9 @@
 package br.com.wfcreations.annms.core.sqlann;
 
 import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
-import br.com.wfcreations.annms.core.exception.RequestValidationException;
+import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
 
-public class SQLANNSyntaxException extends RequestValidationException {
+public class SQLANNSyntaxException extends ANNMSRequestValidationException {
 
 	private static final long serialVersionUID = 1L;
 

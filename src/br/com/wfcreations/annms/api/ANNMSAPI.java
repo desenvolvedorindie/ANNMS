@@ -27,17 +27,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.exception;
+package br.com.wfcreations.annms.api;
 
-public abstract class RequestExecutionException extends ANNMSException {
+public class ANNMSAPI {
 
-	private static final long serialVersionUID = 1L;
-
-	protected RequestExecutionException(ANNMSExceptionCode code, String msg) {
-		super(code, msg);
-	}
-	
-	protected RequestExecutionException(ANNMSExceptionCode code, String msg, Throwable e) {
-		super(code, msg, e);
-	}
+    public static final String VERSION = "1.0.0";
+    
+    public static final short MAJOR = 1;
+    
+    public static final short MINOR = 0;
+    
+    public static final short REVISION = 0;
 }

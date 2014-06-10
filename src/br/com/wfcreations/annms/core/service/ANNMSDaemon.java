@@ -27,41 +27,67 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.sqlann.statements;
+package br.com.wfcreations.annms.core.service;
 
-import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
-import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
-import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
-import br.com.wfcreations.annms.core.transport.message.ResultMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class ShowDataStatement implements SQLANNStatement {
+public class ANNMSDaemon {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ANNMSDaemon.class);
 
-	public final String query;
-	
-	
-	
-	public ShowDataStatement(String query) {
-		this.query = query;
+	private static final ANNMSDaemon instance = new ANNMSDaemon();
+
+	// private Bootstrap bootstrap = new Bootstrap();
+
+	public static ANNMSDaemon getInstance() {
+		return instance;
 	}
 
-	@Override
-	public void checkAccess() {
-		// TODO Auto-generated method stub
+	public static void stop(String[] args) {
+		instance.deactivate();
 	}
 
-	@Override
-	public void validate() throws ANNMSRequestValidationException {
-		// TODO Auto-generated method stub
+	public static void start(String[] args) {
+		instance.activate();
 	}
 
-	@Override
-	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
-		return null;
+	private Server thriftServer;
+
+	protected void setup() {
+		//thriftServer = new ThriftServer();
 	}
 
-	@Override
-	public String getId() {
-		return "ShowDataStatement";
+	private void boostrap() {
+		//bootstrap.run();
 	}
 
+	public void start() {
+		thriftServer.start();
+	}
+
+	public void stop() {
+		thriftServer.stop();
+	}
+
+	public void destroy() {
+	}
+
+	public void activate() {
+		boostrap();
+		setup();
+		start();
+	}
+
+	public void deactivate() {
+		stop();
+		destroy();
+	}
+
+	public interface Server {
+		public void start();
+
+		public void stop();
+
+		public boolean isRunning();
+	}
 }

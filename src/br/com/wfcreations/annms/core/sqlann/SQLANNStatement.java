@@ -29,17 +29,17 @@
  */
 package br.com.wfcreations.annms.core.sqlann;
 
-import br.com.wfcreations.annms.core.exception.RequestExecutionException;
-import br.com.wfcreations.annms.core.exception.RequestValidationException;
+import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
+import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 
 public interface SQLANNStatement {
 
     public void checkAccess();
 
-    public void validate() throws RequestValidationException;
+    public void validate() throws ANNMSRequestValidationException;
 
-    public ResultMessage execute() throws RequestValidationException, RequestExecutionException;
+    public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException;
     
     public String getId();
 }

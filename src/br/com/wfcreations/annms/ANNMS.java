@@ -27,17 +27,38 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.exception;
+package br.com.wfcreations.annms;
 
-public abstract class RequestValidationException extends ANNMSException {
+import java.util.Scanner;
 
-	private static final long serialVersionUID = 1L;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-	protected RequestValidationException(ANNMSExceptionCode code, String msg) {
-		super(code, msg);
-	}
+import br.com.wfcreations.annms.core.service.ANNMSDaemon;
 
-	protected RequestValidationException(ANNMSExceptionCode code, String msg, Throwable e) {
-		super(code, msg, e);
+public class ANNMS {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ANNMS.class);
+
+	public static void main(String[] args) {
+		boolean started = false;
+		while (true) {
+			Scanner s = new Scanner(System.in);
+			String str = s.nextLine();
+			if (str.equalsIgnoreCase("START") && !started) {
+				ANNMSDaemon.start(args);
+				started = true;
+			} else if (str.equalsIgnoreCase("STOP") && started) {
+				ANNMSDaemon.stop(args);
+				started = false;
+			} else if (str.equalsIgnoreCase("RESTART") && started) {
+				ANNMSDaemon.stop(args);
+				ANNMSDaemon.start(args);
+			} else if (str.equalsIgnoreCase("exit") && started) {
+				ANNMSDaemon.stop(args);
+				s.close();
+				LOGGER.info("BYE");
+				System.exit(0);
+			}
+		}
 	}
 }

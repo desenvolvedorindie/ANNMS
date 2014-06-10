@@ -6,13 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.io.FilenameUtils;
 
-import br.com.wfcreations.annms.core.neuralnetwork.data.Data;
+import br.com.wfcreations.annms.core.data.Data;
 
 public class DataResource {
 

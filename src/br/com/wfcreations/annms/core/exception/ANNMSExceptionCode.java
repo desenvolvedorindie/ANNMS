@@ -38,7 +38,9 @@ public enum ANNMSExceptionCode {
 
 	SYNTAXE_ERROR(0x0001),
 	
-	CONFIG_ERROR(0x0002);
+	BOOTSTRAPPING(0x0002),
+	
+	CONFIG_ERROR(0x0003);
 	
 	public final int value;
 

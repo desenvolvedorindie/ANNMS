@@ -1,4 +1,4 @@
-package br.com.wfcreations.annms.core.neuralnetwork.data;
+package br.com.wfcreations.annms.core.data;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,10 +7,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.HashSet;
-
-import br.com.wfcreations.annms.core.data.Attribute;
-import br.com.wfcreations.annms.core.data.DataType;
-import br.com.wfcreations.annms.core.data.IValue;
 
 public class Data {
 

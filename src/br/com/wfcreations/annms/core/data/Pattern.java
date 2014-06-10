@@ -1,8 +1,6 @@
-package br.com.wfcreations.annms.core.neuralnetwork.data;
+package br.com.wfcreations.annms.core.data;
 
 import java.io.Serializable;
-
-import br.com.wfcreations.annms.core.data.IValue;
 
 public class Pattern implements Serializable {
 
