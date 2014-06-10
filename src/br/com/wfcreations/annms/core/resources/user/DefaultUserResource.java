@@ -27,34 +27,57 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.exception;
+package br.com.wfcreations.annms.core.resources.user;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
-public enum ANNMSExceptionCode {
+public class DefaultUserResource {
 
-	SERVER_ERROR(0x0000),
+	private static DefaultUserResource instance;
 
-	SYNTAXE_ERROR(0x0001),
-	
-	CONFIG_ERROR(0x0002);
-	
-	public final int value;
-
-	private static final Map<Integer, ANNMSExceptionCode> valueToCode = new HashMap<Integer, ANNMSExceptionCode>(ANNMSExceptionCode.values().length);
-
-	static {
-		for (ANNMSExceptionCode code : ANNMSExceptionCode.values())
-			valueToCode.put(code.value, code);
+	public static DefaultUserResource getInstance() {
+		if (instance == null) {
+			instance = new DefaultUserResource();
+		}
+		return instance;
 	}
 
-	private ANNMSExceptionCode(int value) {
-		this.value = value;
+	public static void setInstance(DefaultUserResource instance) {
+		DefaultUserResource.instance = instance;
 	}
 
-	public static ANNMSExceptionCode fromValue(int value) {
-		ANNMSExceptionCode code = valueToCode.get(value);
-		return code;
+	public User root;
+
+	private ArrayList<User> users = new ArrayList<User>();
+
+	public void init() {
+		
+	}
+
+	public synchronized void insert(User user) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public synchronized User get(String username) {
+		if (root.getUsername().equals(username)) {
+			return root;
+		}
+		for (User user : users) {
+			if (user.getUsername().equals(username)) {
+				return user;
+			}
+		}
+		return null;
+	}
+
+	public synchronized boolean set(String username, User data) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public synchronized boolean delete(String username) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

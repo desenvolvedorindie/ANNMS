@@ -27,34 +27,24 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.exception;
+package br.com.wfcreations.annms.core.resources.config;
 
-import java.util.HashMap;
-import java.util.Map;
+public class Config {
 
-public enum ANNMSExceptionCode {
+    // Server Config
+    public int port = 9090;
+    public String root_username = "root";
+    public String root_password = "";
+    public String usersfile = "users";
+    public int maxuser = 10;
+    public int timeout = 0;
 
-	SERVER_ERROR(0x0000),
+    // Thrift
+    public String thrift_server = "ThreadPoolServer";
 
-	SYNTAXE_ERROR(0x0001),
-	
-	CONFIG_ERROR(0x0002);
-	
-	public final int value;
+    // Absolute or relative path
+    public String data_path = "./data";
 
-	private static final Map<Integer, ANNMSExceptionCode> valueToCode = new HashMap<Integer, ANNMSExceptionCode>(ANNMSExceptionCode.values().length);
-
-	static {
-		for (ANNMSExceptionCode code : ANNMSExceptionCode.values())
-			valueToCode.put(code.value, code);
-	}
-
-	private ANNMSExceptionCode(int value) {
-		this.value = value;
-	}
-
-	public static ANNMSExceptionCode fromValue(int value) {
-		ANNMSExceptionCode code = valueToCode.get(value);
-		return code;
-	}
+    // Absolute or relative path
+    public String neuralnetworks_path = "./neuralnetworks";
 }

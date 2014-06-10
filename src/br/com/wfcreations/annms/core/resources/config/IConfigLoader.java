@@ -27,34 +27,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.exception;
+package br.com.wfcreations.annms.core.resources.config;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public enum ANNMSExceptionCode {
+public interface IConfigLoader {
 
-	SERVER_ERROR(0x0000),
-
-	SYNTAXE_ERROR(0x0001),
-	
-	CONFIG_ERROR(0x0002);
-	
-	public final int value;
-
-	private static final Map<Integer, ANNMSExceptionCode> valueToCode = new HashMap<Integer, ANNMSExceptionCode>(ANNMSExceptionCode.values().length);
-
-	static {
-		for (ANNMSExceptionCode code : ANNMSExceptionCode.values())
-			valueToCode.put(code.value, code);
-	}
-
-	private ANNMSExceptionCode(int value) {
-		this.value = value;
-	}
-
-	public static ANNMSExceptionCode fromValue(int value) {
-		ANNMSExceptionCode code = valueToCode.get(value);
-		return code;
-	}
+    Config load() throws FileNotFoundException, IOException, ConfigurationException;
+    
 }
