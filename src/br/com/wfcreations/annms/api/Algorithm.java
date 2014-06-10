@@ -1,4 +1,4 @@
-package br.com.wfcreations.annms.core.neuralnetwork.learnrule;
+package br.com.wfcreations.annms.api;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;

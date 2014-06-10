@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.io.FilenameUtils;
 
-import br.com.wfcreations.annms.core.neuralnetwork.learnrule.IArtificialNeuralNetwork;
+import br.com.wfcreations.annms.api.IArtificialNeuralNetwork;
 
 public class NeuralNetworkResource {
 
