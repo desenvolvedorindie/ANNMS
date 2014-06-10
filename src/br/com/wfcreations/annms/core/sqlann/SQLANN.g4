@@ -148,25 +148,25 @@ WS
  * Parser
  */
 statements
-    :   statement (';' statement)* ';'?;
+    :   statement (CLAUSE_END statement)* CLAUSE_END?;
 
 statement
-    :   CREATE DATA (IF NOT EXISTS)? ID ('(' dataAttributes ')' | LIKE ID)?                                                 #createDataStatement
-    |   CREATE NEURALNETWORK (IF NOT EXISTS)? ID (('(' params ')')? MODEL ('=')? ID | LIKE ID)?                             #createNeuralNetworkStatement
-    |   DROP DATA (IF EXISTS)? ID (',' ID)*                                                                                 #dropDataStatement
-    |   DROP NEURALNETWORKS (IF EXISTS)? ID (',' ID)*                                                                       #dropNeuralNetworkStatement
-    |   INSERT INTO ID VALUES '(' values ')'                                                                                #insertIntoStatement
-    |   RUN ID VALUES '(' values ')'                                                                                        #runStatement
-    |   SHOW DATA                                                                                                           #showDataStatemen
-    |   SHOW DATA STATUS ID                                                                                                 #showDataStatusStatement
-    |   SHOW NEURALNETWORKS                                                                                                 #showNeuralNetworksStatement
-    |   SHOW NEURALNETWORK STATUS ID                                                                                        #showNeuralNetworkStatusStatement
-    |   SHOW STATUS                                                                                                         #showStatusStatement
-    |   TRAIN ID ('(' params ')')? LEARNRULE ('=')? ID ',' DATA ('=')? ID ',' INPUT ('=')? list (',' OUTPUT ('=') list)?    #trainStatement
+    :   CREATE DATA (IF NOT EXISTS)? ID (OPEN_PARENTHESIS dataAttributes CLOSE_PARENTHESIS | LIKE ID)?                                                                      #createDataStatement
+    |   CREATE NEURALNETWORK (IF NOT EXISTS)? ID ((OPEN_PARENTHESIS params CLOSE_PARENTHESIS)? MODEL (EQUALS)? ID | LIKE ID)?                                               #createNeuralNetworkStatement
+    |   DROP DATA (IF EXISTS)? ID (COMMA ID)*                                                                                                                               #dropDataStatement
+    |   DROP NEURALNETWORKS (IF EXISTS)? ID (COMMA ID)*                                                                                                                     #dropNeuralNetworkStatement
+    |   INSERT INTO ID VALUES OPEN_PARENTHESIS values CLOSE_PARENTHESIS                                                                                                     #insertIntoStatement
+    |   RUN ID VALUES OPEN_PARENTHESIS values CLOSE_PARENTHESIS                                                                                                             #runStatement
+    |   SHOW DATA                                                                                                                                                           #showDataStatement
+    |   SHOW DATA STATUS ID                                                                                                                                                 #showDataStatusStatement
+    |   SHOW NEURALNETWORKS                                                                                                                                                 #showNeuralNetworksStatement
+    |   SHOW NEURALNETWORK STATUS ID                                                                                                                                        #showNeuralNetworkStatusStatement
+    |   SHOW STATUS                                                                                                                                                         #showStatusStatement
+    |   TRAIN ID (OPEN_PARENTHESIS params CLOSE_PARENTHESIS)? LEARNRULE (EQUALS)? ID COMMA? DATA (EQUALS)? ID COMMA? INPUT (EQUALS)? list (COMMA? OUTPUT (EQUALS) list)?    #trainStatement
     ;
 
 dataAttributes
-    :   dataAttribute (',' dataAttribute)* ','?;
+    :   dataAttribute (COMMA dataAttribute)* COMMA?;
 
 dataAttribute
     :   ID dataType
@@ -182,10 +182,10 @@ dataType
     ;
 
 list
-    :   '{' ID (',' ID)* '}';
+    :   OPEN_BRACKETS ID (COMMA ID)* CLOSE_BRACKETS;
 
 params
-    :   param (',' param)* ','?                                                                     
+    :   param (COMMA param)* COMMA?                                                                     
     ;
 
 param
@@ -207,10 +207,10 @@ value
     ;
 
 values
-    :   value (',' value)*
+    :   value (COMMA value)*
     ;
 
 
 complexList
-    :   '{' paramValue (',' paramValue)* '}'
+    :   OPEN_BRACKETS paramValue (COMMA paramValue)* CLOSE_BRACKETS
     ;

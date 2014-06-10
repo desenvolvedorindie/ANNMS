@@ -62,17 +62,6 @@ public interface SQLANNListener extends ParseTreeListener {
 	void exitShowNeuralNetworksStatement(@NotNull SQLANNParser.ShowNeuralNetworksStatementContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#showDataStatemen}.
-	 * @param ctx the parse tree
-	 */
-	void enterShowDataStatemen(@NotNull SQLANNParser.ShowDataStatemenContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#showDataStatemen}.
-	 * @param ctx the parse tree
-	 */
-	void exitShowDataStatemen(@NotNull SQLANNParser.ShowDataStatemenContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link SQLANNParser#runStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -214,6 +203,17 @@ public interface SQLANNListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link SQLANNParser#showDataStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterShowDataStatement(@NotNull SQLANNParser.ShowDataStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SQLANNParser#showDataStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitShowDataStatement(@NotNull SQLANNParser.ShowDataStatementContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link SQLANNParser#realValue}.

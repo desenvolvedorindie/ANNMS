@@ -65,14 +65,6 @@ public class SQLANNBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
-	@Override public T visitShowDataStatemen(@NotNull SQLANNParser.ShowDataStatemenContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.
-	 */
 	@Override public T visitRunStatement(@NotNull SQLANNParser.RunStatementContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -170,6 +162,14 @@ public class SQLANNBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
 	@Override public T visitListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.
+	 */
+	@Override public T visitShowDataStatement(@NotNull SQLANNParser.ShowDataStatementContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

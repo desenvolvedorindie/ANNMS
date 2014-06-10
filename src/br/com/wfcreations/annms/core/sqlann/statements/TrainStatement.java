@@ -30,6 +30,7 @@
 package br.com.wfcreations.annms.core.sqlann.statements;
 
 import br.com.wfcreations.annms.core.data.Param;
+import br.com.wfcreations.annms.core.data.values.IdentifierValue;
 import br.com.wfcreations.annms.core.sqlann.IStatement;
 
 public class TrainStatement implements IStatement {
@@ -38,14 +39,23 @@ public class TrainStatement implements IStatement {
 
 	public final Param[] params;
 
+	public final String learnRule;
+
 	public final String dataName;
+
+	public final IdentifierValue[] inputs;
+
+	public final IdentifierValue[] outputs;
 
 	public final String query;
 
-	public TrainStatement(String neuralNetworkName, Param[] params, String dataName, String query) {
+	public TrainStatement(String neuralNetworkName, Param[] params, String learnRule, String dataName, IdentifierValue[] inputs, IdentifierValue[] outputs, String query) {
 		this.neuralNetworkName = neuralNetworkName;
 		this.params = params;
+		this.learnRule = learnRule;
 		this.dataName = dataName;
+		this.inputs = inputs;
+		this.outputs = outputs;
 		this.query = query;
 	}
 

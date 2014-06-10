@@ -27,38 +27,24 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.sqlann.statements;
+package br.com.wfcreations.annms.core.sqlann;
 
-import br.com.wfcreations.annms.core.sqlann.IStatement;
+import java.util.ArrayList;
 
-public class ShowNeuralNetworksStatement implements IStatement {
+import org.antlr.v4.runtime.BaseErrorListener;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.Recognizer;
 
-	public final String query;
-	
-	public ShowNeuralNetworksStatement(String query) {
-		this.query = query;
-	}
+public class SQLANNErrorListener extends BaseErrorListener {
 
-	@Override
-	public void checkAccess() {
-		// TODO Auto-generated method stub
-
-	}
+	private ArrayList<SQLANNSytaxError> errors = new ArrayList<>();
 
 	@Override
-	public void validate() {
-		// TODO Auto-generated method stub
-
+	public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+		this.errors.add(new SQLANNSytaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e));
 	}
 
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public String getId() {
-		return "ShowNeuralNetworksStatement";
+	public ArrayList<SQLANNSytaxError> getErrors() {
+		return this.errors;
 	}
 }

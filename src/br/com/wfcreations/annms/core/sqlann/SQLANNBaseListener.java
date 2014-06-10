@@ -74,19 +74,6 @@ public class SQLANNBaseListener implements SQLANNListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterShowDataStatemen(@NotNull SQLANNParser.ShowDataStatemenContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitShowDataStatemen(@NotNull SQLANNParser.ShowDataStatemenContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
 	@Override public void enterRunStatement(@NotNull SQLANNParser.RunStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -250,6 +237,19 @@ public class SQLANNBaseListener implements SQLANNListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterShowDataStatement(@NotNull SQLANNParser.ShowDataStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitShowDataStatement(@NotNull SQLANNParser.ShowDataStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

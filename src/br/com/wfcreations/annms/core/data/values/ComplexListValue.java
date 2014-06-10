@@ -27,38 +27,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.sqlann.statements;
+package br.com.wfcreations.annms.core.data.values;
 
-import br.com.wfcreations.annms.core.sqlann.IStatement;
+import java.util.Arrays;
 
-public class ShowNeuralNetworksStatement implements IStatement {
+import br.com.wfcreations.annms.core.data.IValue;
 
-	public final String query;
-	
-	public ShowNeuralNetworksStatement(String query) {
-		this.query = query;
+public class ComplexListValue implements IValue {
+
+	private static final long serialVersionUID = 1L;
+
+	private final IValue[] values;
+
+	public ComplexListValue(IValue[] values) {
+		this.values = values;
+	}
+
+	public IValue[] getValue() {
+		return this.values;
 	}
 
 	@Override
-	public void checkAccess() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void validate() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public String getId() {
-		return "ShowNeuralNetworksStatement";
+	public String toString() {
+		return Arrays.toString(values);
 	}
 }

@@ -38,7 +38,7 @@ public class CreateNeuralNetworkStatement implements IStatement {
 
 	public final Param[] params;
 
-	public final String type;
+	public final String model;
 
 	public final boolean ifNotExists;
 
@@ -46,10 +46,10 @@ public class CreateNeuralNetworkStatement implements IStatement {
 
 	public final String query;
 
-	public CreateNeuralNetworkStatement(String name, Param[] params, String type, boolean ifNotExists, String copy, String query) {
+	public CreateNeuralNetworkStatement(String name, Param[] params, String model, boolean ifNotExists, String copy, String query) {
 		this.name = name;
 		this.params = params;
-		this.type = type;
+		this.model = model;
 		this.ifNotExists = ifNotExists;
 		this.copy = copy;
 		this.query = query;

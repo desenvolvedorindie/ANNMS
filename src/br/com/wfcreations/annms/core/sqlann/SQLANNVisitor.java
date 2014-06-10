@@ -57,13 +57,6 @@ public interface SQLANNVisitor<T> extends ParseTreeVisitor<T> {
 	T visitShowNeuralNetworksStatement(@NotNull SQLANNParser.ShowNeuralNetworksStatementContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#showDataStatemen}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitShowDataStatemen(@NotNull SQLANNParser.ShowDataStatemenContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link SQLANNParser#runStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -153,6 +146,13 @@ public interface SQLANNVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link SQLANNParser#showDataStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitShowDataStatement(@NotNull SQLANNParser.ShowDataStatementContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link SQLANNParser#realValue}.

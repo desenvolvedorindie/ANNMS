@@ -27,38 +27,56 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.sqlann.statements;
+package br.com.wfcreations.annms.core.sqlann;
 
-import br.com.wfcreations.annms.core.sqlann.IStatement;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.Recognizer;
 
-public class ShowNeuralNetworksStatement implements IStatement {
+public class SQLANNSytaxError extends Exception {
 
-	public final String query;
+	private static final long serialVersionUID = 1L;
+
+	private Recognizer<?, ?> recognizer;
 	
-	public ShowNeuralNetworksStatement(String query) {
-		this.query = query;
+	private Object offendingSymbol;
+	
+	private int line;
+	
+	private int charPositionInLine;
+	
+	private String msg;
+	
+	private RecognitionException cause;
+	
+	public SQLANNSytaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+		super(msg, e);
+		this.recognizer = recognizer;
+		this.offendingSymbol = offendingSymbol;
+		this.line = line;
+		this.charPositionInLine = charPositionInLine;
 	}
 
-	@Override
-	public void checkAccess() {
-		// TODO Auto-generated method stub
-
+	public Recognizer<?, ?> getRecognizer() {
+		return recognizer;
 	}
 
-	@Override
-	public void validate() {
-		// TODO Auto-generated method stub
-
+	public Object getOfedingSymbol() {
+		return offendingSymbol;
 	}
 
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-
+	public int getLine() {
+		return line;
 	}
 
-	@Override
-	public String getId() {
-		return "ShowNeuralNetworksStatement";
+	public int getCharPositionInLine() {
+		return charPositionInLine;
 	}
+
+	public String getMsg() {
+		return msg;
+	}
+	
+	public RecognitionException getCause() {
+		return cause;
+	}	
 }

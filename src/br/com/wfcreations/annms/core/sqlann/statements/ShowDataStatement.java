@@ -33,6 +33,14 @@ import br.com.wfcreations.annms.core.sqlann.IStatement;
 
 public class ShowDataStatement implements IStatement {
 
+	public final String query;
+	
+	
+	
+	public ShowDataStatement(String query) {
+		this.query = query;
+	}
+
 	@Override
 	public void checkAccess() {
 		// TODO Auto-generated method stub

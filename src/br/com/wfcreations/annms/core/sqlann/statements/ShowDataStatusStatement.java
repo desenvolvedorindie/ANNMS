@@ -34,9 +34,12 @@ import br.com.wfcreations.annms.core.sqlann.IStatement;
 public class ShowDataStatusStatement implements IStatement {
 
 	public final String name;
+	
+	public final String query;
 
-	public ShowDataStatusStatement(String name) {
+	public ShowDataStatusStatement(String name, String query) {
 		this.name = name;
+		this.query = query;
 	}
 
 	@Override
