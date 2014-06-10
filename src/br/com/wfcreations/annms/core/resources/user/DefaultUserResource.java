@@ -72,12 +72,10 @@ public class DefaultUserResource {
 	}
 
 	public synchronized boolean set(String username, User data) {
-		// TODO Auto-generated method stub
-
+		return false;
 	}
 
 	public synchronized boolean delete(String username) {
-		// TODO Auto-generated method stub
-		return 0;
+		return true;
 	}
 }
