@@ -39,14 +39,14 @@ public class Configuration {
 	public int thirft_port = 9090;
 
 	// Users
-	public String user_file = "./users.o";
+	public String user_file = "users.o";
 	public int user_max = 10;
 	public String user_admin_username = "admin";
 	public String user_admin_password = "123456";
 
 	// Data
-	public String data_path = "./data";
+	public String data_path = "data";
 
 	// Neural Networks
-	public String neuralnetworks_path = "./neuralnetworks";
+	public String neuralnetworks_path = "neuralnetworks";
 }

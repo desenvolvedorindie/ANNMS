@@ -51,7 +51,7 @@ public class DefaultUserResource {
 	private ArrayList<User> users = new ArrayList<User>();
 
 	public void init() {
-		
+
 	}
 
 	public synchronized void insert(User user) {

@@ -35,13 +35,29 @@ public class Bootstrap extends Bootstrapper {
 
 	protected void initFilesAndFolders() {
 		File f = new File(ANNMS.instance.configuration.user_file);
-		if (!f.exists() && !f.isDirectory()) {
+		if (!f.exists() || f.isDirectory()) {
 			try {
 				if (f.createNewFile())
-					LOGGER.info(String.format("Creating user file: %s", f.getAbsolutePath()));
+					LOGGER.info(String.format("Creating user file: (%s)", f.getAbsolutePath()));
 			} catch (IOException e) {
-				LOGGER.error(String.format("Can't create user file %", f.getAbsolutePath()));
+				LOGGER.error(String.format("Can't create user file (%s)", f.getAbsolutePath()));
 			}
+		}
+
+		f = new File(ANNMS.instance.configuration.data_path);
+		if (!f.exists() || !f.isDirectory()) {
+			if (f.mkdir())
+				LOGGER.info(String.format("Created data folder  (%s)", f.getAbsolutePath()));
+			else
+				LOGGER.error(String.format("Can't create data folder (%s)", f.getAbsolutePath()));
+		}
+
+		f = new File(ANNMS.instance.configuration.neuralnetworks_path);
+		if (!f.exists() || !f.isAbsolute()) {
+			if (f.mkdir())
+				LOGGER.info(String.format("Created neuralnetworks folder: (%s)", f.getAbsolutePath()));
+			else
+				LOGGER.error(String.format("Can't create neuralnetworks folder (%s)", f.getAbsolutePath()));
 		}
 	}
 
@@ -50,7 +66,7 @@ public class Bootstrap extends Bootstrapper {
 	}
 
 	protected void initData() {
-
+		
 	}
 
 	protected void initNeuralNetworks() {
