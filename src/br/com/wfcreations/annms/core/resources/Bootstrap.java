@@ -34,12 +34,13 @@ public class Bootstrap extends Bootstrapper {
 	}
 
 	protected void initFilesAndFolders() {
-		File f = new File(ANNMS.instance.configuration.user_path);
-		if (!f.exists() && f.isDirectory()) {
+		File f = new File(ANNMS.instance.configuration.user_file);
+		if (!f.exists() && !f.isDirectory()) {
 			try {
-				f.createNewFile();
+				if (f.createNewFile())
+					LOGGER.info(String.format("Creating user file: %s", f.getAbsolutePath()));
 			} catch (IOException e) {
-				LOGGER.error(String.format("Can't create user file %", ANNMS.instance.configuration.user_path));
+				LOGGER.error(String.format("Can't create user file %", f.getAbsolutePath()));
 			}
 		}
 	}

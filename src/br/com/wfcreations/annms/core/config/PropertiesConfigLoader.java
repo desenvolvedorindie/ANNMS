@@ -41,7 +41,7 @@ public class PropertiesConfigLoader implements IConfigurationLoader {
 
 	public final String TIMEOUT_KEY = "timeout";
 
-	public final String USER_PATH_KEY = "user.path";
+	public final String USER_FILE_KEY = "user.file";
 
 	public final String USER_MAX_KEY = "user.max";
 
@@ -103,8 +103,8 @@ public class PropertiesConfigLoader implements IConfigurationLoader {
 				} catch (NumberFormatException e) {
 					throw new ConfigurationException(String.format("Invalid %s format", key), e);
 				}
-			} else if (key.equals(PREFIX + "." + USER_PATH_KEY)) {
-				config.user_path = value;
+			} else if (key.equals(PREFIX + "." + USER_FILE_KEY)) {
+				config.user_file = value;
 			} else if (key.equals(PREFIX + "." + USER_MAX_KEY)) {
 				try {
 					config.user_max = Integer.parseInt(value);

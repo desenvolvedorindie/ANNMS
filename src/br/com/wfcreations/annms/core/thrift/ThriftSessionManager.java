@@ -46,7 +46,7 @@ public class ThriftSessionManager {
 		FileAdapter adapter = new FileAdapter();
 		adapter.setIdentity(username);
 		adapter.setCredential(password);
-		adapter.setFilePath(ANNMS.instance.configuration.user_path);
+		adapter.setFilePath(ANNMS.instance.configuration.user_file);
 		try {
 			return Auth.getInstance().authenticate(adapter);
 		} catch (br.com.wfcreations.annms.core.auth.AuthenticationException e) {

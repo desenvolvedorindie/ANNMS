@@ -39,7 +39,7 @@ public class Configuration {
 	public int thirft_port = 9090;
 
 	// Users
-	public String user_path = "./users.usr";
+	public String user_file = "./users.o";
 	public int user_max = 10;
 	public String user_admin_username = "admin";
 	public String user_admin_password = "123456";
