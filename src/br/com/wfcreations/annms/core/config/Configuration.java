@@ -27,26 +27,26 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms;
+package br.com.wfcreations.annms.core.config;
 
-import br.com.wfcreations.annms.core.config.Configuration;
+public class Configuration {
 
-public class ANNMS {
+	// Server Config
+	public int timeout = 0;
 
-	public static final String VERSION = "1.0.0-dev";
+	// Thrift
+	public String thrift_server = "ThreadPoolServer";
+	public int thirft_port = 9090;
 
-	public static final short MAJOR = 1;
+	// Users
+	public String user_path = "./users.usr";
+	public int user_max = 10;
+	public String user_admin_username = "admin";
+	public String user_admin_password = "123456";
 
-	public static final short MINOR = 0;
+	// Data
+	public String data_path = "./data";
 
-	public static final short REVISION = 0;
-
-	public static final ANNMS instance = new ANNMS();
-
-	public Configuration configuration;
-
-	public final String CONFIG_FILE_PATH = "annms.config";
-
-	private ANNMS() {
-	}
+	// Neural Networks
+	public String neuralnetworks_path = "./neuralnetworks";
 }

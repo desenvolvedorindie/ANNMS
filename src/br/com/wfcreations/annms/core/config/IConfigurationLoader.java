@@ -27,24 +27,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.resources.config;
+package br.com.wfcreations.annms.core.config;
 
-public class Config {
+public interface IConfigurationLoader {
 
-    // Server Config
-    public int port = 9090;
-    public String root_username = "root";
-    public String root_password = "";
-    public String usersfile = "users";
-    public int maxuser = 10;
-    public int timeout = 0;
+	Configuration load() throws ConfigurationException;
 
-    // Thrift
-    public String thrift_server = "ThreadPoolServer";
-
-    // Absolute or relative path
-    public String data_path = "./data";
-
-    // Absolute or relative path
-    public String neuralnetworks_path = "./neuralnetworks";
 }

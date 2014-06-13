@@ -30,9 +30,9 @@
 # Interface Definition Language for Artificial Neural Network Management System Service
 #
 
-namespace java br.com.wfcreations.annms.transport.thrift
-namespace cpp br.com.wfcreations.annms.transport
-namespace csharp WFCreations.ANNMS.transport
+namespace java br.com.wfcreations.annms.core.thrift
+namespace cpp br.com.wfcreations.annms
+namespace csharp WFCreations.ANNMS
 namespace py annms
 namespace php annms
 namespace perl ANNMS
@@ -41,9 +41,7 @@ namespace perl ANNMS
 # Types
 #
 
-typedef i16 short
 typedef i32 int
-typedef i64 long
 
 #
 # Structures

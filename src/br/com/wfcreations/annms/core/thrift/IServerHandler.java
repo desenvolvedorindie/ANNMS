@@ -27,13 +27,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.resources.config;
+package br.com.wfcreations.annms.core.thrift;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import org.apache.thrift.server.TServerEventHandler;
 
-public interface IConfigLoader {
+import br.com.wfcreations.annms.core.thrift.ANNMSService.Iface;
 
-    Config load() throws FileNotFoundException, IOException, ConfigurationException;
-    
+public interface IServerHandler extends Iface, TServerEventHandler {
+
 }

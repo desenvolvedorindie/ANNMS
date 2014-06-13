@@ -35,13 +35,14 @@ import org.slf4j.LoggerFactory;
 import br.com.wfcreations.annms.core.resources.Application;
 import br.com.wfcreations.annms.core.resources.Bootstrap;
 import br.com.wfcreations.annms.core.resources.Bootstrapper;
+import br.com.wfcreations.annms.core.thrift.ThriftServer;
 
 public class ANNMSDaemon extends Application {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ANNMSDaemon.class);
 
 	private static final ANNMSDaemon instance = new ANNMSDaemon(new Bootstrap());
-	
+
 	protected Thread shutdownThread = new Thread() {
 		@Override
 		public void run() {
@@ -67,22 +68,19 @@ public class ANNMSDaemon extends Application {
 		instance.activate(args);
 	}
 
-	private Server thriftServer;
-
-	protected void boostrap() {
-		this.bootstrap.run();
-	}
+	private IServer thriftServer;
 
 	protected void setup() {
-		// thriftServer = new ThriftServer();
+		this.bootstrap.init();
+		thriftServer = new ThriftServer();
 	}
 
 	public void start() {
-		// thriftServer.start();
+		thriftServer.start();
 	}
 
 	public void stop() {
-		// thriftServer.stop();
+		thriftServer.stop();
 	}
 
 	public void destroy() {
@@ -90,7 +88,6 @@ public class ANNMSDaemon extends Application {
 	}
 
 	public void activate(String[] args) {
-		boostrap();
 		setup();
 		start();
 		Runtime.getRuntime().addShutdownHook(shutdownThread);
@@ -99,13 +96,5 @@ public class ANNMSDaemon extends Application {
 	public void deactivate(String[] args) {
 		stop();
 		destroy();
-	}
-
-	public interface Server {
-		public void start();
-
-		public void stop();
-
-		public boolean isRunning();
 	}
 }

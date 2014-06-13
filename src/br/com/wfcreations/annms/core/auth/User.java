@@ -58,6 +58,8 @@ public class User implements Serializable {
 			throw new IllegalArgumentException("Username can't be null");
 		if (username.equals(""))
 			throw new IllegalArgumentException("Username can't be empty");
+		if (!username.matches("[a-zA-Z$][a-zA-Z0-9$_[-]]*"))
+			throw new IllegalArgumentException("Invalid username format");
 		this.username = username;
 		return this;
 	}

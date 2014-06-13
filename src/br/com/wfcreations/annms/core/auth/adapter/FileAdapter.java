@@ -52,20 +52,20 @@ public class FileAdapter implements AdapterInterface {
 			User[] users = (User[]) ois.readObject();
 			ois.close();
 			if (isUserAmbiguous(users))
-				throw new AuthenticationException(AuthenticationException.USER_AMBIGUOUS, "Duplicated User");
+				throw new AuthenticationException(AuthenticationException.ErrorType.USER_AMBIGUOUS, "Duplicated User");
 			for (User user : users) {
 				if (user.getUsername() == getIdentity()) {
 					if (user.getPassword() == getCredential())
 						return user;
 					else
-						throw new AuthenticationException(AuthenticationException.PASSWORD_INVALID, "Invalid Password");
+						throw new AuthenticationException(AuthenticationException.ErrorType.PASSWORD_INVALID, "Invalid Password");
 				}
 			}
-			throw new AuthenticationException(AuthenticationException.USER_NOT_FOUND, "User not found");
+			throw new AuthenticationException(AuthenticationException.ErrorType.USER_NOT_FOUND, "User not found");
 		} catch (IOException e) {
-			throw new AuthenticationException(AuthenticationException.FAILURE, "IOException", e);
+			throw new AuthenticationException(AuthenticationException.ErrorType.FAILURE, "IOException", e);
 		} catch (ClassNotFoundException e) {
-			throw new AuthenticationException(AuthenticationException.FAILURE, "ClassNotFoundException", e);
+			throw new AuthenticationException(AuthenticationException.ErrorType.FAILURE, "ClassNotFoundException", e);
 		}
 	}
 

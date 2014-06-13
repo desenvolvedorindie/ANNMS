@@ -1,4 +1,4 @@
-package br.com.wfcreations.annms.core.resources.config;
+package br.com.wfcreations.annms.core.config;
 
 import br.com.wfcreations.annms.core.exception.ANNMSException;
 import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;

@@ -57,5 +57,5 @@ public abstract class Bootstrapper {
 		resource.init();
 	}
 	
-	public abstract void run();
+	public abstract void init();
 }

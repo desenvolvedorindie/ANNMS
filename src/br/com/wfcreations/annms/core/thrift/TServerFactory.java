@@ -27,26 +27,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms;
+package br.com.wfcreations.annms.core.thrift;
 
-import br.com.wfcreations.annms.core.config.Configuration;
+import java.net.InetSocketAddress;
 
-public class ANNMS {
+import org.apache.thrift.protocol.TProtocolFactory;
+import org.apache.thrift.server.TServer;
+import org.apache.thrift.server.TSimpleServer;
+import org.apache.thrift.server.TThreadPoolServer;
+import org.apache.thrift.transport.TServerSocket;
+import org.apache.thrift.transport.TServerTransport;
+import org.apache.thrift.transport.TTransportException;
+import org.apache.thrift.transport.TTransportFactory;
 
-	public static final String VERSION = "1.0.0-dev";
+public class TServerFactory {
 
-	public static final short MAJOR = 1;
+	public static class Args {
+		public InetSocketAddress address;
+		public IServerHandler handler;
+		public ANNMSService.Processor<?> processor;
+		public TProtocolFactory transportProtocolFactory;
+		public TTransportFactory inTransportFactory;
+		public TTransportFactory outTransportFactory;
+	}
 
-	public static final short MINOR = 0;
+	public enum ServerType {
+		SimpleServer, ThreadPoolServer
+	}
 
-	public static final short REVISION = 0;
-
-	public static final ANNMS instance = new ANNMS();
-
-	public Configuration configuration;
-
-	public final String CONFIG_FILE_PATH = "annms.config";
-
-	private ANNMS() {
+	public static TServer createServer(ServerType type, Args args) {
+		try {
+			TServer server;
+			TServerTransport serverTransport = new TServerSocket(args.address);
+			if (type == ServerType.ThreadPoolServer) {
+				TThreadPoolServer.Args arg = new TThreadPoolServer.Args(serverTransport).processor(args.processor);
+				server = new TThreadPoolServer(arg);
+				server.setServerEventHandler(args.handler);
+				return server;
+			} else {
+				TServer.Args arg = new TServer.Args(serverTransport).processor(args.processor);
+				server = new TSimpleServer(arg);
+				server.setServerEventHandler(args.handler);
+				return server;
+			}
+		} catch (TTransportException e) {
+		}
+		return null;
 	}
 }

@@ -4,7 +4,7 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-package br.com.wfcreations.annms.transport.thrift;
+package br.com.wfcreations.annms.core.thrift;
 
 import org.apache.thrift.scheme.IScheme;
 import org.apache.thrift.scheme.SchemeFactory;
@@ -33,21 +33,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * AuthenticationException
+ * AuthorizationException
  * 
  * @param int code Error code.
  * @param string message Error message.
  */
-public class AuthenticationException extends TException implements org.apache.thrift.TBase<AuthenticationException, AuthenticationException._Fields>, java.io.Serializable, Cloneable, Comparable<AuthenticationException> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("AuthenticationException");
+public class AuthorizationException extends TException implements org.apache.thrift.TBase<AuthorizationException, AuthorizationException._Fields>, java.io.Serializable, Cloneable, Comparable<AuthorizationException> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("AuthorizationException");
 
   private static final org.apache.thrift.protocol.TField CODE_FIELD_DESC = new org.apache.thrift.protocol.TField("code", org.apache.thrift.protocol.TType.I32, (short)1);
   private static final org.apache.thrift.protocol.TField MESSAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("message", org.apache.thrift.protocol.TType.STRING, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new AuthenticationExceptionStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new AuthenticationExceptionTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new AuthorizationExceptionStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new AuthorizationExceptionTupleSchemeFactory());
   }
 
   public int code; // required
@@ -125,13 +125,13 @@ public class AuthenticationException extends TException implements org.apache.th
     tmpMap.put(_Fields.MESSAGE, new org.apache.thrift.meta_data.FieldMetaData("message", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(AuthenticationException.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(AuthorizationException.class, metaDataMap);
   }
 
-  public AuthenticationException() {
+  public AuthorizationException() {
   }
 
-  public AuthenticationException(
+  public AuthorizationException(
     int code,
     String message)
   {
@@ -144,7 +144,7 @@ public class AuthenticationException extends TException implements org.apache.th
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public AuthenticationException(AuthenticationException other) {
+  public AuthorizationException(AuthorizationException other) {
     __isset_bitfield = other.__isset_bitfield;
     this.code = other.code;
     if (other.isSetMessage()) {
@@ -152,8 +152,8 @@ public class AuthenticationException extends TException implements org.apache.th
     }
   }
 
-  public AuthenticationException deepCopy() {
-    return new AuthenticationException(this);
+  public AuthorizationException deepCopy() {
+    return new AuthorizationException(this);
   }
 
   @Override
@@ -167,7 +167,7 @@ public class AuthenticationException extends TException implements org.apache.th
     return this.code;
   }
 
-  public AuthenticationException setCode(int code) {
+  public AuthorizationException setCode(int code) {
     this.code = code;
     setCodeIsSet(true);
     return this;
@@ -190,7 +190,7 @@ public class AuthenticationException extends TException implements org.apache.th
     return this.message;
   }
 
-  public AuthenticationException setMessage(String message) {
+  public AuthorizationException setMessage(String message) {
     this.message = message;
     return this;
   }
@@ -262,12 +262,12 @@ public class AuthenticationException extends TException implements org.apache.th
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof AuthenticationException)
-      return this.equals((AuthenticationException)that);
+    if (that instanceof AuthorizationException)
+      return this.equals((AuthorizationException)that);
     return false;
   }
 
-  public boolean equals(AuthenticationException that) {
+  public boolean equals(AuthorizationException that) {
     if (that == null)
       return false;
 
@@ -298,7 +298,7 @@ public class AuthenticationException extends TException implements org.apache.th
   }
 
   @Override
-  public int compareTo(AuthenticationException other) {
+  public int compareTo(AuthorizationException other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
@@ -342,7 +342,7 @@ public class AuthenticationException extends TException implements org.apache.th
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("AuthenticationException(");
+    StringBuilder sb = new StringBuilder("AuthorizationException(");
     boolean first = true;
 
     sb.append("code:");
@@ -387,15 +387,15 @@ public class AuthenticationException extends TException implements org.apache.th
     }
   }
 
-  private static class AuthenticationExceptionStandardSchemeFactory implements SchemeFactory {
-    public AuthenticationExceptionStandardScheme getScheme() {
-      return new AuthenticationExceptionStandardScheme();
+  private static class AuthorizationExceptionStandardSchemeFactory implements SchemeFactory {
+    public AuthorizationExceptionStandardScheme getScheme() {
+      return new AuthorizationExceptionStandardScheme();
     }
   }
 
-  private static class AuthenticationExceptionStandardScheme extends StandardScheme<AuthenticationException> {
+  private static class AuthorizationExceptionStandardScheme extends StandardScheme<AuthorizationException> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, AuthenticationException struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, AuthorizationException struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -435,7 +435,7 @@ public class AuthenticationException extends TException implements org.apache.th
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, AuthenticationException struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, AuthorizationException struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -453,23 +453,23 @@ public class AuthenticationException extends TException implements org.apache.th
 
   }
 
-  private static class AuthenticationExceptionTupleSchemeFactory implements SchemeFactory {
-    public AuthenticationExceptionTupleScheme getScheme() {
-      return new AuthenticationExceptionTupleScheme();
+  private static class AuthorizationExceptionTupleSchemeFactory implements SchemeFactory {
+    public AuthorizationExceptionTupleScheme getScheme() {
+      return new AuthorizationExceptionTupleScheme();
     }
   }
 
-  private static class AuthenticationExceptionTupleScheme extends TupleScheme<AuthenticationException> {
+  private static class AuthorizationExceptionTupleScheme extends TupleScheme<AuthorizationException> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, AuthenticationException struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, AuthorizationException struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       oprot.writeI32(struct.code);
       oprot.writeString(struct.message);
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, AuthenticationException struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, AuthorizationException struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       struct.code = iprot.readI32();
       struct.setCodeIsSet(true);
