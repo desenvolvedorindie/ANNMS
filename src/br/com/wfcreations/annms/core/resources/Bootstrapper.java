@@ -6,14 +6,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class Bootstrapper {
 
-	private Application application;
-
 	private Map<String, Resource> resources = new ConcurrentHashMap<String, Resource>();
 
 	private Map<String, Boolean> started = new ConcurrentHashMap<String, Boolean>();
 	
-	public Bootstrapper(Application application) {
-		this.application = application;
+	public Bootstrapper() {
 	}
 
 	public void registerPluginResource(Resource resource) {
@@ -43,18 +40,11 @@ public abstract class Bootstrapper {
 		return resources.keySet().toArray(new String[resources.size()]);
 	}
 
-	public Application getApplication() {
-		return application;
-	}
-
-	public void setApplication(Application application) {
-		this.application = application;
-	}
-
-	public void bootstrap() throws BootstrapException {
+	public Bootstrapper bootstrap() throws BootstrapException {
 		for (Entry<String, Resource> entry : resources.entrySet()) {
 			executeResource(entry.getValue());
 		}
+		return this;
 	}
 	
 	protected void executeResource(Resource resource) throws BootstrapException {

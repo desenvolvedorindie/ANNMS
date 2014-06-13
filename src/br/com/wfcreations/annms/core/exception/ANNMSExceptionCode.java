@@ -36,12 +36,16 @@ public enum ANNMSExceptionCode {
 
 	SERVER_ERROR(0x0000),
 
-	SYNTAXE_ERROR(0x0001),
-	
-	BOOTSTRAPPING(0x0002),
-	
-	CONFIG_ERROR(0x0003);
-	
+	STORAGE(0x0001),
+
+	SYNTAXE_ERROR(0x0002),
+
+	BOOTSTRAPPING(0x0003),
+
+	CONFIG_ERROR(0x0004),
+
+	AUTHENTICATION(0x0005);
+
 	public final int value;
 
 	private static final Map<Integer, ANNMSExceptionCode> valueToCode = new HashMap<Integer, ANNMSExceptionCode>(ANNMSExceptionCode.values().length);

@@ -7,13 +7,12 @@ public class Bootstrap extends Bootstrapper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Bootstrap.class);
 
-	public Bootstrap(Application application) {
-		super(application);
+	public Bootstrap() {
+		super();
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+
 	}
 }

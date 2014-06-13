@@ -29,36 +29,14 @@
  */
 package br.com.wfcreations.annms;
 
-import java.util.Scanner;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import br.com.wfcreations.annms.core.service.ANNMSDaemon;
-
 public class ANNMS {
-	private static final Logger LOGGER = LoggerFactory.getLogger(ANNMS.class);
 
-	public static void main(String[] args) {
-		boolean started = false;
-		while (true) {
-			Scanner s = new Scanner(System.in);
-			String str = s.nextLine();
-			if (str.equalsIgnoreCase("START") && !started) {
-				ANNMSDaemon.start(args);
-				started = true;
-			} else if (str.equalsIgnoreCase("STOP") && started) {
-				ANNMSDaemon.stop(args);
-				started = false;
-			} else if (str.equalsIgnoreCase("RESTART") && started) {
-				ANNMSDaemon.stop(args);
-				ANNMSDaemon.start(args);
-			} else if (str.equalsIgnoreCase("exit") && started) {
-				ANNMSDaemon.stop(args);
-				s.close();
-				LOGGER.info("BYE");
-				System.exit(0);
-			}
-		}
-	}
+	public static final String VERSION = "1.0.0-dev";
+
+	public static final short MAJOR = 1;
+
+	public static final short MINOR = 0;
+
+	public static final short REVISION = 0;
+
 }

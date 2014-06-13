@@ -2,7 +2,7 @@ package br.com.wfcreations.annms.core.resources;
 
 public class Application {
 
-	private Bootstrapper bootstrap;
+	protected Bootstrapper bootstrap;
 
 	public Application(Bootstrapper bootstrap) {
 		this.bootstrap = bootstrap;
@@ -16,7 +16,7 @@ public class Application {
 		this.bootstrap = bootstrap;
 	}
 	
-	public void bootstrap() throws BootstrapException {
-		this.bootstrap.bootstrap();
+	public Bootstrapper bootstrap() throws BootstrapException {
+		return this.bootstrap.bootstrap();
 	}
 }

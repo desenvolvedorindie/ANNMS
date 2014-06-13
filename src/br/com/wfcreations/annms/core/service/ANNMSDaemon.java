@@ -32,53 +32,71 @@ package br.com.wfcreations.annms.core.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ANNMSDaemon {
+import br.com.wfcreations.annms.core.resources.Application;
+import br.com.wfcreations.annms.core.resources.Bootstrap;
+import br.com.wfcreations.annms.core.resources.Bootstrapper;
+
+public class ANNMSDaemon extends Application {
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ANNMSDaemon.class);
 
-	private static final ANNMSDaemon instance = new ANNMSDaemon();
+	private static final ANNMSDaemon instance = new ANNMSDaemon(new Bootstrap());
+	
+	protected Thread shutdownThread = new Thread() {
+		@Override
+		public void run() {
+			instance.deactivate(null);
+		}
+	};
 
-	// private Bootstrap bootstrap = new Bootstrap();
+	protected String[] args;
+
+	private ANNMSDaemon(Bootstrapper bootstrap) {
+		super(bootstrap);
+	}
 
 	public static ANNMSDaemon getInstance() {
 		return instance;
 	}
 
 	public static void stop(String[] args) {
-		instance.deactivate();
+		instance.deactivate(args);
 	}
 
-	public static void start(String[] args) {
-		instance.activate();
+	public static void main(String[] args) {
+		instance.activate(args);
 	}
 
 	private Server thriftServer;
 
-	protected void setup() {
-		//thriftServer = new ThriftServer();
+	protected void boostrap() {
+		this.bootstrap.run();
 	}
 
-	private void boostrap() {
-		//bootstrap.run();
+	protected void setup() {
+		// thriftServer = new ThriftServer();
 	}
 
 	public void start() {
-		thriftServer.start();
+		// thriftServer.start();
 	}
 
 	public void stop() {
-		thriftServer.stop();
+		// thriftServer.stop();
 	}
 
 	public void destroy() {
+		LOGGER.info("BYE");
 	}
 
-	public void activate() {
+	public void activate(String[] args) {
 		boostrap();
 		setup();
 		start();
+		Runtime.getRuntime().addShutdownHook(shutdownThread);
 	}
 
-	public void deactivate() {
+	public void deactivate(String[] args) {
 		stop();
 		destroy();
 	}
