@@ -50,16 +50,16 @@ public class SQLANNParser extends Parser {
 		COMMA=5, CLAUSE_END=6, EQUALS=7, INTEGER=8, REAL=9, BOOLEAN=10, STRING=11, 
 		DATE=12, CREATE=13, DATA=14, DROP=15, MODEL=16, INSERT=17, INTO=18, NEURALNETWORK=19, 
 		NEURALNETWORKS=20, RUN=21, SHOW=22, STATUS=23, TRAIN=24, VALUES=25, TRUE=26, 
-		FALSE=27, NOT=28, NULL=29, EXISTS=30, IF=31, LIKE=32, LEARNRULE=33, INPUT=34, 
-		OUTPUT=35, Integer=36, Real=37, ID=38, String=39, COMMENT=40, LINE_COMMENT=41, 
-		WS=42;
+		FALSE=27, NOT=28, NULL=29, EXISTS=30, IF=31, LIKE=32, LEARNINGRULE=33, 
+		INPUT=34, OUTPUT=35, Integer=36, Real=37, ID=38, String=39, COMMENT=40, 
+		LINE_COMMENT=41, WS=42;
 	public static final String[] tokenNames = {
 		"<INVALID>", "'('", "')'", "'{'", "'}'", "','", "';'", "'='", "INTEGER", 
 		"REAL", "BOOLEAN", "STRING", "DATE", "CREATE", "DATA", "DROP", "MODEL", 
 		"INSERT", "INTO", "NEURALNETWORK", "NEURALNETWORKS", "RUN", "SHOW", "STATUS", 
 		"TRAIN", "VALUES", "TRUE", "FALSE", "NOT", "NULL", "EXISTS", "IF", "LIKE", 
-		"LEARNRULE", "INPUT", "OUTPUT", "Integer", "Real", "ID", "String", "COMMENT", 
-		"LINE_COMMENT", "WS"
+		"LEARNINGRULE", "INPUT", "OUTPUT", "Integer", "Real", "ID", "String", 
+		"COMMENT", "LINE_COMMENT", "WS"
 	};
 	public static final int
 		RULE_statements = 0, RULE_statement = 1, RULE_dataAttributes = 2, RULE_dataAttribute = 3, 
@@ -230,7 +230,7 @@ public class SQLANNParser extends Parser {
 		}
 		public List<TerminalNode> COMMA() { return getTokens(SQLANNParser.COMMA); }
 		public TerminalNode OUTPUT() { return getToken(SQLANNParser.OUTPUT, 0); }
-		public TerminalNode LEARNRULE() { return getToken(SQLANNParser.LEARNRULE, 0); }
+		public TerminalNode LEARNINGRULE() { return getToken(SQLANNParser.LEARNINGRULE, 0); }
 		public TerminalNode OPEN_PARENTHESIS() { return getToken(SQLANNParser.OPEN_PARENTHESIS, 0); }
 		public TerminalNode ID(int i) {
 			return getToken(SQLANNParser.ID, i);
@@ -746,7 +746,7 @@ public class SQLANNParser extends Parser {
 					}
 				}
 
-				setState(139); match(LEARNRULE);
+				setState(139); match(LEARNINGRULE);
 				setState(141);
 				_la = _input.LA(1);
 				if (_la==EQUALS) {

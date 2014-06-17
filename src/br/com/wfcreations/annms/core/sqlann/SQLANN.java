@@ -86,7 +86,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	}
 
 	private SQLANNStatement[] statements;
-	
+
 	public SQLANNStatement[] statements() {
 		return this.statements;
 	}
@@ -270,7 +270,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 	@Override
 	public TrainStatement visitTrainStatement(@NotNull SQLANNParser.TrainStatementContext ctx) {
-		if (ctx != null && ctx.TRAIN() != null && ctx.LEARNRULE() != null && ctx.DATA() != null && ctx.INPUT() != null && ctx.OUTPUT() != null && ctx.ID() != null && ctx.ID().size() > 2 && ctx.list().size() > 0) {
+		if (ctx != null && ctx.TRAIN() != null && ctx.LEARNINGRULE() != null && ctx.DATA() != null && ctx.INPUT() != null && ctx.OUTPUT() != null && ctx.ID() != null && ctx.ID().size() > 2 && ctx.list().size() > 0) {
 			String neuralNetworkName = ctx.ID(1).getText().toUpperCase();
 
 			Param[] params = (Param[]) visit(ctx.params());
@@ -470,7 +470,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 	@Override
 	public ComplexListValue visitComplexList(@NotNull SQLANNParser.ComplexListContext ctx) {
-		if(ctx != null && ctx.paramValue() != null && ctx.OPEN_BRACKETS() != null && ctx.CLOSE_BRACKETS() != null && ctx.paramValue().size() > 0) {
+		if (ctx != null && ctx.paramValue() != null && ctx.OPEN_BRACKETS() != null && ctx.CLOSE_BRACKETS() != null && ctx.paramValue().size() > 0) {
 			IValue[] values = new IValue[ctx.paramValue().size()];
 			for (int i = 0; i < ctx.paramValue().size(); i++) {
 				values[i] = (IValue) visit(ctx.paramValue(i));

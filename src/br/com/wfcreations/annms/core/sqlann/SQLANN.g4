@@ -115,7 +115,7 @@ NULL                :   N_ U_ L_ L_;
 EXISTS              :   E_ X_ I_ S_ T_ S_;
 IF                  :   I_ F_;
 LIKE                :   L_ I_ K_ E_;
-LEARNRULE           :   L_ E_ A_ R_ N_ R_ U_ L_ E_;
+LEARNINGRULE        :   L_ E_ A_ R_ N_ I_ N_ G_ R_ U_ L_ E_;
 
 
 INPUT               :   I_ N_ P_ U_ T_;
@@ -162,7 +162,7 @@ statement
     |   SHOW NEURALNETWORKS                                                                                                                                                 #showNeuralNetworksStatement
     |   SHOW NEURALNETWORK STATUS ID                                                                                                                                        #showNeuralNetworkStatusStatement
     |   SHOW STATUS                                                                                                                                                         #showStatusStatement
-    |   TRAIN ID (OPEN_PARENTHESIS params CLOSE_PARENTHESIS)? LEARNRULE (EQUALS)? ID COMMA? DATA (EQUALS)? ID COMMA? INPUT (EQUALS)? list (COMMA? OUTPUT (EQUALS) list)?    #trainStatement
+    |   TRAIN ID (OPEN_PARENTHESIS params CLOSE_PARENTHESIS)? LEARNINGRULE (EQUALS)? ID COMMA? DATA (EQUALS)? ID COMMA? INPUT (EQUALS)? list (COMMA? OUTPUT (EQUALS) list)?    #trainStatement
     ;
 
 dataAttributes
