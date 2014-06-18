@@ -8,6 +8,7 @@ import br.com.wfcreations.annms.ANNMS;
 import br.com.wfcreations.annms.core.auth.Auth;
 import br.com.wfcreations.annms.core.auth.User;
 import br.com.wfcreations.annms.core.auth.adapter.FileAdapter;
+import br.com.wfcreations.annms.core.service.ClientState;
 
 public class ThriftSessionManager {
 	private static ThriftSessionManager instance;
@@ -26,6 +27,11 @@ public class ThriftSessionManager {
 	public void setCurrentSocket(SocketAddress socket) {
 		remoteSocket.set(socket);
 	}
+	
+	public SocketAddress getCurrentSocket() {
+		return remoteSocket.get();
+	}
+
 
 	public ClientState currentSession() {
 		SocketAddress socket = remoteSocket.get();
@@ -42,6 +48,10 @@ public class ThriftSessionManager {
 		remoteSocket.remove();
 	}
 
+	public int getConnectedClients() {
+		return activeSocketSessions.size();
+	}
+
 	public static User authenticate(String username, String password) throws AuthenticationException {
 		FileAdapter adapter = new FileAdapter();
 		adapter.setIdentity(username);
@@ -50,10 +60,7 @@ public class ThriftSessionManager {
 		try {
 			return Auth.getInstance().authenticate(adapter);
 		} catch (br.com.wfcreations.annms.core.auth.AuthenticationException e) {
-			int code = 0;
-			if (e.getType() == br.com.wfcreations.annms.core.auth.AuthenticationException.ErrorType.USER_NOT_FOUND)
-				code = 1;
-			throw new AuthenticationException(code, "Invalid User");
+			throw new AuthenticationException(e.getType().ordinal(), e.getMessage());
 		}
 	}
 }

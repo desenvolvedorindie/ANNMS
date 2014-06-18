@@ -1,4 +1,4 @@
-package br.com.wfcreations.annms.core.thrift;
+package br.com.wfcreations.annms.core.service;
 
 public class ClientState {
 	

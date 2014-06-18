@@ -82,6 +82,17 @@ exception AuthorizationException {
 	2: required string message
 }
 
+/**
+ *	AuthorizationException
+ *
+ *	@param int code Error code.
+ *	@param string message Error message.
+ */
+exception TimedOutException {
+    1: required int code
+	2: required string message
+}
+
 #
 # Services
 #
@@ -106,5 +117,5 @@ service ANNMSService {
 	 *	@return SQLANNResults
 	 *	@throws AuthorizationException
 	 */
-	SQLANNResults execute (1: required string query) throws (1: AuthorizationException ae)
+	SQLANNResults execute (1: required string query) throws (1: AuthorizationException ae, 2: TimedOutException to)
 }

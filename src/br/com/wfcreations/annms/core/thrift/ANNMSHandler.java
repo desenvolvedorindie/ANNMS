@@ -57,11 +57,13 @@ public class ANNMSHandler implements IServerHandler {
 		ThriftSessionManager.authenticate(username, password);
 		ThriftSessionManager.getInstance().currentSession().setUsername(username);
 		ThriftSessionManager.getInstance().currentSession().setPassword(password);
+		LOGGER.info(String.format("A thrift connection, username: %s", ThriftSessionManager.getInstance().currentSession().getUsername()));
 	}
 
 	@Override
-	public SQLANNResults execute(String query) throws AuthorizationException, TException {
+	public SQLANNResults execute(String query) throws AuthorizationException, TimedOutException, TException {
 		ThriftSessionManager.authenticate(ThriftSessionManager.getInstance().currentSession().getUsername(), ThriftSessionManager.getInstance().currentSession().getPassword());
+		System.out.println(query);
 		return new SQLANNResults("");
 	}
 

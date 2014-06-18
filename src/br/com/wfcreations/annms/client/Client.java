@@ -1,35 +1,94 @@
 package br.com.wfcreations.annms.client;
 
-import org.apache.thrift.TException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 
+import br.com.wfcreations.annms.client.config.ClientConfiguration;
+import br.com.wfcreations.annms.client.config.ClientPropertiesConfigLoader;
 import br.com.wfcreations.annms.core.thrift.ANNMSService;
+import br.com.wfcreations.annms.core.thrift.AuthorizationException;
+import br.com.wfcreations.annms.core.thrift.TimedOutException;
 
 public class Client {
 
-	public static void main(String[] args) {
-		try {
-			TTransport transport;
+	public static String CONFIG_FILE_PATH = "client.config";
 
-			transport = new TSocket("localhost", 9090);
-			transport.open();
+	static TTransport transport;
+	static ANNMSService.Client client;
 
-			TProtocol protocol = new TBinaryProtocol(transport);
-			ANNMSService.Client client = new ANNMSService.Client(protocol);
-
-			client.connect("admin", "12345");
-			//client.execute("CREATE DATA iris (sepallenght REAL, sepalwidth REAL, petallenght REAL, petalwidth REAL, class {Iris-setosa,Iris-versicolor,Iris-virginica});");
-
+	public static void connect(String host, int port) {
+		if (transport != null) {
 			transport.close();
+		}
+		transport = new TSocket("localhost", 9090);
+		try {
+			transport.open();
 		} catch (TTransportException e) {
-			e.printStackTrace();
-		} catch (TException x) {
-			x.printStackTrace();
+			String error = (e.getCause() == null) ? e.getMessage() : e.getCause().getMessage();
+			throw new RuntimeException("Exception connecting to " + host + ":" + port + ". Reason: " + error + ".");
+		}
+
+		TProtocol protocol = new TBinaryProtocol(transport);
+		client = new ANNMSService.Client(protocol);
+	}
+
+	public static void disconnect() {
+		if (transport != null) {
+			transport.close();
+			transport = null;
 		}
 	}
 
+	public static boolean isConnected() {
+		return client != null;
+	}
+
+	public static void main(String[] args) {
+
+		try {
+			ClientConfiguration configuration = new ClientPropertiesConfigLoader(CONFIG_FILE_PATH).load();
+
+			connect(configuration.host, configuration.port);
+
+			client.connect(configuration.user_username, configuration.user_password);
+
+			System.out.println(String.format("Connected to %s:%s, User: %s", configuration.host, configuration.port, configuration.user_username));
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+			String line;
+			StringBuilder sb = new StringBuilder();
+			while (true) {
+				try {
+					line = br.readLine();
+					if (line.isEmpty()) {
+						try {
+							client.execute(sb.toString());
+						} catch (AuthorizationException e1) {
+							System.out.println();
+						} catch (TimedOutException e2) {
+							System.out.println();
+						}
+
+						sb.setLength(0);
+					} else {
+						sb.append(line);
+						sb.append('\n');
+					}
+				} catch (IOException ioe) {
+					System.exit(1);
+				}
+			}
+		} catch (Exception e) {
+			disconnect();
+			System.out.println(e.getMessage());
+		}
+	}
 }

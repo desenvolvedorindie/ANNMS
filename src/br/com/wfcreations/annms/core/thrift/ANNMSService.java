@@ -60,7 +60,7 @@ public class ANNMSService {
      * 
      * @param query
      */
-    public SQLANNResults execute(String query) throws AuthorizationException, org.apache.thrift.TException;
+    public SQLANNResults execute(String query) throws AuthorizationException, TimedOutException, org.apache.thrift.TException;
 
   }
 
@@ -116,7 +116,7 @@ public class ANNMSService {
       return;
     }
 
-    public SQLANNResults execute(String query) throws AuthorizationException, org.apache.thrift.TException
+    public SQLANNResults execute(String query) throws AuthorizationException, TimedOutException, org.apache.thrift.TException
     {
       send_execute(query);
       return recv_execute();
@@ -129,7 +129,7 @@ public class ANNMSService {
       sendBase("execute", args);
     }
 
-    public SQLANNResults recv_execute() throws AuthorizationException, org.apache.thrift.TException
+    public SQLANNResults recv_execute() throws AuthorizationException, TimedOutException, org.apache.thrift.TException
     {
       execute_result result = new execute_result();
       receiveBase(result, "execute");
@@ -138,6 +138,9 @@ public class ANNMSService {
       }
       if (result.ae != null) {
         throw result.ae;
+      }
+      if (result.to != null) {
+        throw result.to;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "execute failed: unknown result");
     }
@@ -217,7 +220,7 @@ public class ANNMSService {
         prot.writeMessageEnd();
       }
 
-      public SQLANNResults getResult() throws AuthorizationException, org.apache.thrift.TException {
+      public SQLANNResults getResult() throws AuthorizationException, TimedOutException, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -288,6 +291,8 @@ public class ANNMSService {
           result.success = iface.execute(args.query);
         } catch (AuthorizationException ae) {
           result.ae = ae;
+        } catch (TimedOutException to) {
+          result.to = to;
         }
         return result;
       }
@@ -397,6 +402,11 @@ public class ANNMSService {
             if (e instanceof AuthorizationException) {
                         result.ae = (AuthorizationException) e;
                         result.setAeIsSet(true);
+                        msg = result;
+            }
+            else             if (e instanceof TimedOutException) {
+                        result.to = (TimedOutException) e;
+                        result.setToIsSet(true);
                         msg = result;
             }
              else 
@@ -1577,6 +1587,7 @@ public class ANNMSService {
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
     private static final org.apache.thrift.protocol.TField AE_FIELD_DESC = new org.apache.thrift.protocol.TField("ae", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField TO_FIELD_DESC = new org.apache.thrift.protocol.TField("to", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -1586,11 +1597,13 @@ public class ANNMSService {
 
     public SQLANNResults success; // required
     public AuthorizationException ae; // required
+    public TimedOutException to; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       SUCCESS((short)0, "success"),
-      AE((short)1, "ae");
+      AE((short)1, "ae"),
+      TO((short)2, "to");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -1609,6 +1622,8 @@ public class ANNMSService {
             return SUCCESS;
           case 1: // AE
             return AE;
+          case 2: // TO
+            return TO;
           default:
             return null;
         }
@@ -1656,6 +1671,8 @@ public class ANNMSService {
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, SQLANNResults.class)));
       tmpMap.put(_Fields.AE, new org.apache.thrift.meta_data.FieldMetaData("ae", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      tmpMap.put(_Fields.TO, new org.apache.thrift.meta_data.FieldMetaData("to", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(execute_result.class, metaDataMap);
     }
@@ -1665,11 +1682,13 @@ public class ANNMSService {
 
     public execute_result(
       SQLANNResults success,
-      AuthorizationException ae)
+      AuthorizationException ae,
+      TimedOutException to)
     {
       this();
       this.success = success;
       this.ae = ae;
+      this.to = to;
     }
 
     /**
@@ -1682,6 +1701,9 @@ public class ANNMSService {
       if (other.isSetAe()) {
         this.ae = new AuthorizationException(other.ae);
       }
+      if (other.isSetTo()) {
+        this.to = new TimedOutException(other.to);
+      }
     }
 
     public execute_result deepCopy() {
@@ -1692,6 +1714,7 @@ public class ANNMSService {
     public void clear() {
       this.success = null;
       this.ae = null;
+      this.to = null;
     }
 
     public SQLANNResults getSuccess() {
@@ -1742,6 +1765,30 @@ public class ANNMSService {
       }
     }
 
+    public TimedOutException getTo() {
+      return this.to;
+    }
+
+    public execute_result setTo(TimedOutException to) {
+      this.to = to;
+      return this;
+    }
+
+    public void unsetTo() {
+      this.to = null;
+    }
+
+    /** Returns true if field to is set (has been assigned a value) and false otherwise */
+    public boolean isSetTo() {
+      return this.to != null;
+    }
+
+    public void setToIsSet(boolean value) {
+      if (!value) {
+        this.to = null;
+      }
+    }
+
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
       case SUCCESS:
@@ -1760,6 +1807,14 @@ public class ANNMSService {
         }
         break;
 
+      case TO:
+        if (value == null) {
+          unsetTo();
+        } else {
+          setTo((TimedOutException)value);
+        }
+        break;
+
       }
     }
 
@@ -1770,6 +1825,9 @@ public class ANNMSService {
 
       case AE:
         return getAe();
+
+      case TO:
+        return getTo();
 
       }
       throw new IllegalStateException();
@@ -1786,6 +1844,8 @@ public class ANNMSService {
         return isSetSuccess();
       case AE:
         return isSetAe();
+      case TO:
+        return isSetTo();
       }
       throw new IllegalStateException();
     }
@@ -1818,6 +1878,15 @@ public class ANNMSService {
         if (!(this_present_ae && that_present_ae))
           return false;
         if (!this.ae.equals(that.ae))
+          return false;
+      }
+
+      boolean this_present_to = true && this.isSetTo();
+      boolean that_present_to = true && that.isSetTo();
+      if (this_present_to || that_present_to) {
+        if (!(this_present_to && that_present_to))
+          return false;
+        if (!this.to.equals(that.to))
           return false;
       }
 
@@ -1857,6 +1926,16 @@ public class ANNMSService {
           return lastComparison;
         }
       }
+      lastComparison = Boolean.valueOf(isSetTo()).compareTo(other.isSetTo());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTo()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.to, other.to);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
       return 0;
     }
 
@@ -1890,6 +1969,14 @@ public class ANNMSService {
         sb.append("null");
       } else {
         sb.append(this.ae);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("to:");
+      if (this.to == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.to);
       }
       first = false;
       sb.append(")");
@@ -1956,6 +2043,15 @@ public class ANNMSService {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 2: // TO
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.to = new TimedOutException();
+                struct.to.read(iprot);
+                struct.setToIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -1979,6 +2075,11 @@ public class ANNMSService {
         if (struct.ae != null) {
           oprot.writeFieldBegin(AE_FIELD_DESC);
           struct.ae.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.to != null) {
+          oprot.writeFieldBegin(TO_FIELD_DESC);
+          struct.to.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -2005,19 +2106,25 @@ public class ANNMSService {
         if (struct.isSetAe()) {
           optionals.set(1);
         }
-        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetTo()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
         if (struct.isSetSuccess()) {
           struct.success.write(oprot);
         }
         if (struct.isSetAe()) {
           struct.ae.write(oprot);
         }
+        if (struct.isSetTo()) {
+          struct.to.write(oprot);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, execute_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(2);
+        BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           struct.success = new SQLANNResults();
           struct.success.read(iprot);
@@ -2027,6 +2134,11 @@ public class ANNMSService {
           struct.ae = new AuthorizationException();
           struct.ae.read(iprot);
           struct.setAeIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.to = new TimedOutException();
+          struct.to.read(iprot);
+          struct.setToIsSet(true);
         }
       }
     }

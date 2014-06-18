@@ -29,12 +29,14 @@
  */
 package br.com.wfcreations.annms.core.auth.adapter;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
 
 import br.com.wfcreations.annms.core.auth.AuthenticationException;
+import br.com.wfcreations.annms.core.auth.AuthenticationException.ErrorType;
 import br.com.wfcreations.annms.core.auth.User;
 
 public class FileAdapter implements AdapterInterface {
@@ -48,24 +50,33 @@ public class FileAdapter implements AdapterInterface {
 	@Override
 	public synchronized User authenticate() throws AuthenticationException {
 		try {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));
-			User[] users = (User[]) ois.readObject();
-			ois.close();
-			if (isUserAmbiguous(users))
-				throw new AuthenticationException(AuthenticationException.ErrorType.USER_AMBIGUOUS, "Duplicated User");
-			for (User user : users) {
-				if (user.getUsername() == getIdentity()) {
-					if (user.getPassword() == getCredential())
-						return user;
-					else
-						throw new AuthenticationException(AuthenticationException.ErrorType.PASSWORD_INVALID, "Invalid Password");
+			File file = new File(filePath);
+			if (!file.exists())
+				throw new AuthenticationException(ErrorType.USER_NOT_FOUND, "User not found");
+			FileInputStream fis = new FileInputStream(file);
+			if (fis.available() > 0) {
+				try (ObjectInputStream ois = new ObjectInputStream(fis)) {
+					User[] users = (User[]) ois.readObject();
+					if (isUserAmbiguous(users))
+						throw new AuthenticationException(ErrorType.USER_AMBIGUOUS, "Duplicated User");
+					for (User user : users) {
+						if (user.getUsername() == getIdentity()) {
+							if (user.getPassword() == getCredential()) {
+								return user;
+							} else {
+								throw new AuthenticationException(ErrorType.PASSWORD_INVALID, "Invalid Password");
+							}
+						}
+					}
 				}
+			} else {
+				throw new AuthenticationException(ErrorType.USER_NOT_FOUND, "No users");
 			}
-			throw new AuthenticationException(AuthenticationException.ErrorType.USER_NOT_FOUND, "User not found");
+			throw new AuthenticationException(ErrorType.USER_NOT_FOUND, "User not found");
 		} catch (IOException e) {
-			throw new AuthenticationException(AuthenticationException.ErrorType.FAILURE, "IOException", e);
+			throw new AuthenticationException(ErrorType.FAILURE, "IOException", e);
 		} catch (ClassNotFoundException e) {
-			throw new AuthenticationException(AuthenticationException.ErrorType.FAILURE, "ClassNotFoundException", e);
+			throw new AuthenticationException(ErrorType.FAILURE, "ClassNotFoundException", e);
 		}
 	}
 

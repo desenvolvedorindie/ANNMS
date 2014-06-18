@@ -48,15 +48,25 @@ public class Auth {
 	}
 
 	public User authenticate(AdapterInterface adapter) throws AuthenticationException {
-		User user = adapter.authenticate();
-		if (admin != null)
-			if (user != null && admin.getUsername().equals(user.getUsername()))
+		User user = null;
+		AuthenticationException ae = null;
+		try {
+			user = adapter.authenticate();
+		} catch (AuthenticationException e) {
+			ae = e;
+		}
+		if (admin != null) {
+			if (user != null && admin.getUsername().equals(user.getUsername())) {
 				throw new AuthenticationException(AuthenticationException.ErrorType.USER_AMBIGUOUS, "Duplicated User");
-			else if (admin.getUsername().equals(adapter.getIdentity()))
+			} else if (admin.getUsername().equals(adapter.getIdentity())) {
 				if (admin.getPassword().equals(adapter.getCredential()))
 					return admin;
 				else
 					throw new AuthenticationException(AuthenticationException.ErrorType.PASSWORD_INVALID, "Invalid Password");
+			}
+		} else if (ae != null) {
+			throw ae;
+		}
 		return user;
 	}
 }

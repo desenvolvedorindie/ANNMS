@@ -32,6 +32,8 @@ package br.com.wfcreations.annms.core.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import br.com.wfcreations.annms.ANNMS;
+import br.com.wfcreations.annms.api.ANNMSAPI;
 import br.com.wfcreations.annms.core.resources.Application;
 import br.com.wfcreations.annms.core.resources.Bootstrap;
 import br.com.wfcreations.annms.core.resources.Bootstrapper;
@@ -60,17 +62,11 @@ public class ANNMSDaemon extends Application {
 		return instance;
 	}
 
-	public static void stop(String[] args) {
-		instance.deactivate(args);
-	}
-
-	public static void main(String[] args) {
-		instance.activate(args);
-	}
-
 	private IServer thriftServer;
 
 	protected void setup() {
+		LOGGER.info("Artificial Neural Network Management System version: {}", ANNMS.VERSION);
+		LOGGER.info("ANNMS API version: {}", ANNMSAPI.VERSION);
 		this.bootstrap.init();
 		thriftServer = new ThriftServer();
 	}
@@ -96,5 +92,13 @@ public class ANNMSDaemon extends Application {
 	public void deactivate(String[] args) {
 		stop();
 		destroy();
+	}
+
+	public static void stop(String[] args) {
+		instance.deactivate(args);
+	}
+
+	public static void main(String[] args) {
+		instance.activate(args);
 	}
 }

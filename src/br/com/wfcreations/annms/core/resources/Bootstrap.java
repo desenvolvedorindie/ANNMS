@@ -53,7 +53,7 @@ public class Bootstrap extends Bootstrapper {
 		}
 
 		f = new File(ANNMS.instance.configuration.neuralnetworks_path);
-		if (!f.exists() || !f.isAbsolute()) {
+		if (!f.exists() || !f.isDirectory()) {
 			if (f.mkdir())
 				LOGGER.info(String.format("Created neuralnetworks folder: (%s)", f.getAbsolutePath()));
 			else
@@ -63,10 +63,11 @@ public class Bootstrap extends Bootstrapper {
 
 	protected void initUsers() {
 		Auth.admin = new User(ANNMS.instance.configuration.user_admin_username, ANNMS.instance.configuration.user_admin_password);
+		LOGGER.info(String.format("Admin username: %s", ANNMS.instance.configuration.user_admin_username));
 	}
 
 	protected void initData() {
-		
+
 	}
 
 	protected void initNeuralNetworks() {

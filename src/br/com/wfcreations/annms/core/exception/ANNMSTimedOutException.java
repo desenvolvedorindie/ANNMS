@@ -27,26 +27,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms;
+package br.com.wfcreations.annms.core.exception;
 
-import br.com.wfcreations.annms.core.config.Configuration;
+public class ANNMSTimedOutException extends ANNMSException {
 
-public class ANNMS {
+	private static final long serialVersionUID = 1L;
 
-	public static final String VERSION = "1.0.0-dev";
+	protected ANNMSTimedOutException(ANNMSExceptionCode code, String msg) {
+		super(code, msg);
+	}
 
-	public static final short MAJOR = 1;
-
-	public static final short MINOR = 0;
-
-	public static final short REVISION = 0;
-
-	public static final ANNMS instance = new ANNMS();
-
-	public Configuration configuration;
-
-	public String CONFIG_FILE_PATH = "annms.config";
-
-	private ANNMS() {
+	protected ANNMSTimedOutException(ANNMSExceptionCode code, String msg, Throwable e) {
+		super(code, msg, e);
 	}
 }
