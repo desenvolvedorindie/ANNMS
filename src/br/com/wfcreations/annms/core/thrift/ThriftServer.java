@@ -86,19 +86,23 @@ public class ThriftServer implements IServer {
 			args.processor = new ANNMSService.Processor<>(args.handler);
 			ServerType type = ANNMS.instance.configuration.thrift_server == "ThreadPoolServer" ? TServerFactory.ServerType.ThreadPoolServer : TServerFactory.ServerType.SimpleServer;
 			serverEngine = TServerFactory.createServer(type, args);
+
 			if (serverEngine == null)
-				LOGGER.error("Thrift Server can't start");
+				LOGGER.error("Thrift Server can't start {}");
 			else
-				LOGGER.info(String.format("Binding thrift service to localhost:%s", ANNMS.instance.configuration.thirft_port));
+				LOGGER.info("Binding thrift service to localhost:{}", args.address.getPort());
 		}
 
 		public void run() {
-			serverEngine.serve();
+			if (serverEngine != null)
+				serverEngine.serve();
 		}
 
 		public void stopServer() {
-			LOGGER.info("Stop listening to thrift clients");
-			serverEngine.stop();
+			if (serverEngine != null) {
+				LOGGER.info("Stop listening to thrift clients");
+				serverEngine.stop();
+			}
 		}
 	}
 }

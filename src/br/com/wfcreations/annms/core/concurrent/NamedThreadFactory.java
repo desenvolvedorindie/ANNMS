@@ -27,10 +27,32 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.config;
+package br.com.wfcreations.annms.core.concurrent;
 
-public interface IConfigurationLoader {
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 
-	Config load() throws ConfigurationException;
+public class NamedThreadFactory implements ThreadFactory {
 
+	protected final String id;
+	private final int priority;
+	protected final AtomicInteger n = new AtomicInteger(1);
+
+	public NamedThreadFactory(String id) {
+		this(id, Thread.NORM_PRIORITY);
+	}
+
+	public NamedThreadFactory(String id, int priority) {
+		this.id = id;
+		this.priority = priority;
+	}
+
+	@Override
+	public Thread newThread(Runnable runnable) {
+		String name = id + ":" + n.getAndIncrement();
+		Thread thread = new Thread(runnable, name);
+		thread.setPriority(priority);
+		thread.setDaemon(true);
+		return thread;
+	}
 }

@@ -27,7 +27,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #
-# Interface Definition Language for Artificial Neural Network Management System Service
+# IDL for Artificial Neural Network Management System Service
 #
 
 namespace java br.com.wfcreations.annms.core.thrift

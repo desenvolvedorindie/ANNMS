@@ -29,7 +29,7 @@
  */
 package br.com.wfcreations.annms;
 
-import br.com.wfcreations.annms.core.config.Configuration;
+import br.com.wfcreations.annms.core.config.Config;
 
 public class ANNMS {
 
@@ -43,7 +43,7 @@ public class ANNMS {
 
 	public static final ANNMS instance = new ANNMS();
 
-	public Configuration configuration;
+	public Config configuration;
 
 	public String CONFIG_FILE_PATH = "annms.config";
 

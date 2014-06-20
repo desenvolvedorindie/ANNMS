@@ -87,7 +87,7 @@ COMMA               :   ',';
 CLAUSE_END          :   ';';
 EQUALS              :   '=';
 
-INTEGER             :	I_ N_ T_ E_ G_ E_ R_;
+INTEGER             :   I_ N_ T_ E_ G_ E_ R_;
 REAL                :   R_ E_ A_ L_;
 BOOLEAN             :   B_ O_ O_ L_ E_ A_ N_;
 STRING              :   S_ T_ R_ I_ N_ G_;
@@ -169,7 +169,7 @@ dataAttributes
     :   dataAttribute (COMMA dataAttribute)* COMMA?;
 
 dataAttribute
-    :   ID dataType
+    :   ID dataType (NOT NULL | NULL)?
     ;
 
 dataType

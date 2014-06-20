@@ -76,7 +76,8 @@ public class ANNMSDaemon extends Application {
 	}
 
 	public void stop() {
-		thriftServer.stop();
+		if (thriftServer != null)
+			thriftServer.stop();
 	}
 
 	public void destroy() {

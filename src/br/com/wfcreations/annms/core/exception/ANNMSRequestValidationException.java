@@ -29,9 +29,13 @@
  */
 package br.com.wfcreations.annms.core.exception;
 
+import br.com.wfcreations.annms.core.transport.message.ResultMessage;
+
 public abstract class ANNMSRequestValidationException extends ANNMSException {
 
 	private static final long serialVersionUID = 1L;
+
+	protected ResultMessage[] processed;
 
 	protected ANNMSRequestValidationException(ANNMSExceptionCode code, String msg) {
 		super(code, msg);
@@ -40,4 +44,14 @@ public abstract class ANNMSRequestValidationException extends ANNMSException {
 	protected ANNMSRequestValidationException(ANNMSExceptionCode code, String msg, Throwable e) {
 		super(code, msg, e);
 	}
+
+	public ResultMessage[] getProcessed() {
+		return processed;
+	}
+
+	public ANNMSRequestValidationException setProcessed(ResultMessage[] processed) {
+		this.processed = processed;
+		return this;
+	}
+
 }

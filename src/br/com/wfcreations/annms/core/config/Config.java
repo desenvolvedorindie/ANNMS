@@ -29,8 +29,24 @@
  */
 package br.com.wfcreations.annms.core.config;
 
-public interface IConfigurationLoader {
+public class Config {
 
-	Config load() throws ConfigurationException;
+	// Server Config
+	public int timeout = 0;
 
+	// Thrift
+	public String thrift_server = "ThreadPoolServer";
+	public int thirft_port = 9090;
+
+	// Users
+	public String user_file = "users.o";
+	public int user_max = 10;
+	public String user_admin_username = "admin";
+	public String user_admin_password = "123456";
+
+	// Data
+	public String data_path = "data";
+
+	// Neural Networks
+	public String neuralnetworks_path = "neuralnetworks";
 }

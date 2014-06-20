@@ -29,6 +29,66 @@
  */
 package br.com.wfcreations.annms.core.transport.message;
 
-public class ResultMessage {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.wfcreations.annms.core.exception.ANNMSException;
+
+public abstract class ResultMessage {
+
+	String query;
+
+	protected ResultMessage(String query) {
+		this.query = query;
+	}
+
+	public abstract void toThriftResult(List<Object> listData);
+
+	public static class DataChange extends ResultMessage {
+
+		public enum Operation {
+			CREATE, DROP
+		}
+
+		Operation operation;
+
+		String name;
+
+		public DataChange(Operation operation, String name, String query) {
+			super(query);
+			this.operation = operation;
+			this.name = name;
+		}
+
+		@Override
+		public void toThriftResult(List<Object> listData) {
+			Map<String, String> param = new HashMap<>();
+			param.put("OP", operation.toString());
+			param.put("NAME", name);
+			Map<String, Object> data = new HashMap<>();
+			data.put("DATACHANGE", param);
+			listData.add(data);
+		}
+	}
+
+	public static String mapToThrift(ResultMessage[] resultMessages) {
+		List<Object> dataList = new ArrayList<>();
+		for (ResultMessage resultMessage : resultMessages)
+			resultMessage.toThriftResult(dataList);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(dataList);
+		} catch (JsonProcessingException e) {
+			return "";
+		}
+	}
+
+	public static String mapToThriftWithError(ResultMessage[] resultMessages, ANNMSException e) {
+		return "";
+	}
 }

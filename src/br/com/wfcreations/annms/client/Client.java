@@ -14,6 +14,7 @@ import br.com.wfcreations.annms.client.config.ClientConfiguration;
 import br.com.wfcreations.annms.client.config.ClientPropertiesConfigLoader;
 import br.com.wfcreations.annms.core.thrift.ANNMSService;
 import br.com.wfcreations.annms.core.thrift.AuthorizationException;
+import br.com.wfcreations.annms.core.thrift.SQLANNResults;
 import br.com.wfcreations.annms.core.thrift.TimedOutException;
 
 public class Client {
@@ -65,19 +66,21 @@ public class Client {
 
 			String line;
 			StringBuilder sb = new StringBuilder();
+			int emptyLine = 0;
 			while (true) {
 				try {
 					line = br.readLine();
 					if (line.isEmpty()) {
 						try {
-							client.execute(sb.toString());
+							SQLANNResults result = client.execute(sb.toString());
+							System.out.println(result.data);
 						} catch (AuthorizationException e1) {
 							System.out.println();
 						} catch (TimedOutException e2) {
 							System.out.println();
 						}
-
 						sb.setLength(0);
+
 					} else {
 						sb.append(line);
 						sb.append('\n');

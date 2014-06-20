@@ -31,6 +31,8 @@ package br.com.wfcreations.annms.core.data;
 
 import java.io.Serializable;
 
+import br.com.wfcreations.annms.core.data.values.NullValue;
+
 public class Attribute implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -39,9 +41,12 @@ public class Attribute implements Serializable {
 
 	private final DataType type;
 
-	public Attribute(String name, DataType type) {
+	private final boolean notNull;
+
+	public Attribute(String name, DataType type, boolean notNull) {
 		this.name = name;
 		this.type = type;
+		this.notNull = notNull;
 	};
 
 	public String getName() {
@@ -52,8 +57,12 @@ public class Attribute implements Serializable {
 		return type;
 	}
 
+	public boolean isNotNull() {
+		return notNull;
+	}
+
 	public boolean validate(IValue value) {
-		return type.validate(value);
+		return type.validate(value) || (!notNull && value instanceof NullValue);
 	}
 
 	@Override

@@ -38,8 +38,6 @@ public class ShowDataStatement implements SQLANNStatement {
 
 	public final String query;
 	
-	
-	
 	public ShowDataStatement(String query) {
 		this.query = query;
 	}
@@ -58,10 +56,4 @@ public class ShowDataStatement implements SQLANNStatement {
 	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
 		return null;
 	}
-
-	@Override
-	public String getId() {
-		return "ShowDataStatement";
-	}
-
 }

@@ -43,29 +43,17 @@ import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 
 public class SQLANNProcessor {
 
-	private static SQLANNProcessor instance;
-
-	public static SQLANNProcessor getInstance() {
-		if (instance == null) {
-			instance = new SQLANNProcessor();
-		}
-		return instance;
-	}
-
-	private SQLANNProcessor() {
-	}
-
-	public ResultMessage[] process(String query) throws ANNMSRequestExecutionException, ANNMSRequestValidationException {
+	public static ResultMessage[] process(String query) throws ANNMSRequestExecutionException, ANNMSRequestValidationException {
 		SQLANNStatement[] statements = getStatements(query);
 		return processStatements(statements);
 	}
 
-	public SQLANNStatement[] getStatements(String query) throws ANNMSRequestValidationException {
+	public static SQLANNStatement[] getStatements(String query) throws ANNMSRequestValidationException {
 		SQLANNStatement[] statements = parseStatements(query);
 		return statements;
 	}
 
-	public SQLANNStatement[] parseStatements(String query) throws SQLANNSyntaxException {
+	public static SQLANNStatement[] parseStatements(String query) throws SQLANNSyntaxException {
 		try {
 			ANTLRInputStream input = new ANTLRInputStream(new ByteArrayInputStream(query.getBytes()));
 
@@ -84,9 +72,8 @@ public class SQLANNProcessor {
 			SQLANN sqlann = new SQLANN();
 			sqlann.visit(tree);
 
-			if (errorListener.getErrors().size() > 0) {
+			if (errorListener.getErrors().size() > 0)
 				throw new SQLANNSyntaxException(errorListener.getErrors().get(0).getMsg());
-			}
 
 			return sqlann.statements();
 		} catch (IOException e) {
@@ -94,15 +81,19 @@ public class SQLANNProcessor {
 		}
 	}
 
-	public ResultMessage[] processStatements(SQLANNStatement[] statements) throws ANNMSRequestExecutionException, ANNMSRequestValidationException {
+	public static ResultMessage[] processStatements(SQLANNStatement[] statements) throws ANNMSRequestExecutionException, ANNMSRequestValidationException {
 		ArrayList<ResultMessage> resultMessages = new ArrayList<>();
-
 		for (int i = 0; i < statements.length; i++) {
 			statements[i].checkAccess();
-			statements[i].validate();
-			resultMessages.add(statements[i].execute());
+			try {
+				statements[i].validate();
+				resultMessages.add(statements[i].execute());
+			} catch (ANNMSRequestExecutionException e) {
+				throw e.setProcessed(resultMessages.toArray(new ResultMessage[resultMessages.size()]));
+			} catch (ANNMSRequestValidationException e) {
+				throw e.setProcessed(resultMessages.toArray(new ResultMessage[resultMessages.size()]));
+			}
 		}
-
 		return resultMessages.toArray(new ResultMessage[resultMessages.size()]);
 	}
 }

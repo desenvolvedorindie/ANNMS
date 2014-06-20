@@ -61,11 +61,4 @@ public class ShowDataStatusStatement implements SQLANNStatement {
 	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
 		return null;
 	}
-
-	@Override
-	public String getId() {
-		// TODO Auto-generated method stub
-		return "ShowDataStatusStatement";
-	}
-
 }

@@ -58,9 +58,4 @@ public class ShowNeuralNetworksStatement implements SQLANNStatement {
 	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
 		return null;
 	}
-
-	@Override
-	public String getId() {
-		return "ShowNeuralNetworksStatement";
-	}
 }

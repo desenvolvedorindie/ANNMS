@@ -65,9 +65,4 @@ public class RunStatement implements SQLANNStatement {
 	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
 		return null;
 	}
-
-	@Override
-	public String getId() {
-		return "RunStatement";
-	}
 }

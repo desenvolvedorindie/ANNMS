@@ -35,11 +35,9 @@ import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 
 public interface SQLANNStatement {
 
-    public void checkAccess();
+	public void checkAccess();
 
-    public void validate() throws ANNMSRequestValidationException;
+	public void validate() throws ANNMSRequestValidationException;
 
-    public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException;
-    
-    public String getId();
+	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException;
 }

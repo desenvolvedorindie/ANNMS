@@ -30,10 +30,13 @@
 package br.com.wfcreations.annms.core.sqlann.statements;
 
 import br.com.wfcreations.annms.core.data.Attribute;
+import br.com.wfcreations.annms.core.data.Data;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
+import br.com.wfcreations.annms.core.transport.message.ResultMessage.DataChange;
+import br.com.wfcreations.annms.core.transport.message.ResultMessage.DataChange.Operation;
 
 public class CreateDataStatement implements SQLANNStatement {
 
@@ -69,11 +72,8 @@ public class CreateDataStatement implements SQLANNStatement {
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
-		return null;
-	}
-
-	@Override
-	public String getId() {
-		return "CreateDataStatement";
+		Data data = new Data(name, attributes);
+		System.out.println(data.toString());
+		return new DataChange(Operation.CREATE, name, query);
 	}
 }

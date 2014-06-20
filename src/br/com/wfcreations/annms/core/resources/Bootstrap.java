@@ -10,7 +10,7 @@ import br.com.wfcreations.annms.ANNMS;
 import br.com.wfcreations.annms.core.auth.Auth;
 import br.com.wfcreations.annms.core.auth.User;
 import br.com.wfcreations.annms.core.config.ConfigurationException;
-import br.com.wfcreations.annms.core.config.PropertiesConfigLoader;
+import br.com.wfcreations.annms.core.config.PropertiesConfigurationLoader;
 
 public class Bootstrap extends Bootstrapper {
 
@@ -23,7 +23,7 @@ public class Bootstrap extends Bootstrapper {
 	@Override
 	public void init() {
 		try {
-			ANNMS.instance.configuration = new PropertiesConfigLoader(ANNMS.instance.CONFIG_FILE_PATH).load();
+			ANNMS.instance.configuration = new PropertiesConfigurationLoader(ANNMS.instance.CONFIG_FILE_PATH).load();
 		} catch (ConfigurationException e) {
 			LOGGER.error("Configuration Init error, cause: " + e.getMessage());
 		}

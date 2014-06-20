@@ -133,7 +133,7 @@ public interface DataType extends Serializable {
 
 		@Override
 		public String toString() {
-			return "LIST " + Arrays.toString(listValues);
+			return Arrays.toString(listValues).replace('[', '{').replace(']', '}');
 		}
 	}
 }

@@ -37,6 +37,11 @@ import org.apache.thrift.transport.TTransport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
+import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.sqlann.SQLANNProcessor;
+import br.com.wfcreations.annms.core.transport.message.ResultMessage;
+
 public class ANNMSHandler implements IServerHandler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ANNMSHandler.class);
@@ -57,14 +62,23 @@ public class ANNMSHandler implements IServerHandler {
 		ThriftSessionManager.authenticate(username, password);
 		ThriftSessionManager.getInstance().currentSession().setUsername(username);
 		ThriftSessionManager.getInstance().currentSession().setPassword(password);
-		LOGGER.info(String.format("A thrift connection, username: %s", ThriftSessionManager.getInstance().currentSession().getUsername()));
+		LOGGER.info("A thrift connection, username: {}", ThriftSessionManager.getInstance().currentSession().getUsername());
 	}
 
 	@Override
-	public SQLANNResults execute(String query) throws AuthorizationException, TimedOutException, TException {
-		ThriftSessionManager.authenticate(ThriftSessionManager.getInstance().currentSession().getUsername(), ThriftSessionManager.getInstance().currentSession().getPassword());
-		System.out.println(query);
-		return new SQLANNResults("");
+	public SQLANNResults execute(String query) throws AuthorizationException, TimedOutException {
+		try {
+			ThriftSessionManager.authenticate(ThriftSessionManager.getInstance().currentSession().getUsername(), ThriftSessionManager.getInstance().currentSession().getPassword());
+		} catch (AuthenticationException e) {
+			throw new AuthorizationException(e.code, "Unauthorized Access");
+		}
+		try {
+			return new SQLANNResults(ResultMessage.mapToThrift(SQLANNProcessor.process(query)));
+		} catch (ANNMSRequestValidationException e) {
+			return new SQLANNResults(ResultMessage.mapToThriftWithError(e.getProcessed(), e));
+		} catch (ANNMSRequestExecutionException e) {
+			return new SQLANNResults(ResultMessage.mapToThriftWithError(e.getProcessed(), e));
+		}
 	}
 
 	@Override

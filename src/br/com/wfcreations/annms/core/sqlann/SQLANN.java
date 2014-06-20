@@ -109,11 +109,13 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 	@Override
 	public CreateDataStatement visitCreateDataStatement(@NotNull SQLANNParser.CreateDataStatementContext ctx) {
-		if (ctx.ID() != null && ctx.CREATE() != null && ctx.DATA() != null && ctx.ID().size() > 0) {
+		if (ctx != null && ctx.ID() != null && ctx.CREATE() != null && ctx.DATA() != null && ctx.ID().size() > 0) {
 			String name = ctx.ID(0).getText().toUpperCase();
 
-			Attribute[] attributes = (Attribute[]) visit(ctx.dataAttributes());
-			if (attributes == null)
+			Attribute[] attributes = null;
+			if (ctx.dataAttributes() != null) {
+				attributes = (Attribute[]) visit(ctx.dataAttributes());
+			} else
 				attributes = new Attribute[0];
 
 			boolean ifNotExists = ctx.IF() != null && ctx.NOT() != null && ctx.EXISTS() != null;
@@ -275,7 +277,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 			Param[] params = (Param[]) visit(ctx.params());
 
-			String learnRule = ctx.ID(1).getText().toUpperCase();
+			String learningRule = ctx.ID(1).getText().toUpperCase();
 
 			String dataName = ctx.ID(2).getText().toUpperCase();
 
@@ -285,7 +287,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 			String query = ctx.getText().toUpperCase();
 
-			return new TrainStatement(neuralNetworkName, params, learnRule, dataName, inputs, outputs, query);
+			return new TrainStatement(neuralNetworkName, params, learningRule, dataName, inputs, outputs, query);
 		}
 		return null;
 	}
@@ -296,9 +298,8 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 			ArrayList<Attribute> attributes = new ArrayList<>();
 			for (int i = 0; i < ctx.dataAttribute().size(); i++) {
 				Attribute attribute = (Attribute) visit(ctx.dataAttribute(i));
-				if (attribute != null) {
+				if (attribute != null)
 					attributes.add(attribute);
-				}
 			}
 			return attributes.toArray(new Attribute[attributes.size()]);
 		}
@@ -309,7 +310,13 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	public Attribute visitDataAttribute(@NotNull SQLANNParser.DataAttributeContext ctx) {
 		if (ctx != null && ctx.ID() != null && ctx.dataType() != null) {
 			DataType dataType = (DataType) visit(ctx.dataType());
-			new Attribute(ctx.ID().getText().toUpperCase(), dataType);
+			boolean notNull = false;
+			if (ctx.NOT() != null && ctx.NULL() != null)
+				notNull = true;
+			else if (ctx.NOT() != null) {
+				return null;
+			}
+			return new Attribute(ctx.ID().getText().toUpperCase(), dataType, notNull);
 		}
 		return null;
 	}

@@ -81,7 +81,7 @@ public class Data {
 			if (attributes[i].getName().equals(newName))
 				throw new IllegalArgumentException("Attribute name '" + name + "' already present at position #" + i);
 		}
-		Attribute newAtt = new Attribute(newName, attributes[index].getType());
+		Attribute newAtt = new Attribute(newName, attributes[index].getType(), attributes[index].isNotNull());
 		this.attributes[index] = newAtt;
 	}
 
@@ -156,6 +156,9 @@ public class Data {
 		sb.append(String.format("%n"));
 		for (int i = 0; i < numAttributes(); i++) {
 			sb.append(attributes[i].getName());
+			sb.append('(');
+			sb.append(attributes[i].getType());
+			sb.append(')');
 			if (i != numAttributes() - 1) {
 				sb.append(", ");
 			}
