@@ -62,7 +62,7 @@ public class Attribute implements Serializable {
 	}
 
 	public boolean validate(IValue value) {
-		return type.validate(value) || (!notNull && value instanceof NullValue);
+		return (!notNull && value instanceof NullValue) || type.validate(value);
 	}
 
 	@Override

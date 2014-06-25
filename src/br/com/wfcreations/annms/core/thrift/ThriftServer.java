@@ -88,7 +88,7 @@ public class ThriftServer implements IServer {
 			serverEngine = TServerFactory.createServer(type, args);
 
 			if (serverEngine == null)
-				LOGGER.error("Thrift Server can't start {}");
+				LOGGER.error("Thrift Server can't start");
 			else
 				LOGGER.info("Binding thrift service to localhost:{}", args.address.getPort());
 		}

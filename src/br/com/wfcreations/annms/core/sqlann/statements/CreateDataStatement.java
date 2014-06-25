@@ -29,16 +29,22 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import br.com.wfcreations.annms.core.config.Schema;
 import br.com.wfcreations.annms.core.data.Attribute;
 import br.com.wfcreations.annms.core.data.Data;
+import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
+import br.com.wfcreations.annms.core.transport.message.DataCreateResultMessage;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
-import br.com.wfcreations.annms.core.transport.message.ResultMessage.DataChange;
-import br.com.wfcreations.annms.core.transport.message.ResultMessage.DataChange.Operation;
 
 public class CreateDataStatement implements SQLANNStatement {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(CreateDataStatement.class);
 
 	public final String name;
 
@@ -60,20 +66,31 @@ public class CreateDataStatement implements SQLANNStatement {
 
 	@Override
 	public void checkAccess() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
-		Data data = new Data(name, attributes);
-		System.out.println(data.toString());
-		return new DataChange(Operation.CREATE, name, query);
+		if (Schema.instance.getDataInstance(name) != null)
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data already %s exist", name));
+
+		Data data;
+		if (copy != null && copy != "") {
+			data = Schema.instance.getDataInstance(copy);
+			if (data == null) {
+				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", copy));
+			} else {
+				data = data.clone();
+				data.setName(name);
+			}
+		} else {
+			data = new Data(this.name, this.attributes);
+		}
+		Schema.instance.storeDataInstance(data);
+		LOGGER.info("Data {} created", this.name);
+		return new DataCreateResultMessage(this.name);
 	}
 }

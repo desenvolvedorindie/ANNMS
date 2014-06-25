@@ -1,4 +1,4 @@
-package br.com.wfcreations.annms.core.data;
+package br.com.wfcreations.annms.core.neuralnetwork;
 
 public class NeuralNetwork {
 

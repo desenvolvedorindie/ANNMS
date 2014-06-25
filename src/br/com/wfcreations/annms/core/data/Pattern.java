@@ -6,7 +6,7 @@ public class Pattern implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected IValue[] values;
+	protected final IValue[] values;
 
 	public Pattern(IValue[] values) {
 		this.values = values.clone();

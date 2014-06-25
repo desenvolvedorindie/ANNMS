@@ -10,11 +10,11 @@ import java.util.HashSet;
 
 public class Data {
 
-	private String name;
+	protected String name;
 
-	private Attribute[] attributes;
+	protected Attribute[] attributes;
 
-	private Pattern[] patterns = new Pattern[0];
+	protected Pattern[] patterns = new Pattern[0];
 
 	public Data(String name, Attribute[] attributes) {
 		HashSet<String> names = new HashSet<String>();
@@ -56,6 +56,15 @@ public class Data {
 		return attributes.length;
 	}
 
+	public String[] getAttributes() {
+		String[] attributeNames = new String[attributes.length];
+		int i = 0;
+		for (Attribute attr : attributes) {
+			attributeNames[i++] = attr.getName();
+		}
+		return attributeNames;
+	}
+
 	public boolean hasAttributeType(DataType dataType) {
 		for (Attribute attribte : attributes)
 			if (attribte.getType().equals(dataType))
@@ -85,15 +94,40 @@ public class Data {
 		this.attributes[index] = newAtt;
 	}
 
+	public boolean removeAttribute(String name) {
+		return removeAttribute(indexOfAttribute(name));
+	}
+
+	public boolean removeAttribute(int index) {
+		if (index < 0)
+			return false;
+		// TODO
+		return false;
+	}
+
+	public int indexOfAttribute(String name) {
+		for (int i = 0; i < attributes.length; i++)
+			if (attributes[i].getName().equals(name))
+				return i;
+		return -1;
+	}
+
 	public int numPatterns() {
 		return patterns.length;
+	}
+
+	public int indexOfPattenr(Pattern pattern) {
+		for (int i = 0; i < patterns.length; i++)
+			if (patterns[i] == pattern)
+				return i;
+		return -1;
 	}
 
 	public Pattern getPattern(int index) {
 		return patterns[index];
 	}
 
-	public Pattern setPattern(int index, Pattern pattern) {
+	public Pattern setPattern(Pattern pattern, int index) {
 		validatePattern(pattern);
 		return patterns[index] = pattern;
 	}
@@ -112,23 +146,39 @@ public class Data {
 		this.patterns = newPatterns;
 	}
 
-	public void remove(int index) {
+	public void addPatternAt(Pattern pattern, int index) {
+		// TODO
+	}
+
+	public void removePatternAt(int index) {
 		Pattern[] newPatterns = new Pattern[patterns.length - 1];
 		System.arraycopy(this.patterns, 0, newPatterns, 0, index);
 		System.arraycopy(this.patterns, index + 1, newPatterns, index, patterns.length - index - 1);
 		this.patterns = newPatterns;
 	}
 
-	public void removeAll() {
+	public void removeAllPatterns() {
 		patterns = new Pattern[0];
 	}
 
+	public Data fetch(Select where) {
+		if (where == null)
+			return this.clone();
+		else {
+
+		}
+
+		return null;
+	}
+
+	@Override
 	public Data clone() {
 		Data clone = new Data(this.name, this.attributes.clone());
 		clone.patterns = this.patterns.clone();
 		return clone;
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -149,6 +199,7 @@ public class Data {
 		return true;
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append('#');
@@ -181,7 +232,7 @@ public class Data {
 		return sb.toString();
 	}
 
-	private void validatePattern(Pattern pattern) throws IllegalArgumentException {
+	protected void validatePattern(Pattern pattern) throws IllegalArgumentException {
 		if (pattern.size() != attributes.length)
 			throw new IllegalArgumentException("Invalid values numbers");
 		for (int i = 0; i < attributes.length; i++)
@@ -189,10 +240,15 @@ public class Data {
 				throw new IllegalArgumentException("Invalid value type for attribute " + attributes[i].getName());
 	}
 
-	public static Data mergeInstances(Data first, Data second) {
+	public static Data merge(Data first, Data second) {
 		if (first.numPatterns() != second.numPatterns()) {
 			throw new IllegalArgumentException("Patterns must be of the same size");
 		}
+
+		if (checkDuplicateAttribute(first.attributes, second.attributes)) {
+			throw new IllegalArgumentException("Data 1 has the same attribute of Data 2");
+		}
+
 		Attribute[] attr = new Attribute[first.numAttributes() + second.numAttributes()];
 		System.arraycopy(first.attributes, 0, attr, 0, first.numAttributes());
 		System.arraycopy(second.attributes, 0, attr, first.numAttributes(), second.numAttributes());
@@ -207,5 +263,14 @@ public class Data {
 		Data mergeData = new Data(first.getName() + "_" + second.getName(), attr);
 		mergeData.patterns = patterns;
 		return mergeData;
+	}
+
+	private static boolean checkDuplicateAttribute(Attribute[] attributes1, Attribute[] attributes2) {
+		for (Attribute attr1 : attributes1) {
+			for (Attribute attr2 : attributes2)
+				if (attr1.getName().equals(attr2.getName()))
+					return true;
+		}
+		return false;
 	}
 }

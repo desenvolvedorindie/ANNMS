@@ -8,49 +8,49 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Inherited
 public @interface Algorithm {
-    public String id();
-    
-    public String name();
+	public String id();
 
-    public String version();
-    
-    public String[] dependencies() default {};
+	public String name() default "";
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.FIELD)
-    public @interface Instance {
-    }
+	public String version() default "";
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.METHOD)
-    public @interface Init {
-    }
+	public String[] dependencies() default {};
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.METHOD)
-    public @interface ServerStarting {
-    }
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.FIELD)
+	public @interface Instance {
+		String value() default "";
+	}
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.METHOD)
-    public @interface ServerStarted {
-    }
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.METHOD)
+	public @interface Init {
+	}
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.METHOD)
-    public @interface ServerStopping {
-    }
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.METHOD)
+	public @interface ServerStarting {
+	}
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.METHOD)
-    public @interface ServerStopped {
-    }
-    
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.CONSTRUCTOR)
-    @Inherited
-    public @interface ParamConstructor {
-    }
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.METHOD)
+	public @interface ServerStarted {
+	}
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.METHOD)
+	public @interface ServerStopping {
+	}
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.METHOD)
+	public @interface ServerStopped {
+	}
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.CONSTRUCTOR)
+	@Inherited
+	public @interface ParamConstructor {
+	}
 }

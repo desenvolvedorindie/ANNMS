@@ -120,7 +120,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 			boolean ifNotExists = ctx.IF() != null && ctx.NOT() != null && ctx.EXISTS() != null;
 
-			String copy = ctx.ID().size() == 2 ? ctx.ID().get(1).getText() : null;
+			String copy = ctx.ID().size() == 2 ? ctx.ID().get(1).getText().toUpperCase() : null;
 
 			String query = ctx.getText().toUpperCase();
 

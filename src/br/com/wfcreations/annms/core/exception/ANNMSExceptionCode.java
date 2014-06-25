@@ -46,13 +46,13 @@ public enum ANNMSExceptionCode {
 
 	AUTHENTICATION(0x0005);
 
-	public final int value;
+	private final int value;
 
 	private static final Map<Integer, ANNMSExceptionCode> valueToCode = new HashMap<Integer, ANNMSExceptionCode>(ANNMSExceptionCode.values().length);
 
 	static {
 		for (ANNMSExceptionCode code : ANNMSExceptionCode.values())
-			valueToCode.put(code.value, code);
+			valueToCode.put(code.getValue(), code);
 	}
 
 	private ANNMSExceptionCode(int value) {
@@ -62,5 +62,9 @@ public enum ANNMSExceptionCode {
 	public static ANNMSExceptionCode fromValue(int value) {
 		ANNMSExceptionCode code = valueToCode.get(value);
 		return code;
+	}
+
+	public int getValue() {
+		return value;
 	}
 }

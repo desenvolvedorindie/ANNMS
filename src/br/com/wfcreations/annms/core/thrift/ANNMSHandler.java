@@ -73,7 +73,9 @@ public class ANNMSHandler implements IServerHandler {
 			throw new AuthorizationException(e.code, "Unauthorized Access");
 		}
 		try {
-			return new SQLANNResults(ResultMessage.mapToThrift(SQLANNProcessor.process(query)));
+			ResultMessage[] results = SQLANNProcessor.process(query);
+			String data = ResultMessage.mapToThrift(results);
+			return new SQLANNResults(data);
 		} catch (ANNMSRequestValidationException e) {
 			return new SQLANNResults(ResultMessage.mapToThriftWithError(e.getProcessed(), e));
 		} catch (ANNMSRequestExecutionException e) {

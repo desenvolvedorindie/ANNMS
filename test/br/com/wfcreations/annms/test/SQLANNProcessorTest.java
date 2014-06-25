@@ -1,4 +1,4 @@
-package br.com.wfcreations.annms;
+package br.com.wfcreations.annms.test;
 
 import static org.junit.Assert.*;
 

@@ -66,18 +66,17 @@ public class Client {
 
 			String line;
 			StringBuilder sb = new StringBuilder();
-			int emptyLine = 0;
 			while (true) {
 				try {
 					line = br.readLine();
 					if (line.isEmpty()) {
 						try {
 							SQLANNResults result = client.execute(sb.toString());
-							System.out.println(result.data);
+							System.out.println(String.format("Result: %s", result.data));
 						} catch (AuthorizationException e1) {
-							System.out.println();
+							System.out.println(e1.getMessage());
 						} catch (TimedOutException e2) {
-							System.out.println();
+							System.out.println(e2.getMessage());
 						}
 						sb.setLength(0);
 
