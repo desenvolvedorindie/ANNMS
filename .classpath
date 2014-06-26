@@ -14,7 +14,6 @@
 	<classpathentry kind="lib" path="lib/jackson-annotations-2.2.3.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-core-2.2.3.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-databind-2.2.3.jar"/>
-	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/jcl-core-2.3.jar"/>
 	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/reflections-0.9.9-RC1.jar"/>
 	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/guava-17.0.jar"/>
 	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/javassist.jar"/>
