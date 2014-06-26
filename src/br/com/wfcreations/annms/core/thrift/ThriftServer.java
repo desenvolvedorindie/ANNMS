@@ -36,7 +36,7 @@ import org.apache.thrift.server.TServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.wfcreations.annms.ANNMS;
+import br.com.wfcreations.annms.core.ANNMS;
 import br.com.wfcreations.annms.core.service.IServer;
 import br.com.wfcreations.annms.core.thrift.TServerFactory.ServerType;
 

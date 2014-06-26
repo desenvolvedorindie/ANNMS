@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.io.FilenameUtils;
 
-import br.com.wfcreations.annms.api.IArtificialNeuralNetwork;
+import br.com.wfcreations.annms.api.neuralnetwork.INeuralNetwork;
 
 public class NeuralNetworkResource {
 
@@ -21,7 +21,7 @@ public class NeuralNetworkResource {
 
 	private static NeuralNetworkResource instance;
 
-	private Map<String, IArtificialNeuralNetwork> dataList = new ConcurrentHashMap<String, IArtificialNeuralNetwork>();
+	private Map<String, INeuralNetwork> dataList = new ConcurrentHashMap<String, INeuralNetwork>();
 
 	public static NeuralNetworkResource getInstance() {
 		if (instance == null) {
@@ -41,7 +41,7 @@ public class NeuralNetworkResource {
 		return null;
 	}
 
-	public void create(IArtificialNeuralNetwork data) throws FileNotFoundException, IOException {
+	public void create(INeuralNetwork data) throws FileNotFoundException, IOException {
 
 	}
 
@@ -56,7 +56,7 @@ public class NeuralNetworkResource {
 		return false;
 	}
 
-	public IArtificialNeuralNetwork get(String name) throws ClassNotFoundException, FileNotFoundException, IOException {
+	public INeuralNetwork get(String name) throws ClassNotFoundException, FileNotFoundException, IOException {
 		if (this.has(name)) {
 			if (this.dataList.get(name) == null) {
 				FileInputStream fis = new FileInputStream(getPath(name));
@@ -70,12 +70,12 @@ public class NeuralNetworkResource {
 
 	public void saveOpenedData() throws FileNotFoundException, IOException {
 		FileOutputStream fos;
-		for (Map.Entry<String, IArtificialNeuralNetwork> entry : dataList.entrySet()) {
+		for (Map.Entry<String, INeuralNetwork> entry : dataList.entrySet()) {
 			fos = new FileOutputStream(getPath(entry.getKey()));
 			// entry.getValue().save(fos);
 			fos.close();
 		}
-		dataList = new ConcurrentHashMap<String, IArtificialNeuralNetwork>();
+		dataList = new ConcurrentHashMap<String, INeuralNetwork>();
 		load();
 	}
 

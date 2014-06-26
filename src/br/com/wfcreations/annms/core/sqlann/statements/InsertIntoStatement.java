@@ -29,7 +29,7 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
-import br.com.wfcreations.annms.core.data.IValue;
+import br.com.wfcreations.annms.api.data.IValue;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;

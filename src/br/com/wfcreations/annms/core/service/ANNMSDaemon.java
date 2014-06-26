@@ -32,8 +32,8 @@ package br.com.wfcreations.annms.core.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.wfcreations.annms.ANNMS;
 import br.com.wfcreations.annms.api.ANNMSAPI;
+import br.com.wfcreations.annms.core.ANNMS;
 import br.com.wfcreations.annms.core.resources.Application;
 import br.com.wfcreations.annms.core.resources.Bootstrap;
 import br.com.wfcreations.annms.core.resources.Bootstrapper;

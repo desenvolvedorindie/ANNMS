@@ -13,7 +13,8 @@ import org.apache.commons.io.FilenameUtils;
 
 
 
-import br.com.wfcreations.annms.core.data.Data;
+
+import br.com.wfcreations.annms.api.data.Data;
 
 public class DataManager {
 

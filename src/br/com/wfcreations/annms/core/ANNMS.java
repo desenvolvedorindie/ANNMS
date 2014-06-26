@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms;
+package br.com.wfcreations.annms.core;
 
 import br.com.wfcreations.annms.core.config.Config;
 

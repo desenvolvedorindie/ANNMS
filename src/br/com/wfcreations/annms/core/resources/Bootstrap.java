@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.wfcreations.annms.ANNMS;
+import br.com.wfcreations.annms.core.ANNMS;
 import br.com.wfcreations.annms.core.auth.Auth;
 import br.com.wfcreations.annms.core.auth.User;
 import br.com.wfcreations.annms.core.config.ConfigurationException;

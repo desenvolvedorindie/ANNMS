@@ -29,8 +29,8 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
-import br.com.wfcreations.annms.core.data.Param;
-import br.com.wfcreations.annms.core.data.values.IdentifierValue;
+import br.com.wfcreations.annms.api.data.Param;
+import br.com.wfcreations.annms.api.data.values.IDValue;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
@@ -46,13 +46,13 @@ public class TrainStatement implements SQLANNStatement {
 
 	public final String dataName;
 
-	public final IdentifierValue[] inputs;
+	public final IDValue[] inputs;
 
-	public final IdentifierValue[] outputs;
+	public final IDValue[] outputs;
 
 	public final String query;
 
-	public TrainStatement(String neuralNetworkName, Param[] params, String learnRule, String dataName, IdentifierValue[] inputs, IdentifierValue[] outputs, String query) {
+	public TrainStatement(String neuralNetworkName, Param[] params, String learnRule, String dataName, IDValue[] inputs, IDValue[] outputs, String query) {
 		this.neuralNetworkName = neuralNetworkName;
 		this.params = params;
 		this.learnRule = learnRule;

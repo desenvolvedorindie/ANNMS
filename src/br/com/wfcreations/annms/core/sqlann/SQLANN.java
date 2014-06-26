@@ -34,18 +34,18 @@ import java.util.ArrayList;
 
 import org.antlr.v4.runtime.misc.NotNull;
 
-import br.com.wfcreations.annms.core.data.Attribute;
-import br.com.wfcreations.annms.core.data.DataType;
-import br.com.wfcreations.annms.core.data.DataType.Native;
-import br.com.wfcreations.annms.core.data.IValue;
-import br.com.wfcreations.annms.core.data.Param;
-import br.com.wfcreations.annms.core.data.values.BooleanValue;
-import br.com.wfcreations.annms.core.data.values.ComplexListValue;
-import br.com.wfcreations.annms.core.data.values.IdentifierValue;
-import br.com.wfcreations.annms.core.data.values.IntegerValue;
-import br.com.wfcreations.annms.core.data.values.NullValue;
-import br.com.wfcreations.annms.core.data.values.RealValue;
-import br.com.wfcreations.annms.core.data.values.StringValue;
+import br.com.wfcreations.annms.api.data.Attribute;
+import br.com.wfcreations.annms.api.data.DataType;
+import br.com.wfcreations.annms.api.data.IValue;
+import br.com.wfcreations.annms.api.data.Param;
+import br.com.wfcreations.annms.api.data.DataType.Native;
+import br.com.wfcreations.annms.api.data.values.BooleanValue;
+import br.com.wfcreations.annms.api.data.values.ComplexListValue;
+import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.values.IntegerValue;
+import br.com.wfcreations.annms.api.data.values.NullValue;
+import br.com.wfcreations.annms.api.data.values.RealValue;
+import br.com.wfcreations.annms.api.data.values.StringValue;
 import br.com.wfcreations.annms.core.sqlann.statements.CreateDataStatement;
 import br.com.wfcreations.annms.core.sqlann.statements.CreateNeuralNetworkStatement;
 import br.com.wfcreations.annms.core.sqlann.statements.DropDataStatement;
@@ -281,9 +281,9 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 			String dataName = ctx.ID(2).getText().toUpperCase();
 
-			IdentifierValue[] inputs = (IdentifierValue[]) visit(ctx.list(0));
+			IDValue[] inputs = (IDValue[]) visit(ctx.list(0));
 
-			IdentifierValue[] outputs = (IdentifierValue[]) visit(ctx.list(1));
+			IDValue[] outputs = (IDValue[]) visit(ctx.list(1));
 
 			String query = ctx.getText().toUpperCase();
 
@@ -456,9 +456,9 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	}
 
 	@Override
-	public IdentifierValue visitIdValue(@NotNull SQLANNParser.IdValueContext ctx) {
+	public IDValue visitIdValue(@NotNull SQLANNParser.IdValueContext ctx) {
 		if (ctx != null && ctx.ID() != null) {
-			return new IdentifierValue(ctx.ID().getText());
+			return new IDValue(ctx.ID().getText());
 		}
 		return null;
 	}

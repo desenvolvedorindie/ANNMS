@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import br.com.wfcreations.annms.core.data.Data;
+import br.com.wfcreations.annms.api.data.Data;
 
 public class Schema {
 

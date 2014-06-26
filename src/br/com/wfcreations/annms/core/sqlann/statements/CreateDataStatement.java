@@ -32,9 +32,9 @@ package br.com.wfcreations.annms.core.sqlann.statements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import br.com.wfcreations.annms.api.data.Attribute;
+import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.core.config.Schema;
-import br.com.wfcreations.annms.core.data.Attribute;
-import br.com.wfcreations.annms.core.data.Data;
 import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
