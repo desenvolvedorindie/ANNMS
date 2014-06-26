@@ -27,26 +27,46 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.data.values;
+package br.com.wfcreations.annms.api.data;
 
-import br.com.wfcreations.annms.core.data.IValue;
+import java.io.Serializable;
 
-public class StringValue implements IValue {
+import br.com.wfcreations.annms.api.data.values.NullValue;
+
+public class Attribute implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final String value;
+	private final String name;
 
-	public StringValue(String value) {
-		this.value = value;
+	private final DataType type;
+
+	private final boolean notNull;
+
+	public Attribute(String name, DataType type, boolean notNull) {
+		this.name = name;
+		this.type = type;
+		this.notNull = notNull;
+	};
+
+	public String getName() {
+		return name;
 	}
 
-	public String getValue() {
-		return this.value;
+	public DataType getType() {
+		return type;
+	}
+
+	public boolean isNotNull() {
+		return notNull;
+	}
+
+	public boolean validate(IValue value) {
+		return (!notNull && value instanceof NullValue) || type.validate(value);
 	}
 
 	@Override
 	public String toString() {
-		return this.value;
+		return "Attribute [name=" + name + ", type=" + type + "]";
 	}
 }

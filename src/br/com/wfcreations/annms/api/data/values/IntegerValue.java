@@ -27,21 +27,26 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.data.values;
+package br.com.wfcreations.annms.api.data.values;
 
-import br.com.wfcreations.annms.core.data.IValue;
+import br.com.wfcreations.annms.api.data.IValue;
 
-public class RealValue implements IValue {
+public class IntegerValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	private final double value;
+	public static int getValueFor(IValue value) {
+		return (int) value.getValue();
+	}
 
-	public RealValue(double value) {
+	private final int value;
+
+	public IntegerValue(int value) {
 		this.value = value;
 	}
 
-	public Double getValue() {
+	@Override
+	public Integer getValue() {
 		return this.value;
 	}
 

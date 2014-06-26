@@ -27,24 +27,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.data.values;
+package br.com.wfcreations.annms.api.data.values;
 
-import br.com.wfcreations.annms.core.data.IValue;
+import br.com.wfcreations.annms.api.data.IValue;
 
-public class NullValue implements IValue {
+public class IDValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public NullValue() {
+	public static String getValueFor(IValue value) {
+		return (String) value.getValue();
+	}
+
+	private final String value;
+
+	public IDValue(String value) {
+		this.value = value;
 	}
 
 	@Override
 	public Object getValue() {
-		return null;
+		return this.value;
 	}
 
 	@Override
 	public String toString() {
-		return "NULL";
+		return String.valueOf(this.value);
 	}
 }

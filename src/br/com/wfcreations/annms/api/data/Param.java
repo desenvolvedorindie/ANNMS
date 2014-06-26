@@ -27,11 +27,36 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.data;
+package br.com.wfcreations.annms.api.data;
 
 import java.io.Serializable;
 
-public interface IValue extends Serializable {
+public class Param implements Serializable {
 
-	public Object getValue();
+	private static final long serialVersionUID = 1L;
+
+	private final String name;
+
+	private final IValue[] values;
+
+	public Param(String name, IValue[] values) {
+		this.name = name;
+		this.values = values;
+	};
+
+	public String getName() {
+		return name;
+	};
+
+	public boolean nameIs(String name) {
+		return this.name.equalsIgnoreCase(name);
+	}
+
+	public IValue[] getValues() {
+		return values;
+	};
+
+	public int size() {
+		return this.values.length;
+	}
 }

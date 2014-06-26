@@ -27,17 +27,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.data;
+package br.com.wfcreations.annms.api.data;
 
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
-import br.com.wfcreations.annms.core.data.values.BooleanValue;
-import br.com.wfcreations.annms.core.data.values.IntegerValue;
-import br.com.wfcreations.annms.core.data.values.RealValue;
-import br.com.wfcreations.annms.core.data.values.StringValue;
+import br.com.wfcreations.annms.api.data.values.BooleanValue;
+import br.com.wfcreations.annms.api.data.values.IntegerValue;
+import br.com.wfcreations.annms.api.data.values.RealValue;
+import br.com.wfcreations.annms.api.data.values.StringValue;
 
 public interface DataType extends Serializable {
 

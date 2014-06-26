@@ -27,28 +27,24 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.data.values;
+package br.com.wfcreations.annms.api.data.values;
 
-import java.util.Arrays;
+import br.com.wfcreations.annms.api.data.IValue;
 
-import br.com.wfcreations.annms.core.data.IValue;
-
-public class ComplexListValue implements IValue {
+public class NullValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	private final IValue[] values;
-
-	public ComplexListValue(IValue[] values) {
-		this.values = values;
+	public NullValue() {
 	}
 
-	public IValue[] getValue() {
-		return this.values;
+	@Override
+	public Object getValue() {
+		return null;
 	}
 
 	@Override
 	public String toString() {
-		return Arrays.toString(values);
+		return "NULL";
 	}
 }

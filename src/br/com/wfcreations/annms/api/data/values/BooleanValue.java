@@ -27,13 +27,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.data.values;
+package br.com.wfcreations.annms.api.data.values;
 
-import br.com.wfcreations.annms.core.data.IValue;
+import br.com.wfcreations.annms.api.data.IValue;
 
 public class BooleanValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
+
+	public static boolean getValueFor(IValue value) {
+		return (boolean) value.getValue();
+	}
 
 	private final boolean value;
 

@@ -27,27 +27,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.data.values;
+package br.com.wfcreations.annms.api.data;
 
-import br.com.wfcreations.annms.core.data.IValue;
+import java.io.Serializable;
 
-public class IntegerValue implements IValue {
+public interface IValue extends Serializable {
 
-	private static final long serialVersionUID = 1L;
-
-	private final int value;
-
-	public IntegerValue(int value) {
-		this.value = value;
-	}
-
-	@Override
-	public Integer getValue() {
-		return this.value;
-	}
-
-	@Override
-	public String toString() {
-		return String.valueOf(this.value);
-	}
+	public Object getValue();
 }
