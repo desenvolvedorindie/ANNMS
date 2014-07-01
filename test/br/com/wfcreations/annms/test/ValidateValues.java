@@ -2,8 +2,6 @@ package br.com.wfcreations.annms.test;
 
 import static org.junit.Assert.*;
 
-import java.util.Iterator;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -49,7 +47,7 @@ public class ValidateValues {
 
 	@Test
 	public void intTest() {
-		ValidateAbstract validate = new IntValidate();
+		ValidateAbstract validate = new IntValidate(true);
 		IntegerValue integer = new IntegerValue(9);
 		RealValue real = new RealValue(5.2);
 		IValue[] values = new IValue[] { integer, new IntegerValue(2) };
@@ -60,7 +58,7 @@ public class ValidateValues {
 
 	@Test
 	public void realTest() {
-		ValidateAbstract validate = new RealValidate();
+		ValidateAbstract validate = new RealValidate(true);
 		IntegerValue integer = new IntegerValue(10);
 		RealValue real = new RealValue(5.2);
 		IValue[] values = new IValue[] { real, new RealValue(2.5) };

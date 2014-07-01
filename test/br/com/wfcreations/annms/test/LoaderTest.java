@@ -1,9 +1,5 @@
 package br.com.wfcreations.annms.test;
 
-import static org.junit.Assert.*;
-
-import java.net.MalformedURLException;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,14 +34,15 @@ public class LoaderTest {
 	public void test() throws Exception {
 		IAlgorithmsLoader loader = new ReflectionsAlgorithmsLoader();
 		loader.loadNeuralNetwoks();
-		loader.loadLearningRules();
-		INeuralNetwork network = loader.createNeuralNetwork("MLP");
+		loader.loadSupervisedLearningRules();
+		loader.loadUnsupervisedLearningRules();
+		INeuralNetwork network = loader.instantiateNeuralNetwork("MLP");
 		if (network != null) {
 			network.create(new Param[0]);
 		} else {
 			System.out.println("Neural Network Model not found");
 		}
-		ISupervisedLearningRule supervisedLearninRule = loader.createSupervisedLearningRule("BACKPROPAGATION");
+		ISupervisedLearningRule supervisedLearninRule = loader.instantiateSupervisedLearningRule("BACKPROPAGATION");
 		if (supervisedLearninRule != null) {
 			supervisedLearninRule.create(new Param[0]);
 			supervisedLearninRule.train(network, null, null, null);
