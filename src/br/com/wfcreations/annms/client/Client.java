@@ -10,12 +10,12 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 
+import br.com.wfcreations.annms.api.thrift.ANNMSService;
+import br.com.wfcreations.annms.api.thrift.AuthorizationException;
+import br.com.wfcreations.annms.api.thrift.SQLANNResults;
+import br.com.wfcreations.annms.api.thrift.TimedOutException;
 import br.com.wfcreations.annms.client.config.ClientConfiguration;
 import br.com.wfcreations.annms.client.config.ClientPropertiesConfigLoader;
-import br.com.wfcreations.annms.core.thrift.ANNMSService;
-import br.com.wfcreations.annms.core.thrift.AuthorizationException;
-import br.com.wfcreations.annms.core.thrift.SQLANNResults;
-import br.com.wfcreations.annms.core.thrift.TimedOutException;
 
 public class Client {
 

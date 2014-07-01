@@ -4,7 +4,7 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-package br.com.wfcreations.annms.core.thrift;
+package br.com.wfcreations.annms.api.thrift;
 
 import org.apache.thrift.scheme.IScheme;
 import org.apache.thrift.scheme.SchemeFactory;
@@ -33,21 +33,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * AuthorizationException
+ * AuthenticationException
  * 
  * @param int code Error code.
  * @param string message Error message.
  */
-public class TimedOutException extends TException implements org.apache.thrift.TBase<TimedOutException, TimedOutException._Fields>, java.io.Serializable, Cloneable, Comparable<TimedOutException> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("TimedOutException");
+public class AuthenticationException extends TException implements org.apache.thrift.TBase<AuthenticationException, AuthenticationException._Fields>, java.io.Serializable, Cloneable, Comparable<AuthenticationException> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("AuthenticationException");
 
   private static final org.apache.thrift.protocol.TField CODE_FIELD_DESC = new org.apache.thrift.protocol.TField("code", org.apache.thrift.protocol.TType.I32, (short)1);
   private static final org.apache.thrift.protocol.TField MESSAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("message", org.apache.thrift.protocol.TType.STRING, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new TimedOutExceptionStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new TimedOutExceptionTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new AuthenticationExceptionStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new AuthenticationExceptionTupleSchemeFactory());
   }
 
   public int code; // required
@@ -125,13 +125,13 @@ public class TimedOutException extends TException implements org.apache.thrift.T
     tmpMap.put(_Fields.MESSAGE, new org.apache.thrift.meta_data.FieldMetaData("message", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(TimedOutException.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(AuthenticationException.class, metaDataMap);
   }
 
-  public TimedOutException() {
+  public AuthenticationException() {
   }
 
-  public TimedOutException(
+  public AuthenticationException(
     int code,
     String message)
   {
@@ -144,7 +144,7 @@ public class TimedOutException extends TException implements org.apache.thrift.T
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public TimedOutException(TimedOutException other) {
+  public AuthenticationException(AuthenticationException other) {
     __isset_bitfield = other.__isset_bitfield;
     this.code = other.code;
     if (other.isSetMessage()) {
@@ -152,8 +152,8 @@ public class TimedOutException extends TException implements org.apache.thrift.T
     }
   }
 
-  public TimedOutException deepCopy() {
-    return new TimedOutException(this);
+  public AuthenticationException deepCopy() {
+    return new AuthenticationException(this);
   }
 
   @Override
@@ -167,7 +167,7 @@ public class TimedOutException extends TException implements org.apache.thrift.T
     return this.code;
   }
 
-  public TimedOutException setCode(int code) {
+  public AuthenticationException setCode(int code) {
     this.code = code;
     setCodeIsSet(true);
     return this;
@@ -190,7 +190,7 @@ public class TimedOutException extends TException implements org.apache.thrift.T
     return this.message;
   }
 
-  public TimedOutException setMessage(String message) {
+  public AuthenticationException setMessage(String message) {
     this.message = message;
     return this;
   }
@@ -262,12 +262,12 @@ public class TimedOutException extends TException implements org.apache.thrift.T
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof TimedOutException)
-      return this.equals((TimedOutException)that);
+    if (that instanceof AuthenticationException)
+      return this.equals((AuthenticationException)that);
     return false;
   }
 
-  public boolean equals(TimedOutException that) {
+  public boolean equals(AuthenticationException that) {
     if (that == null)
       return false;
 
@@ -298,7 +298,7 @@ public class TimedOutException extends TException implements org.apache.thrift.T
   }
 
   @Override
-  public int compareTo(TimedOutException other) {
+  public int compareTo(AuthenticationException other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
@@ -342,7 +342,7 @@ public class TimedOutException extends TException implements org.apache.thrift.T
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("TimedOutException(");
+    StringBuilder sb = new StringBuilder("AuthenticationException(");
     boolean first = true;
 
     sb.append("code:");
@@ -387,15 +387,15 @@ public class TimedOutException extends TException implements org.apache.thrift.T
     }
   }
 
-  private static class TimedOutExceptionStandardSchemeFactory implements SchemeFactory {
-    public TimedOutExceptionStandardScheme getScheme() {
-      return new TimedOutExceptionStandardScheme();
+  private static class AuthenticationExceptionStandardSchemeFactory implements SchemeFactory {
+    public AuthenticationExceptionStandardScheme getScheme() {
+      return new AuthenticationExceptionStandardScheme();
     }
   }
 
-  private static class TimedOutExceptionStandardScheme extends StandardScheme<TimedOutException> {
+  private static class AuthenticationExceptionStandardScheme extends StandardScheme<AuthenticationException> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, TimedOutException struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, AuthenticationException struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -435,7 +435,7 @@ public class TimedOutException extends TException implements org.apache.thrift.T
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, TimedOutException struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, AuthenticationException struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -453,23 +453,23 @@ public class TimedOutException extends TException implements org.apache.thrift.T
 
   }
 
-  private static class TimedOutExceptionTupleSchemeFactory implements SchemeFactory {
-    public TimedOutExceptionTupleScheme getScheme() {
-      return new TimedOutExceptionTupleScheme();
+  private static class AuthenticationExceptionTupleSchemeFactory implements SchemeFactory {
+    public AuthenticationExceptionTupleScheme getScheme() {
+      return new AuthenticationExceptionTupleScheme();
     }
   }
 
-  private static class TimedOutExceptionTupleScheme extends TupleScheme<TimedOutException> {
+  private static class AuthenticationExceptionTupleScheme extends TupleScheme<AuthenticationException> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, TimedOutException struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, AuthenticationException struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       oprot.writeI32(struct.code);
       oprot.writeString(struct.message);
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, TimedOutException struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, AuthenticationException struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       struct.code = iprot.readI32();
       struct.setCodeIsSet(true);

@@ -163,6 +163,7 @@ public class Data {
 		patterns = new Pattern[0];
 	}
 
+	// TODO
 	public Data fetch(Select where) {
 		if (where == null)
 			return this.clone();

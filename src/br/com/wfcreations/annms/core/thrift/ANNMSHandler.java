@@ -37,6 +37,10 @@ import org.apache.thrift.transport.TTransport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import br.com.wfcreations.annms.api.thrift.AuthenticationException;
+import br.com.wfcreations.annms.api.thrift.AuthorizationException;
+import br.com.wfcreations.annms.api.thrift.SQLANNResults;
+import br.com.wfcreations.annms.api.thrift.TimedOutException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
 import br.com.wfcreations.annms.core.sqlann.SQLANNProcessor;
@@ -85,6 +89,7 @@ public class ANNMSHandler implements IServerHandler {
 
 	@Override
 	public void deleteContext(ServerContext serverContext, TProtocol input, TProtocol output) {
+		LOGGER.info("A thrift connection closed, username: {}", ThriftSessionManager.getInstance().currentSession().getUsername());
 		ThriftSessionManager.getInstance().complete(((TSocket) input.getTransport()).getSocket().getRemoteSocketAddress());
 	}
 

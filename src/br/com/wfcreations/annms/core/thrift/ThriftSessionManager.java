@@ -4,6 +4,7 @@ import java.net.SocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import br.com.wfcreations.annms.api.thrift.AuthenticationException;
 import br.com.wfcreations.annms.core.ANNMS;
 import br.com.wfcreations.annms.core.auth.Auth;
 import br.com.wfcreations.annms.core.auth.User;

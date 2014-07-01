@@ -31,7 +31,7 @@ package br.com.wfcreations.annms.core.thrift;
 
 import org.apache.thrift.server.TServerEventHandler;
 
-import br.com.wfcreations.annms.core.thrift.ANNMSService.Iface;
+import br.com.wfcreations.annms.api.thrift.ANNMSService.Iface;
 
 public interface IServerHandler extends Iface, TServerEventHandler {
 

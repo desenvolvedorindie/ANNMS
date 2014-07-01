@@ -40,6 +40,8 @@ import org.apache.thrift.transport.TServerTransport;
 import org.apache.thrift.transport.TTransportException;
 import org.apache.thrift.transport.TTransportFactory;
 
+import br.com.wfcreations.annms.api.thrift.ANNMSService;
+
 public class TServerFactory {
 
 	public static class Args {
