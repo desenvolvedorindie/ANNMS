@@ -4,6 +4,7 @@ import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
+import br.com.wfcreations.annms.core.transport.message.ShowStatusResultMessage;
 
 public class ShowStatusStatement implements SQLANNStatement {
 
@@ -16,7 +17,7 @@ public class ShowStatusStatement implements SQLANNStatement {
 	@Override
 	public void checkAccess() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -27,6 +28,6 @@ public class ShowStatusStatement implements SQLANNStatement {
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
-		return null;
+		return new ShowStatusResultMessage();
 	}
 }

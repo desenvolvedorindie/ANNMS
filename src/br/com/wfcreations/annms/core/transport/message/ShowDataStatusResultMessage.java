@@ -24,7 +24,13 @@ public class ShowDataStatusResultMessage extends ResultMessage {
 	}
 
 	@Override
-	public void toThriftResult(List<Object> resultMessages) {
+	public Object toThriftResult(List<Object> resultMessages) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getType() {
+		return "SHOW DATA STATUS";
 	}
 }

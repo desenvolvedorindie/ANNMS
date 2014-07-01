@@ -13,7 +13,6 @@ import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.wfcreations.annms.api.neuralnetwork.ILearningRule;
 import br.com.wfcreations.annms.api.neuralnetwork.INeuralNetwork;
 import br.com.wfcreations.annms.api.neuralnetwork.ISupervisedLearningRule;
 import br.com.wfcreations.annms.api.neuralnetwork.IUnsupervisedLearningRule;
@@ -42,13 +41,15 @@ public class ReflectionsAlgorithmsLoader implements IAlgorithmsLoader {
 	public void loadNeuralNetwoks() {
 		neuralNetworksAlgorithms.clear();
 		Set<Class<? extends INeuralNetwork>> networks = reflections.getSubTypesOf(INeuralNetwork.class);
-		LOGGER.info("Total of neural networks models found: {}", networks.size());
 
 		String id = null;
 		Iterator<Class<? extends INeuralNetwork>> iteratorNetworks = networks.iterator();
 		int loaded = 0;
 		while (iteratorNetworks.hasNext()) {
 			Class<? extends INeuralNetwork> neuralNetworkClass = iteratorNetworks.next();
+			if (neuralNetworkClass.isInterface())
+				continue;
+			
 			Annotation annotation = neuralNetworkClass.getAnnotation(NeuralNetwork.class);
 			if (annotation == null) {
 				LOGGER.warn("Neural Network annotation did not found for {}", neuralNetworkClass.getName());
@@ -73,32 +74,18 @@ public class ReflectionsAlgorithmsLoader implements IAlgorithmsLoader {
 		LOGGER.info("Total neural networks model loaded: {}", loaded);
 	}
 
-	@SuppressWarnings("unchecked")
-	public void loadLearningRules() {
-		Set<Class<? extends ILearningRule>> learningRules = reflections.getSubTypesOf(ILearningRule.class);
+	public void loadSupervisedLearningRules() {
+		supervisedLearningRuleAlgorithms.clear();
 
-		LOGGER.info("Total learning rules found {}", learningRules.size() - 2);
+		Set<Class<? extends ISupervisedLearningRule>> learningRules = reflections.getSubTypesOf(ISupervisedLearningRule.class);
 
 		String id = null;
-		boolean supervised = false;
 		int loaded = 0;
-		Iterator<Class<? extends ILearningRule>> iteratorLearningRule = learningRules.iterator();
+		Iterator<Class<? extends ISupervisedLearningRule>> iteratorLearningRule = learningRules.iterator();
 		while (iteratorLearningRule.hasNext()) {
-			Class<? extends ILearningRule> learningRuleClass = iteratorLearningRule.next();
+			Class<? extends ISupervisedLearningRule> learningRuleClass = iteratorLearningRule.next();
 			if (learningRuleClass.isInterface())
 				continue;
-			try {
-				learningRuleClass.asSubclass(ISupervisedLearningRule.class);
-				supervised = true;
-			} catch (ClassCastException e) {
-				try {
-					learningRuleClass.asSubclass(ISupervisedLearningRule.class);
-					supervised = false;
-				} catch (ClassCastException e2) {
-					LOGGER.error("Invalid subtype class for learning rule {}", learningRuleClass.getName());
-					continue;
-				}
-			}
 
 			Annotation annotation = learningRuleClass.getAnnotation(LearningRule.class);
 			id = ((LearningRule) annotation).value().toUpperCase();
@@ -108,31 +95,55 @@ public class ReflectionsAlgorithmsLoader implements IAlgorithmsLoader {
 			} else if (!validID(id)) {
 				LOGGER.warn("Invalid learning rule id for {}", learningRuleClass.getName());
 				continue;
-			} else if (supervised && supervisedLearningRuleAlgorithms.containsKey(id)) {
-				LOGGER.warn("{} Supervised learning rule already registered", id);
-				continue;
-			} else if (!supervised && unsupervisedLearningRuleAlgorithms.containsKey(id)) {
-				LOGGER.error("{} Unsupervised learning rule already registered", id);
+			} else if (supervisedLearningRuleAlgorithms.containsKey(id)) {
+				LOGGER.error("{} supervised learning rule already registered", id);
 			}
 
-			if (supervised) {
-				supervisedLearningRuleAlgorithms.put(id, (Class<? extends ISupervisedLearningRule>) learningRuleClass);
-				LOGGER.info("Supervised Learning Rule {} loaded", id);
-			} else {
-				unsupervisedLearningRuleAlgorithms.put(id, (Class<? extends IUnsupervisedLearningRule>) learningRuleClass);
-				LOGGER.info("Unsupervised Learning Rule {} loaded", id);
-			}
-
+			supervisedLearningRuleAlgorithms.put(id, (Class<? extends ISupervisedLearningRule>) learningRuleClass);
+			LOGGER.info("Supervised Learning Rule {} loaded", id);
 			loaded++;
 		}
-		LOGGER.info("Total Learning Rules Loaded: {}", loaded);
+		LOGGER.info("Total Supervised Learning Rules Loaded: {}", loaded);
 	}
 
+	@Override
+	public void loadUnsupervisedLearningRules() {
+		unsupervisedLearningRuleAlgorithms.clear();
+
+		Set<Class<? extends IUnsupervisedLearningRule>> learningRules = reflections.getSubTypesOf(IUnsupervisedLearningRule.class);
+
+		String id = null;
+		int loaded = 0;
+		Iterator<Class<? extends IUnsupervisedLearningRule>> iteratorLearningRule = learningRules.iterator();
+		while (iteratorLearningRule.hasNext()) {
+			Class<? extends IUnsupervisedLearningRule> learningRuleClass = iteratorLearningRule.next();
+			if (learningRuleClass.isInterface())
+				continue;
+
+			Annotation annotation = learningRuleClass.getAnnotation(LearningRule.class);
+			id = ((LearningRule) annotation).value().toUpperCase();
+			if (id == null || id == "") {
+				LOGGER.warn("ID did not define for learning rule {}", learningRuleClass.getName());
+				continue;
+			} else if (!validID(id)) {
+				LOGGER.warn("Invalid learning rule id for {}", learningRuleClass.getName());
+				continue;
+			} else if (supervisedLearningRuleAlgorithms.containsKey(id)) {
+				LOGGER.error("{} unsupervised learning rule already registered", id);
+			}
+
+			unsupervisedLearningRuleAlgorithms.put(id, (Class<? extends IUnsupervisedLearningRule>) learningRuleClass);
+			LOGGER.info("Unsupervised Learning Rule {} loaded", id);
+			loaded++;
+		}
+		LOGGER.info("Total Unsupervised Learning Rules Loaded: {}", loaded);
+	}
+	
 	private boolean validID(String id) {
 		return true;
 	}
 
-	public INeuralNetwork createNeuralNetwork(String id) {
+	public INeuralNetwork instantiateNeuralNetwork(String id) {
 		INeuralNetwork neuralNetwork = null;
 		if (neuralNetworksAlgorithms.containsKey(id.toUpperCase())) {
 			Class<? extends INeuralNetwork> networkClass = neuralNetworksAlgorithms.get(id);
@@ -145,8 +156,8 @@ public class ReflectionsAlgorithmsLoader implements IAlgorithmsLoader {
 		}
 		return neuralNetwork;
 	}
-
-	public ISupervisedLearningRule createSupervisedLearningRule(String id) {
+	
+	public ISupervisedLearningRule instantiateSupervisedLearningRule(String id) {
 		ISupervisedLearningRule supervisedLearninRule = null;
 		if (supervisedLearningRuleAlgorithms.containsKey(id.toUpperCase())) {
 			Class<? extends ISupervisedLearningRule> supervisedLearningRuleClass = supervisedLearningRuleAlgorithms.get(id);
@@ -159,7 +170,7 @@ public class ReflectionsAlgorithmsLoader implements IAlgorithmsLoader {
 		return supervisedLearninRule;
 	}
 
-	public IUnsupervisedLearningRule createUnsupervisedLearningRule(String id) {
+	public IUnsupervisedLearningRule instantiateUnsupervisedLearningRule(String id) {
 		IUnsupervisedLearningRule unsupervisedLearninRule = null;
 		if (supervisedLearningRuleAlgorithms.containsKey(id.toUpperCase())) {
 			Class<? extends IUnsupervisedLearningRule> unsupervisedLearningRuleClass = unsupervisedLearningRuleAlgorithms.get(id);

@@ -45,7 +45,7 @@ public class ANNMS {
 
 	public Config configuration;
 
-	public String CONFIG_FILE_PATH = "annms.config";
+	public String CONFIG_FILE_PATH = "conf/annms.config";
 
 	private ANNMS() {
 	}

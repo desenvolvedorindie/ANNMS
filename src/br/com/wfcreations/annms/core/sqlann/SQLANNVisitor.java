@@ -1,4 +1,4 @@
-// Generated from SQLANN.g4 by ANTLR 4.1
+// Generated from SQLANN.g4 by ANTLR 4.3
 
 /*
  * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
@@ -43,21 +43,24 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface SQLANNVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#integerDataType}.
+	 * Visit a parse tree produced by the {@code integerDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitIntegerDataType(@NotNull SQLANNParser.IntegerDataTypeContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#showNeuralNetworksStatement}.
+	 * Visit a parse tree produced by the {@code showNeuralNetworksStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitShowNeuralNetworksStatement(@NotNull SQLANNParser.ShowNeuralNetworksStatementContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#runStatement}.
+	 * Visit a parse tree produced by the {@code runStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -71,42 +74,48 @@ public interface SQLANNVisitor<T> extends ParseTreeVisitor<T> {
 	T visitParam(@NotNull SQLANNParser.ParamContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#stringValue}.
+	 * Visit a parse tree produced by the {@code stringValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStringValue(@NotNull SQLANNParser.StringValueContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#dropNeuralNetworkStatement}.
+	 * Visit a parse tree produced by the {@code dropNeuralNetworkStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitDropNeuralNetworkStatement(@NotNull SQLANNParser.DropNeuralNetworkStatementContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#booleanValue}.
+	 * Visit a parse tree produced by the {@code booleanValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBooleanValue(@NotNull SQLANNParser.BooleanValueContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#createNeuralNetworkStatement}.
+	 * Visit a parse tree produced by the {@code createNeuralNetworkStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitCreateNeuralNetworkStatement(@NotNull SQLANNParser.CreateNeuralNetworkStatementContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#booleanDataType}.
+	 * Visit a parse tree produced by the {@code booleanDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBooleanDataType(@NotNull SQLANNParser.BooleanDataTypeContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#values}.
+	 * Visit a parse tree produced by the {@code values}
+	 * labeled alternative in {@link SQLANNParser#dataTypestatementstatementvaluestatementdataTypestatementvaluedataTypestatementstatementvaluestatementdataTypestatementstatementvaluevaluedataTypestatementstatementstatementvaluedataType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -127,70 +136,80 @@ public interface SQLANNVisitor<T> extends ParseTreeVisitor<T> {
 	T visitStatements(@NotNull SQLANNParser.StatementsContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#integerValue}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIntegerValue(@NotNull SQLANNParser.IntegerValueContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#nullValue}.
+	 * Visit a parse tree produced by the {@code nullValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitNullValue(@NotNull SQLANNParser.NullValueContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#listDataType}.
+	 * Visit a parse tree produced by the {@code integerValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntegerValue(@NotNull SQLANNParser.IntegerValueContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code listDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#showDataStatement}.
+	 * Visit a parse tree produced by the {@code showDataStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitShowDataStatement(@NotNull SQLANNParser.ShowDataStatementContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#realValue}.
+	 * Visit a parse tree produced by the {@code realValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitRealValue(@NotNull SQLANNParser.RealValueContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#trainStatement}.
+	 * Visit a parse tree produced by the {@code trainStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitTrainStatement(@NotNull SQLANNParser.TrainStatementContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#idValue}.
+	 * Visit a parse tree produced by the {@code idValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitIdValue(@NotNull SQLANNParser.IdValueContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#showStatusStatement}.
+	 * Visit a parse tree produced by the {@code showStatusStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitShowStatusStatement(@NotNull SQLANNParser.ShowStatusStatementContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#stringDataType}.
+	 * Visit a parse tree produced by the {@code stringDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStringDataType(@NotNull SQLANNParser.StringDataTypeContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#dateDataType}.
+	 * Visit a parse tree produced by the {@code dateDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -204,7 +223,8 @@ public interface SQLANNVisitor<T> extends ParseTreeVisitor<T> {
 	T visitList(@NotNull SQLANNParser.ListContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#dropDataStatement}.
+	 * Visit a parse tree produced by the {@code dropDataStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -239,35 +259,40 @@ public interface SQLANNVisitor<T> extends ParseTreeVisitor<T> {
 	T visitComplexList(@NotNull SQLANNParser.ComplexListContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#insertIntoStatement}.
+	 * Visit a parse tree produced by the {@code insertIntoStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitInsertIntoStatement(@NotNull SQLANNParser.InsertIntoStatementContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#createDataStatement}.
+	 * Visit a parse tree produced by the {@code createDataStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitCreateDataStatement(@NotNull SQLANNParser.CreateDataStatementContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#showNeuralNetworkStatusStatement}.
+	 * Visit a parse tree produced by the {@code showNeuralNetworkStatusStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitShowNeuralNetworkStatusStatement(@NotNull SQLANNParser.ShowNeuralNetworkStatusStatementContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#showDataStatusStatement}.
+	 * Visit a parse tree produced by the {@code showDataStatusStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitShowDataStatusStatement(@NotNull SQLANNParser.ShowDataStatusStatementContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link SQLANNParser#realDataType}.
+	 * Visit a parse tree produced by the {@code realDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */

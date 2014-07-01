@@ -4,24 +4,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DataDropResultMessage extends ResultMessage {
-	
-	int count;
+import br.com.wfcreations.annms.api.ANNMSAPI;
+import br.com.wfcreations.annms.core.ANNMS;
 
-	public DataDropResultMessage(int count) {
-		this.count = count;
-	}
+public class ShowStatusResultMessage extends ResultMessage {
 
 	@Override
 	public Object toThriftResult(List<Object> resultMessages) {
 		Map<String, String> param = new HashMap<>();
-		param.put("COUNT", String.valueOf(count));
+		param.put("SERVER_VERSION", ANNMS.VERSION);
+		param.put("API_VERSION", ANNMSAPI.VERSION);
 		return param;
 	}
 
 	@Override
 	public String getType() {
-		return "DROP DATA";
+		return "SHOW STATUS";
 	}
 
 }

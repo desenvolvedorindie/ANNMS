@@ -41,11 +41,16 @@ import br.com.wfcreations.annms.core.exception.ANNMSException;
 
 public abstract class ResultMessage {
 
-	public abstract void toThriftResult(List<Object> resultMessages);
+	public abstract Object toThriftResult(List<Object> resultMessages);
+
+	public abstract String getType();
 
 	private static void mapResultMessage(List<Object> dataList, ResultMessage[] resultMessages) {
-		for (ResultMessage resultMessage : resultMessages)
-			resultMessage.toThriftResult(dataList);
+		for (ResultMessage resultMessage : resultMessages) {
+			Map<String, Object> data = new HashMap<>();
+			data.put(resultMessage.getType(), resultMessage.toThriftResult(dataList));
+			dataList.add(data);
+		}
 	}
 
 	public static String mapToThrift(ResultMessage[] resultMessages) {

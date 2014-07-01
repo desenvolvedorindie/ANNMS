@@ -12,11 +12,14 @@ public class DataCreateResultMessage extends ResultMessage {
 	}
 
 	@Override
-	public void toThriftResult(List<Object> resultMessages) {
+	public Object toThriftResult(List<Object> resultMessages) {
 		Map<String, String> param = new HashMap<>();
 		param.put("NAME", name);
-		Map<String, Object> data = new HashMap<>();
-		data.put("CREATE DATA", param);
-		resultMessages.add(data);
+		return param;
+	}
+
+	@Override
+	public String getType() {
+		return "CREATE DATA";
 	}
 }

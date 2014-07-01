@@ -1,4 +1,4 @@
-// Generated from SQLANN.g4 by ANTLR 4.1
+// Generated from SQLANN.g4 by ANTLR 4.3
 
 /*
  * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
@@ -45,455 +45,455 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 public class SQLANNBaseListener implements SQLANNListener {
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterIntegerDataType(@NotNull SQLANNParser.IntegerDataTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIntegerDataType(@NotNull SQLANNParser.IntegerDataTypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterShowNeuralNetworksStatement(@NotNull SQLANNParser.ShowNeuralNetworksStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitShowNeuralNetworksStatement(@NotNull SQLANNParser.ShowNeuralNetworksStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterRunStatement(@NotNull SQLANNParser.RunStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitRunStatement(@NotNull SQLANNParser.RunStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterParam(@NotNull SQLANNParser.ParamContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParam(@NotNull SQLANNParser.ParamContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterStringValue(@NotNull SQLANNParser.StringValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStringValue(@NotNull SQLANNParser.StringValueContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterDropNeuralNetworkStatement(@NotNull SQLANNParser.DropNeuralNetworkStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDropNeuralNetworkStatement(@NotNull SQLANNParser.DropNeuralNetworkStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterBooleanValue(@NotNull SQLANNParser.BooleanValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBooleanValue(@NotNull SQLANNParser.BooleanValueContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterCreateNeuralNetworkStatement(@NotNull SQLANNParser.CreateNeuralNetworkStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCreateNeuralNetworkStatement(@NotNull SQLANNParser.CreateNeuralNetworkStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterBooleanDataType(@NotNull SQLANNParser.BooleanDataTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBooleanDataType(@NotNull SQLANNParser.BooleanDataTypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterValues(@NotNull SQLANNParser.ValuesContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitValues(@NotNull SQLANNParser.ValuesContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterDataAttribute(@NotNull SQLANNParser.DataAttributeContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDataAttribute(@NotNull SQLANNParser.DataAttributeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterStatements(@NotNull SQLANNParser.StatementsContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStatements(@NotNull SQLANNParser.StatementsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterIntegerValue(@NotNull SQLANNParser.IntegerValueContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitIntegerValue(@NotNull SQLANNParser.IntegerValueContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterNullValue(@NotNull SQLANNParser.NullValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNullValue(@NotNull SQLANNParser.NullValueContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIntegerValue(@NotNull SQLANNParser.IntegerValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIntegerValue(@NotNull SQLANNParser.IntegerValueContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterShowDataStatement(@NotNull SQLANNParser.ShowDataStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitShowDataStatement(@NotNull SQLANNParser.ShowDataStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterRealValue(@NotNull SQLANNParser.RealValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitRealValue(@NotNull SQLANNParser.RealValueContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterTrainStatement(@NotNull SQLANNParser.TrainStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTrainStatement(@NotNull SQLANNParser.TrainStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterIdValue(@NotNull SQLANNParser.IdValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIdValue(@NotNull SQLANNParser.IdValueContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterShowStatusStatement(@NotNull SQLANNParser.ShowStatusStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitShowStatusStatement(@NotNull SQLANNParser.ShowStatusStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterStringDataType(@NotNull SQLANNParser.StringDataTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStringDataType(@NotNull SQLANNParser.StringDataTypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterDateDataType(@NotNull SQLANNParser.DateDataTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDateDataType(@NotNull SQLANNParser.DateDataTypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterList(@NotNull SQLANNParser.ListContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitList(@NotNull SQLANNParser.ListContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterDropDataStatement(@NotNull SQLANNParser.DropDataStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDropDataStatement(@NotNull SQLANNParser.DropDataStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterDataAttributes(@NotNull SQLANNParser.DataAttributesContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDataAttributes(@NotNull SQLANNParser.DataAttributesContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterParams(@NotNull SQLANNParser.ParamsContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParams(@NotNull SQLANNParser.ParamsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterParamValue(@NotNull SQLANNParser.ParamValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParamValue(@NotNull SQLANNParser.ParamValueContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterComplexList(@NotNull SQLANNParser.ComplexListContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitComplexList(@NotNull SQLANNParser.ComplexListContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterInsertIntoStatement(@NotNull SQLANNParser.InsertIntoStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInsertIntoStatement(@NotNull SQLANNParser.InsertIntoStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterCreateDataStatement(@NotNull SQLANNParser.CreateDataStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCreateDataStatement(@NotNull SQLANNParser.CreateDataStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterShowNeuralNetworkStatusStatement(@NotNull SQLANNParser.ShowNeuralNetworkStatusStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitShowNeuralNetworkStatusStatement(@NotNull SQLANNParser.ShowNeuralNetworkStatusStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterShowDataStatusStatement(@NotNull SQLANNParser.ShowDataStatusStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitShowDataStatusStatement(@NotNull SQLANNParser.ShowDataStatusStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterRealDataType(@NotNull SQLANNParser.RealDataTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitRealDataType(@NotNull SQLANNParser.RealDataTypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterEveryRule(@NotNull ParserRuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitEveryRule(@NotNull ParserRuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void visitTerminal(@NotNull TerminalNode node) { }
 	/**
 	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
+	 *
+	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void visitErrorNode(@NotNull ErrorNode node) { }
 }

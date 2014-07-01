@@ -1,4 +1,4 @@
-// Generated from SQLANN.g4 by ANTLR 4.1
+// Generated from SQLANN.g4 by ANTLR 4.3
 
 /*
  * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
@@ -42,6 +42,8 @@ import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class SQLANNLexer extends Lexer {
+	static { RuntimeMetaData.checkVersion("4.3", RuntimeMetaData.VERSION); }
+
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
@@ -58,13 +60,13 @@ public class SQLANNLexer extends Lexer {
 	};
 
 	public static final String[] tokenNames = {
-		"<INVALID>",
-		"'('", "')'", "'{'", "'}'", "','", "';'", "'='", "INTEGER", "REAL", "BOOLEAN", 
-		"STRING", "DATE", "CREATE", "DATA", "DROP", "MODEL", "INSERT", "INTO", 
-		"NEURALNETWORK", "NEURALNETWORKS", "RUN", "SHOW", "STATUS", "TRAIN", "VALUES", 
-		"TRUE", "FALSE", "NOT", "NULL", "EXISTS", "IF", "LIKE", "LEARNINGRULE", 
-		"INPUT", "OUTPUT", "Integer", "Real", "ID", "String", "COMMENT", "LINE_COMMENT", 
-		"WS"
+		"'\\u0000'", "'\\u0001'", "'\\u0002'", "'\\u0003'", "'\\u0004'", "'\\u0005'", 
+		"'\\u0006'", "'\\u0007'", "'\b'", "'\t'", "'\n'", "'\\u000B'", "'\f'", 
+		"'\r'", "'\\u000E'", "'\\u000F'", "'\\u0010'", "'\\u0011'", "'\\u0012'", 
+		"'\\u0013'", "'\\u0014'", "'\\u0015'", "'\\u0016'", "'\\u0017'", "'\\u0018'", 
+		"'\\u0019'", "'\\u001A'", "'\\u001B'", "'\\u001C'", "'\\u001D'", "'\\u001E'", 
+		"'\\u001F'", "' '", "'!'", "'\"'", "'#'", "'$'", "'%'", "'&'", "'''", 
+		"'('", "')'", "'*'"
 	};
 	public static final String[] ruleNames = {
 		"A_", "B_", "C_", "D_", "E_", "F_", "G_", "H_", "I_", "J_", "K_", "L_", 
@@ -94,39 +96,16 @@ public class SQLANNLexer extends Lexer {
 	public String[] getRuleNames() { return ruleNames; }
 
 	@Override
+	public String getSerializedATN() { return _serializedATN; }
+
+	@Override
 	public String[] getModeNames() { return modeNames; }
 
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	@Override
-	public void action(RuleContext _localctx, int ruleIndex, int actionIndex) {
-		switch (ruleIndex) {
-		case 67: COMMENT_action((RuleContext)_localctx, actionIndex); break;
-
-		case 68: LINE_COMMENT_action((RuleContext)_localctx, actionIndex); break;
-
-		case 69: WS_action((RuleContext)_localctx, actionIndex); break;
-		}
-	}
-	private void WS_action(RuleContext _localctx, int actionIndex) {
-		switch (actionIndex) {
-		case 2: skip();  break;
-		}
-	}
-	private void LINE_COMMENT_action(RuleContext _localctx, int actionIndex) {
-		switch (actionIndex) {
-		case 1: _channel = HIDDEN;  break;
-		}
-	}
-	private void COMMENT_action(RuleContext _localctx, int actionIndex) {
-		switch (actionIndex) {
-		case 0: _channel = HIDDEN;  break;
-		}
-	}
-
 	public static final String _serializedATN =
-		"\3\uacf5\uee8c\u4f5d\u8b0d\u4a45\u78bd\u1b2f\u3378\2,\u01e9\b\1\4\2\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\2,\u01e9\b\1\4\2\t"+
 		"\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -155,25 +134,23 @@ public class SQLANNLexer extends Lexer {
 		"C\u01b6\nC\fC\16C\u01b9\13C\3D\3D\3D\7D\u01be\nD\fD\16D\u01c1\13D\3D\3"+
 		"D\3E\3E\3E\3E\7E\u01c9\nE\fE\16E\u01cc\13E\3E\3E\3E\3E\3E\3F\3F\3F\3F"+
 		"\7F\u01d7\nF\fF\16F\u01da\13F\3F\5F\u01dd\nF\3F\3F\3F\3F\3G\6G\u01e4\n"+
-		"G\rG\16G\u01e5\3G\3G\3\u01caH\3\2\1\5\2\1\7\2\1\t\2\1\13\2\1\r\2\1\17"+
-		"\2\1\21\2\1\23\2\1\25\2\1\27\2\1\31\2\1\33\2\1\35\2\1\37\2\1!\2\1#\2\1"+
-		"%\2\1\'\2\1)\2\1+\2\1-\2\1/\2\1\61\2\1\63\2\1\65\2\1\67\2\19\2\1;\3\1"+
-		"=\4\1?\5\1A\6\1C\7\1E\b\1G\t\1I\n\1K\13\1M\f\1O\r\1Q\16\1S\17\1U\20\1"+
-		"W\21\1Y\22\1[\23\1]\24\1_\25\1a\26\1c\27\1e\30\1g\31\1i\32\1k\33\1m\34"+
-		"\1o\35\1q\36\1s\37\1u \1w!\1y\"\1{#\1}$\1\177%\1\u0081&\1\u0083\'\1\u0085"+
-		"(\1\u0087)\1\u0089*\2\u008b+\3\u008d,\4\3\2$\4\2CCcc\4\2DDdd\4\2EEee\4"+
-		"\2FFff\4\2GGgg\4\2HHhh\4\2IIii\4\2JJjj\4\2KKkk\4\2LLll\4\2MMmm\4\2NNn"+
-		"n\4\2OOoo\4\2PPpp\4\2QQqq\4\2RRrr\4\2SSss\4\2TTtt\4\2UUuu\4\2VVvv\4\2"+
-		"WWww\4\2XXxx\4\2YYyy\4\2ZZzz\4\2[[{{\4\2\\\\||\3\2\62;\n\2$$))^^ddhhp"+
-		"pttvv\4\2--//\5\2&&C\\c|\b\2&&//\62;C_aac|\4\2$$^^\4\2\f\f\17\17\5\2\13"+
-		"\f\16\17\"\"\u01db\2;\3\2\2\2\2=\3\2\2\2\2?\3\2\2\2\2A\3\2\2\2\2C\3\2"+
-		"\2\2\2E\3\2\2\2\2G\3\2\2\2\2I\3\2\2\2\2K\3\2\2\2\2M\3\2\2\2\2O\3\2\2\2"+
-		"\2Q\3\2\2\2\2S\3\2\2\2\2U\3\2\2\2\2W\3\2\2\2\2Y\3\2\2\2\2[\3\2\2\2\2]"+
-		"\3\2\2\2\2_\3\2\2\2\2a\3\2\2\2\2c\3\2\2\2\2e\3\2\2\2\2g\3\2\2\2\2i\3\2"+
-		"\2\2\2k\3\2\2\2\2m\3\2\2\2\2o\3\2\2\2\2q\3\2\2\2\2s\3\2\2\2\2u\3\2\2\2"+
-		"\2w\3\2\2\2\2y\3\2\2\2\2{\3\2\2\2\2}\3\2\2\2\2\177\3\2\2\2\2\u0081\3\2"+
-		"\2\2\2\u0083\3\2\2\2\2\u0085\3\2\2\2\2\u0087\3\2\2\2\2\u0089\3\2\2\2\2"+
-		"\u008b\3\2\2\2\2\u008d\3\2\2\2\3\u008f\3\2\2\2\5\u0091\3\2\2\2\7\u0093"+
+		"G\rG\16G\u01e5\3G\3G\3\u01ca\2H\3\2\5\2\7\2\t\2\13\2\r\2\17\2\21\2\23"+
+		"\2\25\2\27\2\31\2\33\2\35\2\37\2!\2#\2%\2\'\2)\2+\2-\2/\2\61\2\63\2\65"+
+		"\2\67\29\2;\3=\4?\5A\6C\7E\bG\tI\nK\13M\fO\rQ\16S\17U\20W\21Y\22[\23]"+
+		"\24_\25a\26c\27e\30g\31i\32k\33m\34o\35q\36s\37u w!y\"{#}$\177%\u0081"+
+		"&\u0083\'\u0085(\u0087)\u0089*\u008b+\u008d,\3\2$\4\2CCcc\4\2DDdd\4\2"+
+		"EEee\4\2FFff\4\2GGgg\4\2HHhh\4\2IIii\4\2JJjj\4\2KKkk\4\2LLll\4\2MMmm\4"+
+		"\2NNnn\4\2OOoo\4\2PPpp\4\2QQqq\4\2RRrr\4\2SSss\4\2TTtt\4\2UUuu\4\2VVv"+
+		"v\4\2WWww\4\2XXxx\4\2YYyy\4\2ZZzz\4\2[[{{\4\2\\\\||\3\2\62;\n\2$$))^^"+
+		"ddhhppttvv\4\2--//\5\2&&C\\c|\b\2&&//\62;C_aac|\4\2$$^^\4\2\f\f\17\17"+
+		"\5\2\13\f\16\17\"\"\u01db\2;\3\2\2\2\2=\3\2\2\2\2?\3\2\2\2\2A\3\2\2\2"+
+		"\2C\3\2\2\2\2E\3\2\2\2\2G\3\2\2\2\2I\3\2\2\2\2K\3\2\2\2\2M\3\2\2\2\2O"+
+		"\3\2\2\2\2Q\3\2\2\2\2S\3\2\2\2\2U\3\2\2\2\2W\3\2\2\2\2Y\3\2\2\2\2[\3\2"+
+		"\2\2\2]\3\2\2\2\2_\3\2\2\2\2a\3\2\2\2\2c\3\2\2\2\2e\3\2\2\2\2g\3\2\2\2"+
+		"\2i\3\2\2\2\2k\3\2\2\2\2m\3\2\2\2\2o\3\2\2\2\2q\3\2\2\2\2s\3\2\2\2\2u"+
+		"\3\2\2\2\2w\3\2\2\2\2y\3\2\2\2\2{\3\2\2\2\2}\3\2\2\2\2\177\3\2\2\2\2\u0081"+
+		"\3\2\2\2\2\u0083\3\2\2\2\2\u0085\3\2\2\2\2\u0087\3\2\2\2\2\u0089\3\2\2"+
+		"\2\2\u008b\3\2\2\2\2\u008d\3\2\2\2\3\u008f\3\2\2\2\5\u0091\3\2\2\2\7\u0093"+
 		"\3\2\2\2\t\u0095\3\2\2\2\13\u0097\3\2\2\2\r\u0099\3\2\2\2\17\u009b\3\2"+
 		"\2\2\21\u009d\3\2\2\2\23\u009f\3\2\2\2\25\u00a1\3\2\2\2\27\u00a3\3\2\2"+
 		"\2\31\u00a5\3\2\2\2\33\u00a7\3\2\2\2\35\u00a9\3\2\2\2\37\u00ab\3\2\2\2"+
@@ -286,13 +263,13 @@ public class SQLANNLexer extends Lexer {
 		"\u01d7\n\"\2\2\u01d6\u01d5\3\2\2\2\u01d7\u01da\3\2\2\2\u01d8\u01d6\3\2"+
 		"\2\2\u01d8\u01d9\3\2\2\2\u01d9\u01dc\3\2\2\2\u01da\u01d8\3\2\2\2\u01db"+
 		"\u01dd\7\17\2\2\u01dc\u01db\3\2\2\2\u01dc\u01dd\3\2\2\2\u01dd\u01de\3"+
-		"\2\2\2\u01de\u01df\7\f\2\2\u01df\u01e0\3\2\2\2\u01e0\u01e1\bF\3\2\u01e1"+
+		"\2\2\2\u01de\u01df\7\f\2\2\u01df\u01e0\3\2\2\2\u01e0\u01e1\bF\2\2\u01e1"+
 		"\u008c\3\2\2\2\u01e2\u01e4\t#\2\2\u01e3\u01e2\3\2\2\2\u01e4\u01e5\3\2"+
 		"\2\2\u01e5\u01e3\3\2\2\2\u01e5\u01e6\3\2\2\2\u01e6\u01e7\3\2\2\2\u01e7"+
-		"\u01e8\bG\4\2\u01e8\u008e\3\2\2\2\22\2\u0192\u0197\u019a\u019f\u01a5\u01a9"+
-		"\u01af\u01b1\u01b7\u01bd\u01bf\u01ca\u01d8\u01dc\u01e5";
+		"\u01e8\bG\3\2\u01e8\u008e\3\2\2\2\22\2\u0192\u0197\u019a\u019f\u01a5\u01a9"+
+		"\u01af\u01b1\u01b7\u01bd\u01bf\u01ca\u01d8\u01dc\u01e5\4\2\3\2\b\2\2";
 	public static final ATN _ATN =
-		ATNSimulator.deserialize(_serializedATN.toCharArray());
+		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
 		_decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];
 		for (int i = 0; i < _ATN.getNumberOfDecisions(); i++) {

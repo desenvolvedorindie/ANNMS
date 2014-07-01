@@ -8,11 +8,13 @@ public interface IAlgorithmsLoader {
 
 	public void loadNeuralNetwoks();
 	
-	public void loadLearningRules();
+	public void loadSupervisedLearningRules();
 	
-	public INeuralNetwork createNeuralNetwork(String id);
+	public void loadUnsupervisedLearningRules();
 	
-	public ISupervisedLearningRule createSupervisedLearningRule(String id);
+	public INeuralNetwork instantiateNeuralNetwork(String id);
 	
-	public IUnsupervisedLearningRule createUnsupervisedLearningRule(String id);
+	public ISupervisedLearningRule instantiateSupervisedLearningRule(String id);
+	
+	public IUnsupervisedLearningRule instantiateUnsupervisedLearningRule(String id);
 }

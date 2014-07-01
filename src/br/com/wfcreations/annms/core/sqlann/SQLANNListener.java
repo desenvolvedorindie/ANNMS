@@ -1,4 +1,4 @@
-// Generated from SQLANN.g4 by ANTLR 4.1
+// Generated from SQLANN.g4 by ANTLR 4.3
 
 /*
  * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
@@ -40,34 +40,40 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface SQLANNListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#integerDataType}.
+	 * Enter a parse tree produced by the {@code integerDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 */
 	void enterIntegerDataType(@NotNull SQLANNParser.IntegerDataTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#integerDataType}.
+	 * Exit a parse tree produced by the {@code integerDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 */
 	void exitIntegerDataType(@NotNull SQLANNParser.IntegerDataTypeContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#showNeuralNetworksStatement}.
+	 * Enter a parse tree produced by the {@code showNeuralNetworksStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterShowNeuralNetworksStatement(@NotNull SQLANNParser.ShowNeuralNetworksStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#showNeuralNetworksStatement}.
+	 * Exit a parse tree produced by the {@code showNeuralNetworksStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitShowNeuralNetworksStatement(@NotNull SQLANNParser.ShowNeuralNetworksStatementContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#runStatement}.
+	 * Enter a parse tree produced by the {@code runStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterRunStatement(@NotNull SQLANNParser.RunStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#runStatement}.
+	 * Exit a parse tree produced by the {@code runStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitRunStatement(@NotNull SQLANNParser.RunStatementContext ctx);
@@ -84,67 +90,79 @@ public interface SQLANNListener extends ParseTreeListener {
 	void exitParam(@NotNull SQLANNParser.ParamContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#stringValue}.
+	 * Enter a parse tree produced by the {@code stringValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 */
 	void enterStringValue(@NotNull SQLANNParser.StringValueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#stringValue}.
+	 * Exit a parse tree produced by the {@code stringValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 */
 	void exitStringValue(@NotNull SQLANNParser.StringValueContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#dropNeuralNetworkStatement}.
+	 * Enter a parse tree produced by the {@code dropNeuralNetworkStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterDropNeuralNetworkStatement(@NotNull SQLANNParser.DropNeuralNetworkStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#dropNeuralNetworkStatement}.
+	 * Exit a parse tree produced by the {@code dropNeuralNetworkStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitDropNeuralNetworkStatement(@NotNull SQLANNParser.DropNeuralNetworkStatementContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#booleanValue}.
+	 * Enter a parse tree produced by the {@code booleanValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 */
 	void enterBooleanValue(@NotNull SQLANNParser.BooleanValueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#booleanValue}.
+	 * Exit a parse tree produced by the {@code booleanValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 */
 	void exitBooleanValue(@NotNull SQLANNParser.BooleanValueContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#createNeuralNetworkStatement}.
+	 * Enter a parse tree produced by the {@code createNeuralNetworkStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterCreateNeuralNetworkStatement(@NotNull SQLANNParser.CreateNeuralNetworkStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#createNeuralNetworkStatement}.
+	 * Exit a parse tree produced by the {@code createNeuralNetworkStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitCreateNeuralNetworkStatement(@NotNull SQLANNParser.CreateNeuralNetworkStatementContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#booleanDataType}.
+	 * Enter a parse tree produced by the {@code booleanDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 */
 	void enterBooleanDataType(@NotNull SQLANNParser.BooleanDataTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#booleanDataType}.
+	 * Exit a parse tree produced by the {@code booleanDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 */
 	void exitBooleanDataType(@NotNull SQLANNParser.BooleanDataTypeContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#values}.
+	 * Enter a parse tree produced by the {@code values}
+	 * labeled alternative in {@link SQLANNParser#dataTypestatementstatementvaluestatementdataTypestatementvaluedataTypestatementstatementvaluestatementdataTypestatementstatementvaluevaluedataTypestatementstatementstatementvaluedataType}.
 	 * @param ctx the parse tree
 	 */
 	void enterValues(@NotNull SQLANNParser.ValuesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#values}.
+	 * Exit a parse tree produced by the {@code values}
+	 * labeled alternative in {@link SQLANNParser#dataTypestatementstatementvaluestatementdataTypestatementvaluedataTypestatementstatementvaluestatementdataTypestatementstatementvaluevaluedataTypestatementstatementstatementvaluedataType}.
 	 * @param ctx the parse tree
 	 */
 	void exitValues(@NotNull SQLANNParser.ValuesContext ctx);
@@ -172,111 +190,131 @@ public interface SQLANNListener extends ParseTreeListener {
 	void exitStatements(@NotNull SQLANNParser.StatementsContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#integerValue}.
-	 * @param ctx the parse tree
-	 */
-	void enterIntegerValue(@NotNull SQLANNParser.IntegerValueContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#integerValue}.
-	 * @param ctx the parse tree
-	 */
-	void exitIntegerValue(@NotNull SQLANNParser.IntegerValueContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#nullValue}.
+	 * Enter a parse tree produced by the {@code nullValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 */
 	void enterNullValue(@NotNull SQLANNParser.NullValueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#nullValue}.
+	 * Exit a parse tree produced by the {@code nullValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 */
 	void exitNullValue(@NotNull SQLANNParser.NullValueContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#listDataType}.
+	 * Enter a parse tree produced by the {@code integerValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntegerValue(@NotNull SQLANNParser.IntegerValueContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code integerValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntegerValue(@NotNull SQLANNParser.IntegerValueContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code listDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 */
 	void enterListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#listDataType}.
+	 * Exit a parse tree produced by the {@code listDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 */
 	void exitListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#showDataStatement}.
+	 * Enter a parse tree produced by the {@code showDataStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterShowDataStatement(@NotNull SQLANNParser.ShowDataStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#showDataStatement}.
+	 * Exit a parse tree produced by the {@code showDataStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitShowDataStatement(@NotNull SQLANNParser.ShowDataStatementContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#realValue}.
+	 * Enter a parse tree produced by the {@code realValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 */
 	void enterRealValue(@NotNull SQLANNParser.RealValueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#realValue}.
+	 * Exit a parse tree produced by the {@code realValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 */
 	void exitRealValue(@NotNull SQLANNParser.RealValueContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#trainStatement}.
+	 * Enter a parse tree produced by the {@code trainStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterTrainStatement(@NotNull SQLANNParser.TrainStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#trainStatement}.
+	 * Exit a parse tree produced by the {@code trainStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitTrainStatement(@NotNull SQLANNParser.TrainStatementContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#idValue}.
+	 * Enter a parse tree produced by the {@code idValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 */
 	void enterIdValue(@NotNull SQLANNParser.IdValueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#idValue}.
+	 * Exit a parse tree produced by the {@code idValue}
+	 * labeled alternative in {@link SQLANNParser#value}.
 	 * @param ctx the parse tree
 	 */
 	void exitIdValue(@NotNull SQLANNParser.IdValueContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#showStatusStatement}.
+	 * Enter a parse tree produced by the {@code showStatusStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterShowStatusStatement(@NotNull SQLANNParser.ShowStatusStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#showStatusStatement}.
+	 * Exit a parse tree produced by the {@code showStatusStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitShowStatusStatement(@NotNull SQLANNParser.ShowStatusStatementContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#stringDataType}.
+	 * Enter a parse tree produced by the {@code stringDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 */
 	void enterStringDataType(@NotNull SQLANNParser.StringDataTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#stringDataType}.
+	 * Exit a parse tree produced by the {@code stringDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 */
 	void exitStringDataType(@NotNull SQLANNParser.StringDataTypeContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#dateDataType}.
+	 * Enter a parse tree produced by the {@code dateDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 */
 	void enterDateDataType(@NotNull SQLANNParser.DateDataTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#dateDataType}.
+	 * Exit a parse tree produced by the {@code dateDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 */
 	void exitDateDataType(@NotNull SQLANNParser.DateDataTypeContext ctx);
@@ -293,12 +331,14 @@ public interface SQLANNListener extends ParseTreeListener {
 	void exitList(@NotNull SQLANNParser.ListContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#dropDataStatement}.
+	 * Enter a parse tree produced by the {@code dropDataStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterDropDataStatement(@NotNull SQLANNParser.DropDataStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#dropDataStatement}.
+	 * Exit a parse tree produced by the {@code dropDataStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitDropDataStatement(@NotNull SQLANNParser.DropDataStatementContext ctx);
@@ -348,56 +388,66 @@ public interface SQLANNListener extends ParseTreeListener {
 	void exitComplexList(@NotNull SQLANNParser.ComplexListContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#insertIntoStatement}.
+	 * Enter a parse tree produced by the {@code insertIntoStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterInsertIntoStatement(@NotNull SQLANNParser.InsertIntoStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#insertIntoStatement}.
+	 * Exit a parse tree produced by the {@code insertIntoStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitInsertIntoStatement(@NotNull SQLANNParser.InsertIntoStatementContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#createDataStatement}.
+	 * Enter a parse tree produced by the {@code createDataStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterCreateDataStatement(@NotNull SQLANNParser.CreateDataStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#createDataStatement}.
+	 * Exit a parse tree produced by the {@code createDataStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitCreateDataStatement(@NotNull SQLANNParser.CreateDataStatementContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#showNeuralNetworkStatusStatement}.
+	 * Enter a parse tree produced by the {@code showNeuralNetworkStatusStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterShowNeuralNetworkStatusStatement(@NotNull SQLANNParser.ShowNeuralNetworkStatusStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#showNeuralNetworkStatusStatement}.
+	 * Exit a parse tree produced by the {@code showNeuralNetworkStatusStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitShowNeuralNetworkStatusStatement(@NotNull SQLANNParser.ShowNeuralNetworkStatusStatementContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#showDataStatusStatement}.
+	 * Enter a parse tree produced by the {@code showDataStatusStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void enterShowDataStatusStatement(@NotNull SQLANNParser.ShowDataStatusStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#showDataStatusStatement}.
+	 * Exit a parse tree produced by the {@code showDataStatusStatement}
+	 * labeled alternative in {@link SQLANNParser#statement}.
 	 * @param ctx the parse tree
 	 */
 	void exitShowDataStatusStatement(@NotNull SQLANNParser.ShowDataStatusStatementContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link SQLANNParser#realDataType}.
+	 * Enter a parse tree produced by the {@code realDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 */
 	void enterRealDataType(@NotNull SQLANNParser.RealDataTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLANNParser#realDataType}.
+	 * Exit a parse tree produced by the {@code realDataType}
+	 * labeled alternative in {@link SQLANNParser#dataType}.
 	 * @param ctx the parse tree
 	 */
 	void exitRealDataType(@NotNull SQLANNParser.RealDataTypeContext ctx);

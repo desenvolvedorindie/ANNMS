@@ -134,7 +134,10 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 		if (ctx != null && ctx.CREATE() != null && ctx.NEURALNETWORK() != null && ctx.ID() != null && ctx.ID().size() > 0) {
 			String name = ctx.ID(0).getText().toUpperCase();
 
-			Param[] params = (Param[]) visit(ctx.params());
+			Param[] params = null;
+			if(ctx.params() != null)
+				params = (Param[]) visit(ctx.params());
+			
 			if (params == null)
 				params = new Param[0];
 
