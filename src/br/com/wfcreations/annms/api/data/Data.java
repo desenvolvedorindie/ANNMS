@@ -5,8 +5,10 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.List;
 
 import br.com.wfcreations.annms.api.data.select.Select;
 
@@ -14,29 +16,24 @@ public class Data {
 
 	protected String name;
 
-	protected Attribute[] attributes;
+	protected List<Attribute> attributes = new ArrayList<>();
 
-	protected Pattern[] patterns = new Pattern[0];
+	protected List<Pattern> patterns = new ArrayList<>();
 
 	public Data(String name, Attribute[] attributes) {
-		HashSet<String> names = new HashSet<String>();
-		for (int i = 0; i < attributes.length; i++) {
-			if (names.contains(attributes[i].getName())) {
-				names.clear();
-				throw new IllegalArgumentException("Attribute " + attributes[i].getName() + " are not unique!");
-			}
-			names.add(attributes[i].getName());
-		}
+		if (Attribute.checkDuplicate(attributes))
+			throw new IllegalArgumentException("Attributes are not unique!");
 		this.name = name;
-		names.clear();
-		this.attributes = attributes;
+		for (Attribute attr : attributes)
+			this.attributes.add(attr);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Data(InputStream in) throws IOException, ClassNotFoundException {
 		ObjectInputStream ois = new ObjectInputStream(in);
 		this.name = (String) ois.readObject();
-		this.attributes = (Attribute[]) ois.readObject();
-		this.patterns = (Pattern[]) ois.readObject();
+		this.attributes = (List<Attribute>) ois.readObject();
+		this.patterns = (List<Pattern>) ois.readObject();
 	}
 
 	public void save(OutputStream out) throws IOException {
@@ -54,12 +51,12 @@ public class Data {
 		this.name = name;
 	}
 
-	public int numAttributes() {
-		return attributes.length;
+	public int getAttributesNum() {
+		return attributes.size();
 	}
 
-	public String[] getAttributes() {
-		String[] attributeNames = new String[attributes.length];
+	public String[] getAttributesNames() {
+		String[] attributeNames = new String[attributes.size()];
 		int i = 0;
 		for (Attribute attr : attributes) {
 			attributeNames[i++] = attr.getName();
@@ -74,8 +71,8 @@ public class Data {
 		return false;
 	}
 
-	public Attribute getAttribute(int index) {
-		return attributes[index];
+	public Attribute getAttributeAt(int index) {
+		return attributes.get(index);
 	}
 
 	public Attribute getAttributeByName(String name) {
@@ -86,120 +83,112 @@ public class Data {
 	}
 
 	public void renameAttribute(int index, String newName) {
-		for (int i = 0; i < numAttributes(); i++) {
+		for (int i = 0; i < getAttributesNum(); i++) {
 			if (i == index)
 				continue;
-			if (attributes[i].getName().equals(newName))
+			if (attributes.get(i).getName().equals(newName))
 				throw new IllegalArgumentException("Attribute name '" + name + "' already present at position #" + i);
 		}
-		Attribute newAtt = new Attribute(newName, attributes[index].getType(), attributes[index].isNotNull());
-		this.attributes[index] = newAtt;
-	}
-
-	public boolean removeAttribute(String name) {
-		return removeAttribute(indexOfAttribute(name));
-	}
-
-	public boolean removeAttribute(int index) {
-		if (index < 0)
-			return false;
-		// TODO
-		return false;
+		this.attributes.set(index, new Attribute(newName, attributes.get(index).getType(), attributes.get(index).isNotNull()));
 	}
 
 	public int indexOfAttribute(String name) {
-		for (int i = 0; i < attributes.length; i++)
-			if (attributes[i].getName().equals(name))
+		for (int i = 0; i < attributes.size(); i++)
+			if (attributes.get(i).getName().equals(name))
 				return i;
 		return -1;
 	}
 
-	public int numPatterns() {
-		return patterns.length;
+	public int getPatternsNum() {
+		return patterns.size();
 	}
 
-	public int indexOfPattenr(Pattern pattern) {
-		for (int i = 0; i < patterns.length; i++)
-			if (patterns[i] == pattern)
-				return i;
-		return -1;
+	public int indexOfPattern(Pattern pattern) {
+		return patterns.indexOf(pattern);
 	}
 
-	public Pattern getPattern(int index) {
-		return patterns[index];
+	public Pattern getPatternAt(int index) {
+		return patterns.get(index);
 	}
 
-	public Pattern setPattern(Pattern pattern, int index) {
+	public Pattern setPatternAt(int index, Pattern pattern) {
 		validatePattern(pattern);
-		return patterns[index] = pattern;
+		return patterns.set(index, pattern);
 	}
 
 	public void swap(int i, int j) {
-		Pattern tmp = patterns[i];
-		patterns[i] = patterns[j];
-		patterns[j] = tmp;
+		Collections.swap(patterns, i, j);
 	}
 
 	public void add(Pattern pattern) throws IllegalArgumentException {
 		validatePattern(pattern);
-		Pattern[] newPatterns = new Pattern[patterns.length + 1];
-		System.arraycopy(this.patterns, 0, newPatterns, 0, this.patterns.length);
-		newPatterns[newPatterns.length - 1] = pattern;
-		this.patterns = newPatterns;
+		patterns.add(pattern);
 	}
 
-	public void addPatternAt(Pattern pattern, int index) {
-		// TODO
+	public void addPatternAt(int index, Pattern pattern) {
+		patterns.add(index, pattern);
 	}
 
 	public void removePatternAt(int index) {
-		Pattern[] newPatterns = new Pattern[patterns.length - 1];
-		System.arraycopy(this.patterns, 0, newPatterns, 0, index);
-		System.arraycopy(this.patterns, index + 1, newPatterns, index, patterns.length - index - 1);
-		this.patterns = newPatterns;
+		patterns.remove(index);
 	}
 
 	public void removeAllPatterns() {
-		patterns = new Pattern[0];
+		patterns.clear();
 	}
 
-	// TODO
+	public Data slice(int from, int to) {
+		List<Attribute> newAttributes = attributes.subList(from, to);
+		Data data = new Data(name, newAttributes.toArray(new Attribute[newAttributes.size()]));
+		List<Pattern> newPatterns = new ArrayList<>(patterns.size());
+		for (Pattern pattern : patterns)
+			newPatterns.add(new Pattern(Arrays.copyOfRange(pattern.values, from, to)));
+		data.patterns = newPatterns;
+		return data;
+	}
+
+	public Data slice(int index) {
+		return slice(index, index + 1);
+	}
+
 	public Data fetch(Select where) {
+		Data data = null;
 		if (where == null)
-			return this.clone();
+			data = this.clone();
 		else {
+			Data data2 = null;
+			int index;
 
+			String[] key = where.columns().keySet().toArray(new String[where.columns().size()]);
+			String[] value = where.columns().values().toArray(new String[where.columns().size()]);
+
+			index = this.indexOfAttribute(key[0]);
+			if (index < 0)
+				throw new IllegalArgumentException(String.format("Attribute % not found", key[0]));
+
+			data = this.slice(index);
+			data.renameAttribute(0, value[0]);
+
+			for (int i = 1; i < where.columns().size(); i++) {
+				index = this.indexOfAttribute(key[i]);
+				if (index < 0)
+					throw new IllegalArgumentException(String.format("Attribute %s not found", key[i]));
+
+				data2 = this.slice(index);
+				data2.renameAttribute(0, value[i]);
+				data = merge(data, data2);
+
+			}
+			data.setName(this.name);
 		}
-
-		return null;
+		return data;
 	}
 
 	@Override
 	public Data clone() {
-		Data clone = new Data(this.name, this.attributes.clone());
-		clone.patterns = this.patterns.clone();
+		Data clone = new Data(this.name, new ArrayList<>(this.attributes).toArray(new Attribute[this.attributes.size()]));
+		clone.patterns = new ArrayList<>(patterns);
 		return clone;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Data other = (Data) obj;
-		if (!Arrays.equals(attributes, other.attributes))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (!Arrays.equals(patterns, other.patterns))
-			return false;
-		return true;
 	}
 
 	@Override
@@ -208,67 +197,66 @@ public class Data {
 		sb.append('#');
 		sb.append(getName());
 		sb.append(String.format("%n"));
-		for (int i = 0; i < numAttributes(); i++) {
-			sb.append(attributes[i].getName());
+		for (int i = 0; i < getAttributesNum(); i++) {
+			sb.append(attributes.get(i).getName());
 			sb.append('(');
-			sb.append(attributes[i].getType());
+			sb.append(attributes.get(i).getType());
 			sb.append(')');
-			if (i != numAttributes() - 1) {
+			if (i != getAttributesNum() - 1) {
 				sb.append(", ");
 			}
 		}
 		sb.append(String.format("%n"));
-		int ptrnMax = patterns.length - 1;
-		int attrMax = attributes.length - 1;
-		for (int i = 0; i < patterns.length; i++) {
-			for (int j = 0; j < attributes.length; j++) {
-				sb.append(patterns[i].getElement(j).getValue());
-				if (j != ptrnMax) {
+		int ptrnMax = patterns.size() - 1;
+		int attrMax = attributes.size() - 1;
+		for (int i = 0; i < patterns.size(); i++) {
+			for (int j = 0; j < attributes.size(); j++) {
+				sb.append(patterns.get(i).getValueAt(j).getValue().toString());
+				if (j != attrMax) {
 					sb.append(", ");
 				}
 			}
-			if (i == attrMax) {
-				return sb.toString();
+			if (i != ptrnMax) {
+				sb.append(String.format("%n"));
 			}
-			sb.append(String.format("%n"));
 		}
 		return sb.toString();
 	}
 
 	protected void validatePattern(Pattern pattern) throws IllegalArgumentException {
-		if (pattern.size() != attributes.length)
+		if (pattern.getValuesNum() != attributes.size())
 			throw new IllegalArgumentException("Invalid values numbers");
-		for (int i = 0; i < attributes.length; i++)
-			if (!attributes[i].validate(pattern.getElement(i)))
-				throw new IllegalArgumentException("Invalid value type for attribute " + attributes[i].getName());
+		for (int i = 0; i < attributes.size(); i++)
+			if (!attributes.get(i).validate(pattern.getValueAt(i)))
+				throw new IllegalArgumentException("Invalid value type for attribute " + attributes.get(i).getName());
 	}
 
 	public static Data merge(Data first, Data second) {
-		if (first.numPatterns() != second.numPatterns()) {
+		if (first.getPatternsNum() != second.getPatternsNum())
 			throw new IllegalArgumentException("Patterns must be of the same size");
-		}
-
-		if (checkDuplicateAttribute(first.attributes, second.attributes)) {
+		if (checkDuplicateAttribute(first.attributes, second.attributes))
 			throw new IllegalArgumentException("Data 1 has the same attribute of Data 2");
+
+		List<Attribute> attr = new ArrayList<>(first.getAttributesNum() + second.getAttributesNum());
+		attr.addAll(first.attributes);
+		attr.addAll(second.attributes);
+
+		List<Pattern> patterns = new ArrayList<>(first.getPatternsNum());
+
+		IValue[] tmp;
+		for (int i = 0; i < first.getPatternsNum(); i++) {
+			tmp = new IValue[first.getAttributesNum() + second.getAttributesNum()];
+			System.arraycopy(first.patterns.get(i).values, 0, tmp, 0, first.getAttributesNum());
+			System.arraycopy(second.patterns.get(i).values, 0, tmp, first.getAttributesNum(), second.getAttributesNum());
+			patterns.add(new Pattern(tmp));
 		}
 
-		Attribute[] attr = new Attribute[first.numAttributes() + second.numAttributes()];
-		System.arraycopy(first.attributes, 0, attr, 0, first.numAttributes());
-		System.arraycopy(second.attributes, 0, attr, first.numAttributes(), second.numAttributes());
-		Pattern[] patterns = new Pattern[first.numPatterns()];
-		IValue[] tmp;
-		for (int i = 0; i < first.numPatterns(); i++) {
-			tmp = new IValue[first.numAttributes() + second.numAttributes()];
-			System.arraycopy(first.patterns[i].values, 0, tmp, 0, first.numAttributes());
-			System.arraycopy(second.patterns[i].values, 0, tmp, first.numAttributes(), second.numAttributes());
-			patterns[i] = new Pattern(tmp);
-		}
-		Data mergeData = new Data(first.getName() + "_" + second.getName(), attr);
+		Data mergeData = new Data(first.getName() + "_" + second.getName(), attr.toArray(new Attribute[attr.size()]));
 		mergeData.patterns = patterns;
 		return mergeData;
 	}
 
-	private static boolean checkDuplicateAttribute(Attribute[] attributes1, Attribute[] attributes2) {
+	private static boolean checkDuplicateAttribute(List<Attribute> attributes1, List<Attribute> attributes2) {
 		for (Attribute attr1 : attributes1) {
 			for (Attribute attr2 : attributes2)
 				if (attr1.getName().equals(attr2.getName()))

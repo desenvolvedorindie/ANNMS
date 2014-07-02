@@ -38,10 +38,10 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.wfcreations.annms.core.config.Schema;
 import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
 import br.com.wfcreations.annms.core.transport.message.DataDropResultMessage;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
@@ -73,7 +73,7 @@ public class DropDataStatement implements SQLANNStatement {
 	}
 
 	@Override
-	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
+	public ResultMessage execute() throws ANNMSRequestExecutionException {
 		List<String> nonExistent = new ArrayList<String>();
 		List<String> removed = new ArrayList<String>();
 		for (String dataName : dataList)

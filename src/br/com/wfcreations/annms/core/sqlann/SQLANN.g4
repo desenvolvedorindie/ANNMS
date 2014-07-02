@@ -148,7 +148,7 @@ WS
  * Parser
  */
 statements
-    :   statement (CLAUSE_END statement)* CLAUSE_END? EOF;
+    :   statement (CLAUSE_END statement)* CLAUSE_END?;
 
 statement
     :   CREATE DATA (IF NOT EXISTS)? ID (OPEN_PARENTHESIS dataAttributes CLOSE_PARENTHESIS | LIKE ID)?                                                                      #createDataStatement

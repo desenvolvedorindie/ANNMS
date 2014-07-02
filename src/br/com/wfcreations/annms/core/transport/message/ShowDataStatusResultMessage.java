@@ -1,6 +1,10 @@
 package br.com.wfcreations.annms.core.transport.message;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import br.com.wfcreations.annms.api.data.Attribute;
 
 public class ShowDataStatusResultMessage extends ResultMessage {
 	public static class AttributeDescriptor {
@@ -15,6 +19,12 @@ public class ShowDataStatusResultMessage extends ResultMessage {
 			this.type = type;
 			this.notNull = notNull;
 		}
+
+		public AttributeDescriptor(Attribute attribute) {
+			this.name = attribute.getName();
+			this.type = attribute.getType().toString();
+			this.notNull = attribute.isNotNull();
+		}
 	}
 
 	private AttributeDescriptor[] attributesDescriptor;
@@ -25,8 +35,15 @@ public class ShowDataStatusResultMessage extends ResultMessage {
 
 	@Override
 	public Object toThriftResult(List<Object> resultMessages) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> param = new HashMap<>();
+		Map<String, String> properties;
+		for (AttributeDescriptor attributeDescriptor : attributesDescriptor) {
+			properties = new HashMap<>();
+			properties.put("TYPE", attributeDescriptor.type);
+			properties.put("NOTNULL", String.valueOf(attributeDescriptor.notNull).toUpperCase());
+			param.put(attributeDescriptor.name, properties);
+		}
+		return param;
 	}
 
 	@Override

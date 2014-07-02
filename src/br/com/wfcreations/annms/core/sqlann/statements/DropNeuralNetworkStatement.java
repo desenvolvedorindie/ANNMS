@@ -61,7 +61,7 @@ public class DropNeuralNetworkStatement implements SQLANNStatement {
 	}
 
 	@Override
-	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
+	public ResultMessage execute() throws ANNMSRequestExecutionException {
 		return null;
 	}
 }

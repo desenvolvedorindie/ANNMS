@@ -12,7 +12,6 @@ import org.apache.thrift.transport.TTransportException;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import br.com.wfcreations.annms.api.thrift.ANNMSService;
 import br.com.wfcreations.annms.api.thrift.AuthorizationException;
@@ -30,6 +29,8 @@ public class Client {
 	static TTransport transport;
 
 	static ANNMSService.Client client;
+
+	public static ClientConfiguration configuration;
 
 	public static void connect(String host, int port) {
 		if (transport != null) {
@@ -62,7 +63,7 @@ public class Client {
 		try {
 			System.out.println("Starting ANNMS Client");
 
-			ClientConfiguration configuration = new ClientPropertiesConfigLoader(CONFIG_FILE_PATH).load();
+			configuration = new ClientPropertiesConfigLoader(CONFIG_FILE_PATH).load();
 
 			connect(configuration.host, configuration.port);
 
@@ -71,11 +72,20 @@ public class Client {
 			System.out.println(String.format("Connected to %s:%s", configuration.host, configuration.port));
 
 			System.out.println(String.format("Welcome to ANNMS CLI version %s", VERSION));
-			System.out.println(String.format("%s@", configuration.user_username));
+			
+			SQLANNResults result = client.execute("SHOW STATUS");
+			
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode actualObj = mapper.readTree(result.data);
+			
+			String severVersion = actualObj.get(0).get("SHOW STATUS").get("SERVER_VERSION").asText();
+			String apiVersion = actualObj.get(0).get("SHOW STATUS").get("API_VERSION").asText();
+			System.out.println(String.format("Server Version: %s (%s)", severVersion, apiVersion));
+			
+			System.out.println(String.format("%s@%s", configuration.user_username, "localhost"));
 
-			System.out.println();
-			System.out.print(String.format("sqlann> ", configuration.user_username));
-
+			printPrompt();
+			
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			String line;
 			StringBuilder sb = new StringBuilder();
@@ -84,9 +94,9 @@ public class Client {
 					line = br.readLine();
 					if (line.isEmpty()) {
 						try {
-							SQLANNResults result = client.execute(sb.toString());
-							ObjectMapper mapper = new ObjectMapper();
-							JsonNode actualObj = mapper.readTree(result.data);
+							result = client.execute(sb.toString());
+							mapper = new ObjectMapper();
+							actualObj = mapper.readTree(result.data);
 							String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(actualObj);
 							System.out.println(json);
 						} catch (AuthorizationException e1) {
@@ -95,8 +105,7 @@ public class Client {
 							System.out.println(e2.getMessage());
 						}
 						sb.setLength(0);
-						System.out.println();
-						System.out.print(String.format("sqlann> ", configuration.user_username));
+						printPrompt();
 					} else {
 						sb.append(line);
 						sb.append('\n');
@@ -109,5 +118,10 @@ public class Client {
 			disconnect();
 			System.out.println(e.getMessage());
 		}
+	}
+
+	private static void printPrompt() {
+		System.out.println();
+		System.out.print("sqlann> ");
 	}
 }

@@ -57,11 +57,13 @@ public class SQLANNProcessor {
 		try {
 			ANTLRInputStream input = new ANTLRInputStream(new ByteArrayInputStream(query.getBytes()));
 
+			SQLANNErrorListener errorListener = new SQLANNErrorListener();
+			
 			SQLANNLexer lexer = new SQLANNLexer(input);
+			lexer.removeErrorListeners();
+			lexer.addErrorListener(errorListener);			
 
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
-
-			SQLANNErrorListener errorListener = new SQLANNErrorListener();
 
 			SQLANNParser parser = new SQLANNParser(tokens);
 			parser.removeErrorListeners();

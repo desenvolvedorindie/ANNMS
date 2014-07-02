@@ -1,15 +1,19 @@
 package br.com.wfcreations.annms.api.data.select;
 
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class Select {
 
-	Map<String, String> columns;
+	protected LinkedHashMap<String, String> columns;
 
 	public Select() {
 	}
 
-	public void columns(Map<String, String> columns) {
+	public void columns(LinkedHashMap<String, String> columns) {
 		this.columns = columns;
+	}
+
+	public LinkedHashMap<String, String> columns() {
+		return this.columns;
 	}
 }

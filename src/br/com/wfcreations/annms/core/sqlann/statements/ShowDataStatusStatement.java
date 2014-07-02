@@ -29,36 +29,47 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
+import br.com.wfcreations.annms.api.data.Data;
+import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
+import br.com.wfcreations.annms.core.transport.message.ShowDataStatusResultMessage;
+import br.com.wfcreations.annms.core.transport.message.ShowDataStatusResultMessage.AttributeDescriptor;
 
 public class ShowDataStatusStatement implements SQLANNStatement {
 
-	public final String name;
-	
+	public final String dataName;
+
 	public final String query;
 
-	public ShowDataStatusStatement(String name, String query) {
-		this.name = name;
+	public ShowDataStatusStatement(String dataName, String query) {
+		this.dataName = dataName;
 		this.query = query;
 	}
 
 	@Override
 	public void checkAccess() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
-		return null;
+	public ResultMessage execute() throws ANNMSRequestExecutionException {
+		Data data = Schema.instance.getDataInstance(dataName);
+		if (data == null)
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", dataName));
+
+		AttributeDescriptor[] attributesDescriptor = new AttributeDescriptor[data.getAttributesNum()];
+		for (int i = 0; i < data.getAttributesNum(); i++) {
+			attributesDescriptor[i] = new AttributeDescriptor(data.getAttributeAt(i));
+		}
+		return new ShowDataStatusResultMessage(attributesDescriptor);
 	}
 }

@@ -39,5 +39,5 @@ public interface SQLANNStatement {
 
 	public void validate() throws ANNMSRequestValidationException;
 
-	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException;
+	public ResultMessage execute() throws ANNMSRequestExecutionException;
 }

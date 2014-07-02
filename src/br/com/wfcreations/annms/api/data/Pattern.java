@@ -12,11 +12,11 @@ public class Pattern implements Serializable {
 		this.values = values.clone();
 	}
 
-	public IValue getElement(int index) {
+	public IValue getValueAt(int index) {
 		return values[index];
 	}
 
-	public int size() {
+	public int getValuesNum() {
 		return this.values.length;
 	}
 

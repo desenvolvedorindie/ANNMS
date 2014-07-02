@@ -35,7 +35,15 @@ public class RealValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
+	public static double getValueFor(IValue value) {
+		return (double) value.getValue();
+	}
+
 	private final double value;
+
+	public RealValue() {
+		value = 0;
+	}
 
 	public RealValue(double value) {
 		this.value = value;

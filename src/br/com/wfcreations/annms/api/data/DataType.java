@@ -110,7 +110,11 @@ public interface DataType extends Serializable {
 
 		public String[] getListValues() {
 			return listValues;
-		};
+		}
+
+		public String getListValuesAt(int index) {
+			return listValues[index];
+		}
 
 		@Override
 		public boolean validate(IValue value) {

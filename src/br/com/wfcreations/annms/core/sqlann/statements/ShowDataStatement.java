@@ -29,9 +29,9 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
-import br.com.wfcreations.annms.core.config.Schema;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 import br.com.wfcreations.annms.core.transport.message.ShowDataResultMessage;
@@ -53,7 +53,7 @@ public class ShowDataStatement implements SQLANNStatement {
 	}
 
 	@Override
-	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
-		return new ShowDataResultMessage(Schema.instance.getDataNames().toArray(new String[Schema.instance.getDataNames().size()]));
+	public ResultMessage execute() throws ANNMSRequestExecutionException {
+		return new ShowDataResultMessage(Schema.instance.getDataNames());
 	}
 }

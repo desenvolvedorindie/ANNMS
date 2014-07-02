@@ -30,12 +30,23 @@
 package br.com.wfcreations.annms.api.data;
 
 import java.io.Serializable;
+import java.util.HashSet;
 
 import br.com.wfcreations.annms.api.data.values.NullValue;
 
 public class Attribute implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	public static boolean checkDuplicate(Attribute[] attributes) {
+		HashSet<String> names = new HashSet<String>();
+		for (int i = 0; i < attributes.length; i++) {
+			if (names.contains(attributes[i].getName()))
+				return true;
+			names.add(attributes[i].getName());
+		}
+		return false;
+	}
 
 	private final String name;
 

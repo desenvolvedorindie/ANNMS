@@ -11,8 +11,7 @@ import br.com.wfcreations.annms.core.auth.Auth;
 import br.com.wfcreations.annms.core.auth.User;
 import br.com.wfcreations.annms.core.config.ConfigurationException;
 import br.com.wfcreations.annms.core.config.PropertiesConfigurationLoader;
-import br.com.wfcreations.annms.core.loader.IAlgorithmsLoader;
-import br.com.wfcreations.annms.core.loader.ReflectionsAlgorithmsLoader;
+import br.com.wfcreations.annms.core.service.AlgorithmsLoader;
 
 public class Bootstrap extends Bootstrapper {
 
@@ -33,6 +32,8 @@ public class Bootstrap extends Bootstrapper {
 		initUsers();
 		initData();
 		initAlgorithms();
+		initNeuralNetworks();
+		initLearningRules();
 	}
 
 	protected void initFilesAndFolders() {
@@ -73,9 +74,16 @@ public class Bootstrap extends Bootstrapper {
 	}
 
 	protected void initAlgorithms() {
-		IAlgorithmsLoader loader = new ReflectionsAlgorithmsLoader();
-		loader.loadNeuralNetwoks();
-		loader.loadSupervisedLearningRules();
-		loader.loadUnsupervisedLearningRules();
+		AlgorithmsLoader.instance.loadNeuralNetwoks();
+		AlgorithmsLoader.instance.loadSupervisedLearningRules();
+		AlgorithmsLoader.instance.loadUnsupervisedLearningRules();
+	}
+
+	protected void initNeuralNetworks() {
+
+	}
+
+	protected void initLearningRules() {
+
 	}
 }

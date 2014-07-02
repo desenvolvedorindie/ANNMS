@@ -34,10 +34,10 @@ import org.slf4j.LoggerFactory;
 
 import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
-import br.com.wfcreations.annms.core.config.Schema;
 import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
 import br.com.wfcreations.annms.core.transport.message.DataCreateResultMessage;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
@@ -73,7 +73,7 @@ public class CreateDataStatement implements SQLANNStatement {
 	}
 
 	@Override
-	public ResultMessage execute() throws ANNMSRequestValidationException, ANNMSRequestExecutionException {
+	public ResultMessage execute() throws ANNMSRequestExecutionException {
 		if (Schema.instance.getDataInstance(name) != null)
 			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data already %s exist", name));
 
