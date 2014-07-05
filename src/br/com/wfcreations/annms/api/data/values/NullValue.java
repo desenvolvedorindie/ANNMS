@@ -35,12 +35,25 @@ public class NullValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public NullValue() {
+	public static NullValue INSTANCE = new NullValue();
+
+	private NullValue() {
 	}
 
 	@Override
 	public Object getValue() {
 		return null;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		return true;
 	}
 
 	@Override

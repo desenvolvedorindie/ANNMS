@@ -49,8 +49,23 @@ public class RealValue implements IValue {
 		this.value = value;
 	}
 
+	@Override
 	public Double getValue() {
 		return this.value;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RealValue other = (RealValue) obj;
+		if (Double.doubleToLongBits(value) != Double.doubleToLongBits(other.value))
+			return false;
+		return true;
 	}
 
 	@Override

@@ -29,13 +29,24 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.wfcreations.annms.api.data.Param;
+import br.com.wfcreations.annms.api.neuralnetwork.INeuralNetwork;
+import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.neuralnetwork.NeuralnetworkWrapper;
+import br.com.wfcreations.annms.core.service.AlgorithmsLoader;
+import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
+import br.com.wfcreations.annms.core.transport.message.CreateNeuralnetworkResultMessage;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 
 public class CreateNeuralNetworkStatement implements SQLANNStatement {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(CreateNeuralNetworkStatement.class);
 
 	public final String name;
 
@@ -60,18 +71,50 @@ public class CreateNeuralNetworkStatement implements SQLANNStatement {
 
 	@Override
 	public void checkAccess() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		return null;
+		if (Schema.instance.getNeuralnetworkInstance(this.name) != null)
+			if (ifNotExists)
+				return new CreateNeuralnetworkResultMessage(null, null);
+			else
+				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neural Network already %s exist", this.name));
+
+		Param[] paramsNew = null;
+		String modelNew = null;
+		INeuralNetwork neuralnetwork = null;
+
+		if (this.copy != null && !this.copy.isEmpty()) {
+			NeuralnetworkWrapper wrapper = Schema.instance.getNeuralnetworkInstance(this.copy);
+			if (wrapper == null)
+				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neuralnetwork %s doesn't exist", copy));
+
+			paramsNew = wrapper.getParams();
+			modelNew = wrapper.getModel();
+		} else {
+			paramsNew = this.params;
+			modelNew = this.model;
+		}
+
+		neuralnetwork = AlgorithmsLoader.instance.instantiateNeuralNetwork(modelNew);
+		if (neuralnetwork == null)
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, "Neural network model not found");
+
+		try {
+			neuralnetwork.create(paramsNew);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neural network creation error cause: "));
+		}
+
+		Schema.instance.storeNeuralnetworkInstance(this.name, new NeuralnetworkWrapper(modelNew, paramsNew, neuralnetwork));
+
+		LOGGER.info("Neuralnetwork {} of {} model created", this.name, modelNew);
+		return new CreateNeuralnetworkResultMessage(this.name, modelNew);
 	}
 }

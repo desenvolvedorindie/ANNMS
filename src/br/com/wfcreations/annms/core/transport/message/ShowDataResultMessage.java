@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowDataResultMessage extends ResultMessage {
+	
 	String dataNames[];
 
 	public ShowDataResultMessage(String[] dataNames) {
@@ -11,7 +12,7 @@ public class ShowDataResultMessage extends ResultMessage {
 	}
 
 	@Override
-	public Object toThriftResult(List<Object> resultMessages) {
+	public Object toThriftResult() {
 		List<String> list = new ArrayList<String>();
 		for (String dataName : dataNames)
 			list.add(dataName);

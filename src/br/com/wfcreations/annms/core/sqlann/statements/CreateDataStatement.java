@@ -39,7 +39,7 @@ import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
 import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
-import br.com.wfcreations.annms.core.transport.message.DataCreateResultMessage;
+import br.com.wfcreations.annms.core.transport.message.CreateDataResultMessage;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 
 public class CreateDataStatement implements SQLANNStatement {
@@ -75,22 +75,24 @@ public class CreateDataStatement implements SQLANNStatement {
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
 		if (Schema.instance.getDataInstance(name) != null)
-			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data already %s exist", name));
+			if (ifNotExists)
+				return new CreateDataResultMessage(null);
+			else
+				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.DATA, String.format("Data already %s exist", this.name));
 
 		Data data;
-		if (copy != null && copy != "") {
+		if (copy != null && !copy.isEmpty()) {
 			data = Schema.instance.getDataInstance(copy);
-			if (data == null) {
+			if (data == null)
 				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", copy));
-			} else {
-				data = data.clone();
-				data.setName(name);
-			}
+
+			data = data.clone();
+			data.setName(name);
 		} else {
 			data = new Data(this.name, this.attributes);
 		}
 		Schema.instance.storeDataInstance(data);
 		LOGGER.info("Data {} created", this.name);
-		return new DataCreateResultMessage(this.name);
+		return new CreateDataResultMessage(this.name);
 	}
 }

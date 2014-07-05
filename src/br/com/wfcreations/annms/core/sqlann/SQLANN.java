@@ -135,17 +135,17 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 			String name = ctx.ID(0).getText().toUpperCase();
 
 			Param[] params = null;
-			if(ctx.params() != null)
+			if (ctx.params() != null)
 				params = (Param[]) visit(ctx.params());
-			
+
 			if (params == null)
 				params = new Param[0];
 
-			String model = ctx.ID().size() == 2 ? ctx.ID(1).getText().toUpperCase() : null;
+			String model = ctx.ID().size() == 2 && ctx.LIKE() == null ? ctx.ID(1).getText().toUpperCase() : null;
 
 			boolean ifNotExists = ctx.IF() != null && ctx.NOT() != null && ctx.EXISTS() != null;
 
-			String copy = ctx.ID().size() == 2 ? ctx.ID(1).getText().toUpperCase() : null;
+			String copy = ctx.ID().size() == 2 && ctx.LIKE() != null ? ctx.ID(1).getText().toUpperCase() : null;
 
 			String query = ctx.getText().toUpperCase();
 
@@ -414,14 +414,12 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 	@Override
 	public BooleanValue visitBooleanValue(@NotNull SQLANNParser.BooleanValueContext ctx) {
-		if (ctx != null && (ctx.TRUE() != null && ctx.FALSE() != null)) {
-			boolean value;
+		if (ctx != null && (ctx.TRUE() != null || ctx.FALSE() != null)) {
 			if (ctx.TRUE() != null) {
-				value = true;
+				return BooleanValue.TRUE;
 			} else {
-				value = false;
+				return BooleanValue.FALSE;
 			}
-			return new BooleanValue(value);
 		}
 		return null;
 	}
@@ -429,7 +427,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public NullValue visitNullValue(@NotNull SQLANNParser.NullValueContext ctx) {
 		if (ctx != null && ctx.NULL() != null) {
-			new NullValue();
+			return NullValue.INSTANCE;
 		}
 		return null;
 	}

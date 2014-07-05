@@ -56,6 +56,10 @@ public class Param implements Serializable {
 		return values;
 	};
 
+	public IValue getValueAt(int index) {
+		return values[index];
+	}
+
 	public int size() {
 		return this.values.length;
 	}

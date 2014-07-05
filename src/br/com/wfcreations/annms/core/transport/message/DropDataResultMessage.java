@@ -1,20 +1,19 @@
 package br.com.wfcreations.annms.core.transport.message;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class DataDropResultMessage extends ResultMessage {
-	
+public class DropDataResultMessage extends ResultMessage {
+
 	int count;
 
-	public DataDropResultMessage(int count) {
+	public DropDataResultMessage(int count) {
 		this.count = count;
 	}
 
 	@Override
-	public Object toThriftResult(List<Object> resultMessages) {
-		Map<String, String> param = new HashMap<>();
+	public Object toThriftResult() {
+		Map<String, Object> param = new LinkedHashMap<String, Object>();
 		param.put("COUNT", String.valueOf(count));
 		return param;
 	}

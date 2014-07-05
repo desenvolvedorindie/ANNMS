@@ -23,4 +23,8 @@ public class QueryState {
 	public void prepareTracingSession(UUID sessionId) {
 		this.preparedTracingSession = sessionId;
 	}
+
+	public UUID getPreparedTracingSession() {
+		return preparedTracingSession;
+	}
 }

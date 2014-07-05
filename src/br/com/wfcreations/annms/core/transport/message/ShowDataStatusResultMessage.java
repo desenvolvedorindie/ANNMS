@@ -1,48 +1,51 @@
 package br.com.wfcreations.annms.core.transport.message;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.Attribute;
+import br.com.wfcreations.annms.api.data.DataType;
+import br.com.wfcreations.annms.api.data.DataType.ListDataType;
 
 public class ShowDataStatusResultMessage extends ResultMessage {
-	public static class AttributeDescriptor {
-		public final String name;
 
-		public final String type;
+	private String name;
 
-		public final boolean notNull;
+	private Attribute[] attributes;
 
-		public AttributeDescriptor(String name, String type, boolean notNull) {
-			this.name = name;
-			this.type = type;
-			this.notNull = notNull;
-		}
-
-		public AttributeDescriptor(Attribute attribute) {
-			this.name = attribute.getName();
-			this.type = attribute.getType().toString();
-			this.notNull = attribute.isNotNull();
-		}
-	}
-
-	private AttributeDescriptor[] attributesDescriptor;
-
-	public ShowDataStatusResultMessage(AttributeDescriptor[] attributesDescriptor) {
-		this.attributesDescriptor = attributesDescriptor;
+	public ShowDataStatusResultMessage(String name, Attribute[] attributesDescriptor) {
+		this.name = name;
+		this.attributes = attributesDescriptor;
 	}
 
 	@Override
-	public Object toThriftResult(List<Object> resultMessages) {
-		Map<String, Object> param = new HashMap<>();
-		Map<String, String> properties;
-		for (AttributeDescriptor attributeDescriptor : attributesDescriptor) {
-			properties = new HashMap<>();
-			properties.put("TYPE", attributeDescriptor.type);
-			properties.put("NOTNULL", String.valueOf(attributeDescriptor.notNull).toUpperCase());
-			param.put(attributeDescriptor.name, properties);
+	public Object toThriftResult() {
+		Map<String, Object> param = new LinkedHashMap<String, Object>();
+		List<Map<String, Object>> attrs = new ArrayList<Map<String, Object>>();
+		Map<String, Object> properties;
+		String[] listValues;
+		int i;
+
+		param.put("NAME", this.name);
+		for (Attribute attribute : attributes) {
+			properties = new LinkedHashMap<String, Object>();
+			properties.put("NAME", attribute.getName());
+			if (attribute.getType() instanceof DataType.ListDataType) {
+				DataType.ListDataType listDataType = (ListDataType) attribute.getType();
+				listValues = new String[listDataType.getListValuesNum()];
+				for (i = 0; i < listDataType.getListValuesNum(); i++)
+					listValues[i] = listDataType.getListValuesAt(i);
+
+				properties.put("TYPE", listValues);
+			} else {
+				properties.put("TYPE", attribute.getType().toString());
+			}
+			properties.put("NOTNULL", String.valueOf(attribute.isNotNull()).toUpperCase());
+			attrs.add(properties);
 		}
+		param.put("ATTRIBUTES", attrs);
 		return param;
 	}
 

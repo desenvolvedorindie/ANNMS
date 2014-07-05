@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import br.com.wfcreations.annms.api.data.Data;
+import br.com.wfcreations.annms.core.neuralnetwork.NeuralnetworkWrapper;
 
 public class Schema {
 
@@ -11,15 +12,15 @@ public class Schema {
 
 	private final Map<String, Data> dataInstances = new ConcurrentHashMap<String, Data>();
 
-	// private final Map<String, NeuralNetwork> networkKeyspaceInstances = new ConcurrentHashMap<String, NeuralNetwork>();
+	private final Map<String, NeuralnetworkWrapper> neuralnetworkInstances = new ConcurrentHashMap<String, NeuralnetworkWrapper>();
 
 	private Schema() {
 	}
 
-	public String[] getDataNames(){
+	public String[] getDataNames() {
 		return dataInstances.keySet().toArray(new String[dataInstances.keySet().size()]);
 	}
-	
+
 	public Data getDataInstance(String name) {
 		if (name == null || name.isEmpty())
 			throw new IllegalArgumentException("Name can't be empty or null");
@@ -38,5 +39,29 @@ public class Schema {
 
 	public void clearDataInstance() {
 		dataInstances.clear();
+	}
+
+	public String[] getNeuralnetworksName() {
+		return neuralnetworkInstances.keySet().toArray(new String[dataInstances.keySet().size()]);
+	}
+
+	public NeuralnetworkWrapper getNeuralnetworkInstance(String name) {
+		if (name == null || name.isEmpty())
+			throw new IllegalArgumentException("Name can't be empty or null");
+		return neuralnetworkInstances.get(name);
+	}
+
+	public void storeNeuralnetworkInstance(String name, NeuralnetworkWrapper neuralnetwork) {
+		if (neuralnetworkInstances.containsKey(name))
+			throw new IllegalArgumentException(String.format("Data %s was already initialized.", name));
+		neuralnetworkInstances.put(name, neuralnetwork);
+	}
+
+	public NeuralnetworkWrapper removeNeuralnetworkInstance(String name) {
+		return neuralnetworkInstances.remove(name);
+	}
+
+	public void clearNeuralNetworkInstance() {
+		neuralnetworkInstances.clear();
 	}
 }

@@ -29,6 +29,7 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
+import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
@@ -37,7 +38,6 @@ import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 import br.com.wfcreations.annms.core.transport.message.ShowDataStatusResultMessage;
-import br.com.wfcreations.annms.core.transport.message.ShowDataStatusResultMessage.AttributeDescriptor;
 
 public class ShowDataStatusStatement implements SQLANNStatement {
 
@@ -66,10 +66,10 @@ public class ShowDataStatusStatement implements SQLANNStatement {
 		if (data == null)
 			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", dataName));
 
-		AttributeDescriptor[] attributesDescriptor = new AttributeDescriptor[data.getAttributesNum()];
+		Attribute[] attributes = new Attribute[data.getAttributesNum()];
 		for (int i = 0; i < data.getAttributesNum(); i++) {
-			attributesDescriptor[i] = new AttributeDescriptor(data.getAttributeAt(i));
+			attributes[i] = data.getAttributeAt(i);
 		}
-		return new ShowDataStatusResultMessage(attributesDescriptor);
+		return new ShowDataStatusResultMessage(data.getName(), attributes);
 	}
 }

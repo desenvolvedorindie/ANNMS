@@ -32,9 +32,11 @@ package br.com.wfcreations.annms.api.data;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import br.com.wfcreations.annms.api.data.values.BooleanValue;
+import br.com.wfcreations.annms.api.data.values.IDValue;
 import br.com.wfcreations.annms.api.data.values.IntegerValue;
 import br.com.wfcreations.annms.api.data.values.RealValue;
 import br.com.wfcreations.annms.api.data.values.StringValue;
@@ -79,7 +81,6 @@ public interface DataType extends Serializable {
 		@Override
 		public boolean validate(IValue value) {
 			if (!value.getClass().equals(StringValue.class)) {
-				System.out.println("lol");
 				return false;
 			}
 			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
@@ -102,23 +103,23 @@ public interface DataType extends Serializable {
 
 		private static final long serialVersionUID = 1L;
 
-		private final String[] listValues;
+		private final ArrayList<String> listValues;
 
 		public ListDataType(String[] listValues) {
-			this.listValues = listValues;
-		}
-
-		public String[] getListValues() {
-			return listValues;
+			this.listValues = new ArrayList<>(Arrays.asList(listValues));
 		}
 
 		public String getListValuesAt(int index) {
-			return listValues[index];
+			return listValues.get(index);
+		}
+
+		public int getListValuesNum() {
+			return listValues.size();
 		}
 
 		@Override
 		public boolean validate(IValue value) {
-			return value.getClass().equals(StringValue.class) && Arrays.asList(listValues).contains(value.getValue());
+			return value.getClass().equals(IDValue.class) && Arrays.asList(listValues).contains(value.getValue());
 		}
 
 		@Override
@@ -130,14 +131,20 @@ public interface DataType extends Serializable {
 			if (getClass() != obj.getClass())
 				return false;
 			ListDataType other = (ListDataType) obj;
-			if (!Arrays.equals(listValues, other.listValues))
+			if (this.getListValuesNum() != other.getListValuesNum())
 				return false;
+			boolean eq = true;
+			for (int i = 0; i < this.getListValuesNum(); i++) {
+				eq = eq && this.getListValuesAt(i).equals(other.getListValuesAt(i));
+				if (!eq)
+					return false;
+			}
 			return true;
 		}
 
 		@Override
 		public String toString() {
-			return Arrays.toString(listValues).replace('[', '{').replace(']', '}');
+			return Arrays.toString(listValues.toArray(new String[listValues.size()])).replace('[', '{').replace(']', '}');
 		}
 	}
 }

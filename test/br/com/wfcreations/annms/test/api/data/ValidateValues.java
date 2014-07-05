@@ -1,4 +1,4 @@
-package br.com.wfcreations.annms.test;
+package br.com.wfcreations.annms.test.api.data;
 
 import static org.junit.Assert.*;
 

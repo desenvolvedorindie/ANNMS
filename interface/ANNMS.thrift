@@ -30,9 +30,9 @@
 # IDL for Artificial Neural Network Management System Service
 #
 
-namespace java br.com.wfcreations.annms.core.thrift
-namespace cpp br.com.wfcreations.annms
-namespace csharp WFCreations.ANNMS
+namespace java br.com.wfcreations.annms.api.thrift
+namespace cpp br.com.wfcreations.annms.api
+namespace csharp WFCreations.ANNMS.API
 namespace py annms
 namespace php annms
 namespace perl ANNMS

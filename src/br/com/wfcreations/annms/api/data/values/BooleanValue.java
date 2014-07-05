@@ -35,19 +35,37 @@ public class BooleanValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
+	public static BooleanValue TRUE = new BooleanValue(true);
+
+	public static BooleanValue FALSE = new BooleanValue(false);
+
 	public static boolean getValueFor(IValue value) {
 		return (boolean) value.getValue();
 	}
 
 	private final boolean value;
 
-	public BooleanValue(boolean value) {
+	private BooleanValue(boolean value) {
 		this.value = value;
 	}
 
 	@Override
 	public Boolean getValue() {
 		return this.value;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BooleanValue other = (BooleanValue) obj;
+		if (value != other.value)
+			return false;
+		return true;
 	}
 
 	@Override

@@ -44,7 +44,13 @@ public enum ANNMSExceptionCode {
 
 	CONFIG_ERROR(0x0004),
 
-	AUTHENTICATION(0x0005);
+	AUTHENTICATION(0x0005),
+
+	DATA(0x0006),
+
+	NEURALNETWORK(0x0007),
+
+	LEARNINGRULE(0x0008);
 
 	private final int value;
 

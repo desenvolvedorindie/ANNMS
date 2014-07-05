@@ -16,7 +16,8 @@
 	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/reflections-0.9.9-RC1.jar"/>
 	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/guava-17.0.jar"/>
 	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/javassist.jar"/>
-	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/algorithms/mlp.jar"/>
 	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/antlr-4.3-complete.jar"/>
+	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/algorithms/annms-mlp.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SANNMF"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

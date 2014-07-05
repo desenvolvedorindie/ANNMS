@@ -31,9 +31,7 @@ package br.com.wfcreations.annms.core.sqlann.statements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,9 +39,10 @@ import org.slf4j.LoggerFactory;
 import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.lang.ArrayUtils;
 import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
-import br.com.wfcreations.annms.core.transport.message.DataDropResultMessage;
+import br.com.wfcreations.annms.core.transport.message.DropDataResultMessage;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 
 public class DropDataStatement implements SQLANNStatement {
@@ -68,7 +67,7 @@ public class DropDataStatement implements SQLANNStatement {
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
-		if (checkDuplicate(this.dataList))
+		if (ArrayUtils.hasDuplicate(this.dataList))
 			throw new ANNMSRequestValidationException(ANNMSExceptionCode.STORAGE, "data list has duplicated data");
 	}
 
@@ -87,14 +86,6 @@ public class DropDataStatement implements SQLANNStatement {
 			LOGGER.info("Dropped data list: {}", Arrays.toString(new String[removed.size()]));
 		if (nonExistent.size() > 0 && !ifExists)
 			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Non existent data: %s", Arrays.toString(nonExistent.toArray(new String[nonExistent.size()]))));
-		return new DataDropResultMessage(removed.size());
-	}
-
-	private static boolean checkDuplicate(String[] strings) {
-		Set<String> tempSet = new HashSet<String>();
-		for (String str : strings)
-			if (!tempSet.add(str))
-				return true;
-		return false;
+		return new DropDataResultMessage(removed.size());
 	}
 }

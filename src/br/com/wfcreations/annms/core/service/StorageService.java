@@ -2,14 +2,11 @@ package br.com.wfcreations.annms.core.service;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import br.com.wfcreations.annms.core.concurrent.NamedThreadFactory;
 
 public class StorageService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(StorageService.class);
+	//private static final Logger LOGGER = LoggerFactory.getLogger(StorageService.class);
 
 	public static final ScheduledThreadPoolExecutor scheduledTasks = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("ScheduledTasks"));
 

@@ -47,6 +47,28 @@ public class ComplexListValue implements IValue {
 		return this.values;
 	}
 
+	public IValue getValueAt(int index) {
+		return this.values[index];
+	}
+
+	public int size() {
+		return this.values.length;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ComplexListValue other = (ComplexListValue) obj;
+		if (!Arrays.equals(values, other.values))
+			return false;
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		return Arrays.toString(values);

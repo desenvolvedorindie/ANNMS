@@ -1,4 +1,4 @@
-package br.com.wfcreations.annms.test;
+package br.com.wfcreations.annms.test.core.sqlann;
 
 import org.junit.Test;
 

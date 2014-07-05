@@ -36,14 +36,13 @@ public class Client {
 		if (transport != null) {
 			transport.close();
 		}
-		transport = new TSocket("localhost", 9090);
+		transport = new TSocket(host, port);
 		try {
 			transport.open();
 		} catch (TTransportException e) {
 			String error = (e.getCause() == null) ? e.getMessage() : e.getCause().getMessage();
 			throw new RuntimeException("Exception connecting to " + host + ":" + port + ". " + error + ".");
 		}
-
 		TProtocol protocol = new TBinaryProtocol(transport);
 		client = new ANNMSService.Client(protocol);
 	}
@@ -52,6 +51,7 @@ public class Client {
 		if (transport != null) {
 			transport.close();
 			transport = null;
+			client = null;
 		}
 	}
 
@@ -72,20 +72,20 @@ public class Client {
 			System.out.println(String.format("Connected to %s:%s", configuration.host, configuration.port));
 
 			System.out.println(String.format("Welcome to ANNMS CLI version %s", VERSION));
-			
+
 			SQLANNResults result = client.execute("SHOW STATUS");
-			
+
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode actualObj = mapper.readTree(result.data);
-			
+
 			String severVersion = actualObj.get(0).get("SHOW STATUS").get("SERVER_VERSION").asText();
 			String apiVersion = actualObj.get(0).get("SHOW STATUS").get("API_VERSION").asText();
-			System.out.println(String.format("Server Version: %s (%s)", severVersion, apiVersion));
-			
+			System.out.println(String.format("Server Version: %s (API: %s)", severVersion, apiVersion));
+
 			System.out.println(String.format("%s@%s", configuration.user_username, "localhost"));
 
 			printPrompt();
-			
+
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			String line;
 			StringBuilder sb = new StringBuilder();

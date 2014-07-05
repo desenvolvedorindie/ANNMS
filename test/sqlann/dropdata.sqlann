@@ -1,7 +1,7 @@
-DROP DATA IF EXISTS data1;
+DROP DATA IF EXISTS test1;
 
-DROP DATA data1;
+DROP DATA test1;
 
-DROP DATA IF EXISTS data1, data2, data3;
+DROP DATA test;
 
-DROP DATA data1, data2, data3;
+DROP DATA IF EXISTS test1, test2, test3;
