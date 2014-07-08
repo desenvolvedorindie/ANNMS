@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
+ * Copyright (c) Welsiton Ferreira (wfcreations@gmail.com)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -30,8 +30,8 @@
 package br.com.wfcreations.annms.core.sqlann.statements;
 
 import br.com.wfcreations.annms.api.data.Data;
-import br.com.wfcreations.annms.api.data.IValue;
 import br.com.wfcreations.annms.api.data.Pattern;
+import br.com.wfcreations.annms.api.data.values.Value;
 import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
@@ -44,11 +44,11 @@ public class InsertIntoStatement implements SQLANNStatement {
 
 	public final String dataName;
 
-	public final IValue[] values;
+	public final Value[] values;
 
 	public final String query;
 
-	public InsertIntoStatement(String dataName, IValue[] values, String query) {
+	public InsertIntoStatement(String dataName, Value[] values, String query) {
 		this.dataName = dataName;
 		this.values = values;
 		this.query = query;
@@ -70,6 +70,10 @@ public class InsertIntoStatement implements SQLANNStatement {
 		if (data == null)
 			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", dataName));
 		try {
+			for (Value value : values) {
+				System.out.println(value.getClass());
+			}
+
 			data.add(new Pattern(values));
 		} catch (IllegalArgumentException e) {
 			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, e.getMessage());

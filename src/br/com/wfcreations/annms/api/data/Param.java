@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
+ * Copyright (c) Welsiton Ferreira (wfcreations@gmail.com)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -31,15 +31,17 @@ package br.com.wfcreations.annms.api.data;
 
 import java.io.Serializable;
 
+import br.com.wfcreations.annms.api.data.values.IParamValue;
+
 public class Param implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private final String name;
 
-	private final IValue[] values;
+	private final IParamValue[] values;
 
-	public Param(String name, IValue[] values) {
+	public Param(String name, IParamValue[] values) {
 		this.name = name;
 		this.values = values;
 	};
@@ -52,11 +54,11 @@ public class Param implements Serializable {
 		return this.name.equalsIgnoreCase(name);
 	}
 
-	public IValue[] getValues() {
+	public IParamValue[] getValues() {
 		return values;
 	};
 
-	public IValue getValueAt(int index) {
+	public IParamValue getValueAt(int index) {
 		return values[index];
 	}
 

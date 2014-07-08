@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
+ * Copyright (c) Welsiton Ferreira (wfcreations@gmail.com)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,7 +29,7 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
-import br.com.wfcreations.annms.api.data.IValue;
+import br.com.wfcreations.annms.api.data.values.Value;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
@@ -39,11 +39,11 @@ public class RunStatement implements SQLANNStatement {
 
 	public final String modelName;
 
-	public final IValue[] values;
+	public final Value[] values;
 
 	public final String query;
 
-	public RunStatement(String modelName, IValue[] values, String query) {
+	public RunStatement(String modelName, Value[] values, String query) {
 		this.modelName = modelName;
 		this.values = values;
 		this.query = query;

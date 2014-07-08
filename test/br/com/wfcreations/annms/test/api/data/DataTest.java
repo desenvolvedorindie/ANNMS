@@ -1,10 +1,34 @@
+/*
+ * Copyright (c) Welsiton Ferreira (wfcreations@gmail.com)
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ *  Redistributions of source code must retain the above copyright notice, this
+ *  list of conditions and the following disclaimer.
+ *
+ *  Redistributions in binary form must reproduce the above copyright notice, this
+ *  list of conditions and the following disclaimer in the documentation and/or
+ *  other materials provided with the distribution.
+ *
+ *  Neither the name of the WFCreation nor the names of its
+ *  contributors may be used to endorse or promote products derived from
+ *  this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 package br.com.wfcreations.annms.test.api.data;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.LinkedHashMap;
 
 import junit.framework.TestCase;
@@ -14,34 +38,33 @@ import org.junit.Test;
 
 import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
-import br.com.wfcreations.annms.api.data.DataType;
-import br.com.wfcreations.annms.api.data.IValue;
 import br.com.wfcreations.annms.api.data.Pattern;
-import br.com.wfcreations.annms.api.data.select.Select;
+import br.com.wfcreations.annms.api.data.Select;
+import br.com.wfcreations.annms.api.data.type.ListType;
+import br.com.wfcreations.annms.api.data.type.PrimitiveType;
+import br.com.wfcreations.annms.api.data.values.Value;
 import br.com.wfcreations.annms.api.data.values.RealValue;
 import br.com.wfcreations.annms.api.data.values.StringValue;
 
 public class DataTest extends TestCase {
-
-	private final static String FILE_NAME = "iris.data";
 
 	private static Data data;
 
 	@BeforeClass
 	public void setUp() {
 		Attribute[] attr = new Attribute[5];
-		attr[0] = new Attribute("sepallenght", DataType.Native.REAL, true);
-		attr[1] = new Attribute("sepalwidth", DataType.Native.REAL, true);
-		attr[2] = new Attribute("petallenght", DataType.Native.REAL, true);
-		attr[3] = new Attribute("petalwidth", DataType.Native.REAL, true);
-		attr[4] = new Attribute("class", new DataType.ListDataType(new String[] { "Iris-setosa", "Iris-versicolor", "Iris-virginica" }), true);
+		attr[0] = new Attribute("sepallenght", PrimitiveType.REAL, true);
+		attr[1] = new Attribute("sepalwidth", PrimitiveType.REAL, true);
+		attr[2] = new Attribute("petallenght", PrimitiveType.REAL, true);
+		attr[3] = new Attribute("petalwidth", PrimitiveType.REAL, true);
+		attr[4] = new Attribute("class", new ListType(new String[] { "Iris-setosa", "Iris-versicolor", "Iris-virginica" }), true);
 		data = new Data("iris", attr);
 	}
 
 	private void addData() {
-		data.add(new Pattern(new IValue[] { new RealValue(5.1), new RealValue(3.5), new RealValue(1.4), new RealValue(0.2), new StringValue("Iris-setosa") }));
-		data.add(new Pattern(new IValue[] { new RealValue(7.0), new RealValue(3.2), new RealValue(4.7), new RealValue(1.4), new StringValue("Iris-versicolor") }));
-		data.add(new Pattern(new IValue[] { new RealValue(6.3), new RealValue(3.3), new RealValue(6.0), new RealValue(2.5), new StringValue("Iris-virginica") }));
+		data.add(new Pattern(new Value[] { new RealValue(5.1), new RealValue(3.5), new RealValue(1.4), new RealValue(0.2), new StringValue("Iris-setosa") }));
+		data.add(new Pattern(new Value[] { new RealValue(7.0), new RealValue(3.2), new RealValue(4.7), new RealValue(1.4), new StringValue("Iris-versicolor") }));
+		data.add(new Pattern(new Value[] { new RealValue(6.3), new RealValue(3.3), new RealValue(6.0), new RealValue(2.5), new StringValue("Iris-virginica") }));
 	}
 
 	@Test
@@ -56,9 +79,9 @@ public class DataTest extends TestCase {
 		assertEquals("petalwidth", data.getAttributeAt(3).getName());
 		assertEquals("class", data.getAttributeAt(4).getName());
 		// Class
-		assertEquals("Iris-setosa", ((DataType.ListDataType) data.getAttributeAt(4).getType()).getListValuesAt(0));
-		assertEquals("Iris-versicolor", ((DataType.ListDataType) data.getAttributeAt(4).getType()).getListValuesAt(1));
-		assertEquals("Iris-virginica", ((DataType.ListDataType) data.getAttributeAt(4).getType()).getListValuesAt(2));
+		assertEquals("Iris-setosa", ((ListType) data.getAttributeAt(4).getType()).getListValuesAt(0));
+		assertEquals("Iris-versicolor", ((ListType) data.getAttributeAt(4).getType()).getListValuesAt(1));
+		assertEquals("Iris-virginica", ((ListType) data.getAttributeAt(4).getType()).getListValuesAt(2));
 	}
 
 	@Test
@@ -96,65 +119,6 @@ public class DataTest extends TestCase {
 		data.removeAllPatterns();
 	}
 
-	@Test
-	public void testIfSaveAndLoadCorrectly() throws FileNotFoundException, IOException, ClassNotFoundException {
-		addData();
-
-		File file = new File(FILE_NAME);
-
-		FileOutputStream fos = new FileOutputStream(file);
-		data.save(fos);
-		fos.close();
-
-		FileInputStream fis = new FileInputStream(file);
-		Data dataLoaded = new Data(fis);
-		fis.close();
-		data.removeAllPatterns();
-
-		assertEquals("iris", dataLoaded.getName());
-		assertEquals("sepallenght", dataLoaded.getAttributeAt(0).getName());
-		assertEquals("sepalwidth", dataLoaded.getAttributeAt(1).getName());
-		assertEquals("petallenght", dataLoaded.getAttributeAt(2).getName());
-		assertEquals("petalwidth", dataLoaded.getAttributeAt(3).getName());
-		assertEquals("class", dataLoaded.getAttributeAt(4).getName());
-		// Class
-		assertEquals("Iris-setosa", ((DataType.ListDataType) dataLoaded.getAttributeAt(4).getType()).getListValuesAt(0));
-		assertEquals("Iris-versicolor", ((DataType.ListDataType) dataLoaded.getAttributeAt(4).getType()).getListValuesAt(1));
-		assertEquals("Iris-virginica", ((DataType.ListDataType) dataLoaded.getAttributeAt(4).getType()).getListValuesAt(2));
-
-		assertEquals(3, dataLoaded.getPatternsNum());
-		for (int i = 0; i < dataLoaded.getPatternsNum(); i++) {
-			assertEquals(5, dataLoaded.getPatternAt(i).getValuesNum());
-		}
-
-		assertEquals(5.1, dataLoaded.getPatternAt(0).getValueAt(0).getValue());
-		assertEquals(3.5, dataLoaded.getPatternAt(0).getValueAt(1).getValue());
-		assertEquals(1.4, dataLoaded.getPatternAt(0).getValueAt(2).getValue());
-		assertEquals(0.2, dataLoaded.getPatternAt(0).getValueAt(3).getValue());
-		assertEquals("Iris-setosa", dataLoaded.getPatternAt(0).getValueAt(4).getValue());
-
-		assertEquals(7.0, dataLoaded.getPatternAt(1).getValueAt(0).getValue());
-		assertEquals(3.2, dataLoaded.getPatternAt(1).getValueAt(1).getValue());
-		assertEquals(4.7, dataLoaded.getPatternAt(1).getValueAt(2).getValue());
-		assertEquals(1.4, dataLoaded.getPatternAt(1).getValueAt(3).getValue());
-		assertEquals("Iris-versicolor", dataLoaded.getPatternAt(1).getValueAt(4).getValue());
-
-		assertEquals(7.0, dataLoaded.getPatternAt(1).getValueAt(0).getValue());
-		assertEquals(3.2, dataLoaded.getPatternAt(1).getValueAt(1).getValue());
-		assertEquals(4.7, dataLoaded.getPatternAt(1).getValueAt(2).getValue());
-		assertEquals(1.4, dataLoaded.getPatternAt(1).getValueAt(3).getValue());
-		assertEquals("Iris-versicolor", dataLoaded.getPatternAt(1).getValueAt(4).getValue());
-
-		assertEquals(7.0, dataLoaded.getPatternAt(1).getValueAt(0).getValue());
-		assertEquals(3.2, dataLoaded.getPatternAt(1).getValueAt(1).getValue());
-		assertEquals(4.7, dataLoaded.getPatternAt(1).getValueAt(2).getValue());
-		assertEquals(1.4, dataLoaded.getPatternAt(1).getValueAt(3).getValue());
-		assertEquals("Iris-versicolor", dataLoaded.getPatternAt(1).getValueAt(4).getValue());
-
-		assertTrue(file.delete());
-		data.removeAllPatterns();
-	}
-
 	public void testIfCloneCorrectly() {
 		addData();
 		Data dataClone = data.clone();
@@ -166,9 +130,9 @@ public class DataTest extends TestCase {
 		assertEquals("petalwidth", dataClone.getAttributeAt(3).getName());
 		assertEquals("class", dataClone.getAttributeAt(4).getName());
 		// Class
-		assertEquals("Iris-setosa", ((DataType.ListDataType) dataClone.getAttributeAt(4).getType()).getListValuesAt(0));
-		assertEquals("Iris-versicolor", ((DataType.ListDataType) dataClone.getAttributeAt(4).getType()).getListValuesAt(1));
-		assertEquals("Iris-virginica", ((DataType.ListDataType) dataClone.getAttributeAt(4).getType()).getListValuesAt(2));
+		assertEquals("Iris-setosa", ((ListType) dataClone.getAttributeAt(4).getType()).getListValuesAt(0));
+		assertEquals("Iris-versicolor", ((ListType) dataClone.getAttributeAt(4).getType()).getListValuesAt(1));
+		assertEquals("Iris-virginica", ((ListType) dataClone.getAttributeAt(4).getType()).getListValuesAt(2));
 
 		assertEquals(3, dataClone.getPatternsNum());
 		for (int i = 0; i < dataClone.getPatternsNum(); i++) {
@@ -243,10 +207,10 @@ public class DataTest extends TestCase {
 
 	public void testIfMargeCorrectly() {
 		addData();
-		Data data2 = new Data("classes", new Attribute[] { new Attribute("class", new DataType.ListDataType(new String[] { "Iris-setosa", "Iris-versicolor", "Iris-virginica" }), true) });
-		data2.add(new Pattern(new IValue[] { new StringValue("Iris-setosa") }));
-		data2.add(new Pattern(new IValue[] { new StringValue("Iris-versicolor") }));
-		data2.add(new Pattern(new IValue[] { new StringValue("Iris-virginica") }));
+		Data data2 = new Data("classes", new Attribute[] { new Attribute("class", new ListType(new String[] { "Iris-setosa", "Iris-versicolor", "Iris-virginica" }), true) });
+		data2.add(new Pattern(new Value[] { new StringValue("Iris-setosa") }));
+		data2.add(new Pattern(new Value[] { new StringValue("Iris-versicolor") }));
+		data2.add(new Pattern(new Value[] { new StringValue("Iris-virginica") }));
 
 		Data dataSlice = data.slice(0, 4);
 
@@ -260,9 +224,9 @@ public class DataTest extends TestCase {
 		assertEquals("petalwidth", marged.getAttributeAt(3).getName());
 		assertEquals("class", marged.getAttributeAt(4).getName());
 		// Class
-		assertEquals("Iris-setosa", ((DataType.ListDataType) marged.getAttributeAt(4).getType()).getListValuesAt(0));
-		assertEquals("Iris-versicolor", ((DataType.ListDataType) marged.getAttributeAt(4).getType()).getListValuesAt(1));
-		assertEquals("Iris-virginica", ((DataType.ListDataType) marged.getAttributeAt(4).getType()).getListValuesAt(2));
+		assertEquals("Iris-setosa", ((ListType) marged.getAttributeAt(4).getType()).getListValuesAt(0));
+		assertEquals("Iris-versicolor", ((ListType) marged.getAttributeAt(4).getType()).getListValuesAt(1));
+		assertEquals("Iris-virginica", ((ListType) marged.getAttributeAt(4).getType()).getListValuesAt(2));
 
 		assertEquals(3, marged.getPatternsNum());
 		for (int i = 0; i < marged.getPatternsNum(); i++) {

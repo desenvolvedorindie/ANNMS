@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
+ * Copyright (c) Welsiton Ferreira (wfcreations@gmail.com)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -27,11 +27,38 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data;
+package br.com.wfcreations.annms.api.data.type;
 
-import java.io.Serializable;
+import br.com.wfcreations.annms.api.data.values.BooleanValue;
+import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IntegerValue;
+import br.com.wfcreations.annms.api.data.values.RealValue;
+import br.com.wfcreations.annms.api.data.values.StringValue;
 
-public interface IValue extends Serializable {
+public class PrimitiveType implements IType {
 
-	public Object getValue();
+	private static final long serialVersionUID = 1L;
+
+	public static PrimitiveType BOOLEAN = new PrimitiveType(BooleanValue.class);
+
+	public static PrimitiveType INTEGER = new PrimitiveType(IntegerValue.class);
+
+	public static PrimitiveType REAL = new PrimitiveType(RealValue.class);
+
+	public static PrimitiveType STRING = new PrimitiveType(StringValue.class);
+
+	private final Class<? extends Value> representation;
+
+	private PrimitiveType(Class<? extends Value> representation) {
+		this.representation = representation;
+	}
+
+	public Class<? extends Value> getRepresentation() {
+		return representation;
+	}
+
+	@Override
+	public boolean valid(Value value) {
+		return (value.getClass().equals(getRepresentation()));
+	}
 }

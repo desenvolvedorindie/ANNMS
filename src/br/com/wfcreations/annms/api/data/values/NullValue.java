@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
+ * Copyright (c) Welsiton Ferreira (wfcreations@gmail.com)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -29,9 +29,7 @@
  */
 package br.com.wfcreations.annms.api.data.values;
 
-import br.com.wfcreations.annms.api.data.IValue;
-
-public class NullValue implements IValue {
+public class NullValue extends Value {
 
 	private static final long serialVersionUID = 1L;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
+ * Copyright (c) Welsiton Ferreira (wfcreations@gmail.com)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -31,23 +31,21 @@ package br.com.wfcreations.annms.api.data.values;
 
 import java.util.Arrays;
 
-import br.com.wfcreations.annms.api.data.IValue;
-
-public class ComplexListValue implements IValue {
+public class ComplexListValue implements IParamValue {
 
 	private static final long serialVersionUID = 1L;
 
-	private final IValue[] values;
+	private final Value[] values;
 
-	public ComplexListValue(IValue[] values) {
+	public ComplexListValue(Value[] values) {
 		this.values = values;
 	}
 
-	public IValue[] getValue() {
+	public Value[] getValue() {
 		return this.values;
 	}
 
-	public IValue getValueAt(int index) {
+	public Value getValueAt(int index) {
 		return this.values[index];
 	}
 

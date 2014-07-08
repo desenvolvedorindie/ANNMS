@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
+ * Copyright (c) Welsiton Ferreira (wfcreations@gmail.com)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -27,55 +27,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.resources.user;
+package br.com.wfcreations.annms.api.data;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
-public class DefaultUserResource {
+public class Select {
 
-	private static DefaultUserResource instance;
+	protected LinkedHashMap<String, String> columns;
 
-	public static DefaultUserResource getInstance() {
-		if (instance == null) {
-			instance = new DefaultUserResource();
-		}
-		return instance;
+	public Select() {
 	}
 
-	public static void setInstance(DefaultUserResource instance) {
-		DefaultUserResource.instance = instance;
+	public void columns(LinkedHashMap<String, String> columns) {
+		this.columns = columns;
 	}
 
-	public User root;
-
-	private ArrayList<User> users = new ArrayList<User>();
-
-	public void init() {
-
-	}
-
-	public synchronized void insert(User user) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public synchronized User get(String username) {
-		if (root.getUsername().equals(username)) {
-			return root;
-		}
-		for (User user : users) {
-			if (user.getUsername().equals(username)) {
-				return user;
-			}
-		}
-		return null;
-	}
-
-	public synchronized boolean set(String username, User data) {
-		return false;
-	}
-
-	public synchronized boolean delete(String username) {
-		return true;
+	public LinkedHashMap<String, String> columns() {
+		return this.columns;
 	}
 }

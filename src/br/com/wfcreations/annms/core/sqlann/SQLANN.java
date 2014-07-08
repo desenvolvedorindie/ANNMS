@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
+ * Copyright (c) Welsiton Ferreira (wfcreations@gmail.com)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -35,13 +35,15 @@ import java.util.ArrayList;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import br.com.wfcreations.annms.api.data.Attribute;
-import br.com.wfcreations.annms.api.data.DataType;
-import br.com.wfcreations.annms.api.data.IValue;
 import br.com.wfcreations.annms.api.data.Param;
-import br.com.wfcreations.annms.api.data.DataType.Native;
+import br.com.wfcreations.annms.api.data.type.IType;
+import br.com.wfcreations.annms.api.data.type.DateType;
+import br.com.wfcreations.annms.api.data.type.ListType;
+import br.com.wfcreations.annms.api.data.type.PrimitiveType;
 import br.com.wfcreations.annms.api.data.values.BooleanValue;
 import br.com.wfcreations.annms.api.data.values.ComplexListValue;
 import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.values.Value;
 import br.com.wfcreations.annms.api.data.values.IntegerValue;
 import br.com.wfcreations.annms.api.data.values.NullValue;
 import br.com.wfcreations.annms.api.data.values.RealValue;
@@ -60,30 +62,6 @@ import br.com.wfcreations.annms.core.sqlann.statements.ShowStatusStatement;
 import br.com.wfcreations.annms.core.sqlann.statements.TrainStatement;
 
 public class SQLANN extends SQLANNBaseVisitor<Object> {
-
-	public static void replaceAll(StringBuilder builder, String from, String to) {
-		int index = builder.indexOf(from);
-		while (index != -1) {
-			builder.replace(index, index + from.length(), to);
-			index += to.length(); // Move to the end of the replacement
-			index = builder.indexOf(from, index);
-		}
-	}
-
-	public static String formatString(String str) {
-		StringBuilder sb = new StringBuilder(str);
-		replaceAll(sb, "\\b", "\b");
-		replaceAll(sb, "\\t", "\t");
-		replaceAll(sb, "\\n", "\n");
-		replaceAll(sb, "\\f", "\f");
-		replaceAll(sb, "\\r", "\r");
-		replaceAll(sb, "\\\"", "\"");
-		replaceAll(sb, "\\\'", "\'");
-		replaceAll(sb, "\\\\", "\\");
-		sb.deleteCharAt(0);
-		sb.deleteCharAt(sb.length() - 1);
-		return sb.toString();
-	}
 
 	private SQLANNStatement[] statements;
 
@@ -196,7 +174,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 			String dataName = ctx.ID().getText().toUpperCase();
 
-			IValue[] values = (IValue[]) visit(ctx.values());
+			Value[] values = (Value[]) visit(ctx.values());
 
 			String query = ctx.getText().toUpperCase();
 
@@ -210,7 +188,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 		if (ctx != null && ctx.RUN() != null && ctx.VALUES() != null && ctx.OPEN_PARENTHESIS() != null && ctx.CLOSE_PARENTHESIS() != null && ctx.ID() != null && ctx.values() != null) {
 			String modelName = ctx.ID().getText().toUpperCase();
 
-			IValue[] values = (IValue[]) visit(ctx.values());
+			Value[] values = (Value[]) visit(ctx.values());
 
 			String query = ctx.getText().toUpperCase();
 
@@ -312,7 +290,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public Attribute visitDataAttribute(@NotNull SQLANNParser.DataAttributeContext ctx) {
 		if (ctx != null && ctx.ID() != null && ctx.dataType() != null) {
-			DataType dataType = (DataType) visit(ctx.dataType());
+			IType dataType = (IType) visit(ctx.dataType());
 			boolean notNull = false;
 			if (ctx.NOT() != null && ctx.NULL() != null)
 				notNull = true;
@@ -325,50 +303,50 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	}
 
 	@Override
-	public Native visitBooleanDataType(@NotNull SQLANNParser.BooleanDataTypeContext ctx) {
+	public PrimitiveType visitBooleanDataType(@NotNull SQLANNParser.BooleanDataTypeContext ctx) {
 		if (ctx != null && ctx.BOOLEAN() != null) {
-			return Native.BOOLEAN;
+			return PrimitiveType.BOOLEAN;
 		}
 		return null;
 	}
 
 	@Override
-	public Native visitIntegerDataType(@NotNull SQLANNParser.IntegerDataTypeContext ctx) {
+	public PrimitiveType visitIntegerDataType(@NotNull SQLANNParser.IntegerDataTypeContext ctx) {
 		if (ctx != null && ctx.INTEGER() != null) {
-			return Native.INTEGER;
+			return PrimitiveType.INTEGER;
 		}
 		return null;
 	}
 
 	@Override
-	public Native visitRealDataType(@NotNull SQLANNParser.RealDataTypeContext ctx) {
+	public PrimitiveType visitRealDataType(@NotNull SQLANNParser.RealDataTypeContext ctx) {
 		if (ctx != null && ctx.REAL() != null) {
-			return Native.REAL;
+			return PrimitiveType.REAL;
 		}
 		return null;
 	}
 
 	@Override
-	public Native visitStringDataType(@NotNull SQLANNParser.StringDataTypeContext ctx) {
+	public PrimitiveType visitStringDataType(@NotNull SQLANNParser.StringDataTypeContext ctx) {
 		if (ctx != null && ctx.STRING() != null) {
-			return Native.STRING;
+			return PrimitiveType.STRING;
 		}
 		return null;
 	}
 
 	@Override
-	public DataType.DateDataType visitDateDataType(@NotNull SQLANNParser.DateDataTypeContext ctx) {
+	public DateType visitDateDataType(@NotNull SQLANNParser.DateDataTypeContext ctx) {
 		if (ctx != null && ctx.DATE() != null && ctx.String() != null) {
-			return new DataType.DateDataType(formatString(ctx.String().getText()));
+			return new DateType(SQLANNUtils.formatString(ctx.String().getText()));
 		}
 		return null;
 	}
 
 	@Override
-	public DataType.ListDataType visitListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx) {
+	public ListType visitListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx) {
 		if (ctx != null && ctx.list() != null) {
 			String[] listValues = (String[]) visit(ctx.list());
-			return new DataType.ListDataType(listValues);
+			return new ListType(listValues);
 		}
 		return null;
 	}
@@ -400,9 +378,9 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public Param visitParam(@NotNull SQLANNParser.ParamContext ctx) {
 		if (ctx != null && ctx.ID() != null) {
-			IValue[] values = new IValue[ctx.paramValue() == null ? 0 : ctx.paramValue().size()];
+			Value[] values = new Value[ctx.paramValue() == null ? 0 : ctx.paramValue().size()];
 			for (int i = 0; i < ctx.paramValue().size(); i++) {
-				values[i] = (IValue) visit(ctx.paramValue(i));
+				values[i] = (Value) visit(ctx.paramValue(i));
 			}
 
 			String name = ctx.ID().getText().toUpperCase();
@@ -451,7 +429,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public StringValue visitStringValue(@NotNull SQLANNParser.StringValueContext ctx) {
 		if (ctx != null && ctx.String() != null) {
-			return new StringValue(formatString(ctx.String().getText()));
+			return new StringValue(SQLANNUtils.formatString(ctx.String().getText()));
 		}
 		return null;
 	}
@@ -465,11 +443,11 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	}
 
 	@Override
-	public IValue[] visitValues(@NotNull SQLANNParser.ValuesContext ctx) {
+	public Value[] visitValues(@NotNull SQLANNParser.ValuesContext ctx) {
 		if (ctx != null && ctx.value() != null && ctx.value().size() > 0) {
-			IValue[] values = new IValue[ctx.value().size()];
+			Value[] values = new Value[ctx.value().size()];
 			for (int i = 0; i < ctx.value().size(); i++) {
-				values[i] = (IValue) visit(ctx.value(i));
+				values[i] = (Value) visit(ctx.value(i));
 			}
 			return values;
 		}
@@ -479,9 +457,9 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public ComplexListValue visitComplexList(@NotNull SQLANNParser.ComplexListContext ctx) {
 		if (ctx != null && ctx.paramValue() != null && ctx.OPEN_BRACKETS() != null && ctx.CLOSE_BRACKETS() != null && ctx.paramValue().size() > 0) {
-			IValue[] values = new IValue[ctx.paramValue().size()];
+			Value[] values = new Value[ctx.paramValue().size()];
 			for (int i = 0; i < ctx.paramValue().size(); i++) {
-				values[i] = (IValue) visit(ctx.paramValue(i));
+				values[i] = (Value) visit(ctx.paramValue(i));
 			}
 			return new ComplexListValue(values);
 		}

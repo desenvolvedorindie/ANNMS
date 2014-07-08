@@ -37,7 +37,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.com.wfcreations.annms.api.thrift.ANNMSService;
-import br.com.wfcreations.annms.core.ANNMS;
 import br.com.wfcreations.annms.core.service.IServer;
 import br.com.wfcreations.annms.core.thrift.TServerFactory.ServerType;
 
@@ -47,13 +46,19 @@ public class ThriftServer implements IServer {
 
 	private volatile ThriftServerThread server;
 
-	public ThriftServer() {
+	private String serverType;
+
+	private int port;
+
+	public ThriftServer(String serverType, int port) {
+		this.serverType = serverType;
+		this.port = port;
 	}
 
 	@Override
 	public void start() {
 		if (server == null) {
-			server = new ThriftServerThread();
+			server = new ThriftServerThread(serverType, port);
 			server.start();
 		}
 	}
@@ -79,13 +84,13 @@ public class ThriftServer implements IServer {
 	private static class ThriftServerThread extends Thread {
 		private TServer serverEngine;
 
-		public ThriftServerThread() {
+		public ThriftServerThread(String thriftServer, int port) {
 			TServerFactory.Args args = new TServerFactory.Args();
 			args.transportProtocolFactory = new TBinaryProtocol.Factory(true, true);
-			args.address = new InetSocketAddress(ANNMS.instance.configuration.thirft_port);
+			args.address = new InetSocketAddress(port);
 			args.handler = new ANNMSHandler();
 			args.processor = new ANNMSService.Processor<>(args.handler);
-			ServerType type = ANNMS.instance.configuration.thrift_server == "ThreadPoolServer" ? TServerFactory.ServerType.ThreadPoolServer : TServerFactory.ServerType.SimpleServer;
+			ServerType type = thriftServer == "ThreadPoolServer" ? TServerFactory.ServerType.ThreadPoolServer : TServerFactory.ServerType.SimpleServer;
 			serverEngine = TServerFactory.createServer(type, args);
 
 			if (serverEngine == null)

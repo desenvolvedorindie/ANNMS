@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Welsiton Ferreira (wfcreations@gmail.com)
+ * Copyright (c) Welsiton Ferreira (wfcreations@gmail.com)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -30,31 +30,25 @@
 package br.com.wfcreations.annms.api.data;
 
 import java.io.Serializable;
-import java.util.HashSet;
 
+import br.com.wfcreations.annms.api.data.representation.IRepresentator;
+import br.com.wfcreations.annms.api.data.type.IType;
+import br.com.wfcreations.annms.api.data.values.Value;
 import br.com.wfcreations.annms.api.data.values.NullValue;
 
 public class Attribute implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static boolean checkDuplicate(Attribute[] attributes) {
-		HashSet<String> names = new HashSet<String>();
-		for (int i = 0; i < attributes.length; i++) {
-			if (names.contains(attributes[i].getName()))
-				return true;
-			names.add(attributes[i].getName());
-		}
-		return false;
-	}
-
 	private final String name;
 
-	private final DataType type;
+	private final IType type;
 
 	private final boolean notNull;
 
-	public Attribute(String name, DataType type, boolean notNull) {
+	private IRepresentator representator;
+
+	public Attribute(String name, IType type, boolean notNull) {
 		this.name = name;
 		this.type = type;
 		this.notNull = notNull;
@@ -64,7 +58,7 @@ public class Attribute implements Serializable {
 		return name;
 	}
 
-	public DataType getType() {
+	public IType getType() {
 		return type;
 	}
 
@@ -72,12 +66,20 @@ public class Attribute implements Serializable {
 		return notNull;
 	}
 
-	public boolean validate(IValue value) {
-		return (!notNull && value instanceof NullValue) || type.validate(value);
+	public boolean validate(Value value) {
+		return (!notNull && value instanceof NullValue) || type.valid(value);
+	}
+
+	public IRepresentator getVisitor() {
+		return this.representator;
+	}
+
+	public void setVisitor(IRepresentator visitor) {
+		this.representator = visitor;
 	}
 
 	@Override
 	public String toString() {
-		return "Attribute [name=" + name + ", type=" + type + "]";
+		return String.format("Attribute [name=%s, type=%s]", this.name, this.type.toString());
 	}
 }
