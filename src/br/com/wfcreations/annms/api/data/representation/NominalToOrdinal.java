@@ -33,34 +33,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.type.ListType;
-import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.IntegerValue;
+import br.com.wfcreations.annms.api.data.values.Int;
 
 public class NominalToOrdinal implements IRepresentator {
 
 	private static final long serialVersionUID = 1L;
 
-	private IDValue[] classes;
+	private ID[] classes;
 
-	private Map<IDValue, IValue[]> map = new HashMap<IDValue, IValue[]>();
+	private Map<ID, IValue[]> map = new HashMap<ID, IValue[]>();
 
 	public NominalToOrdinal(ListType listType) {
-		this.classes = new IDValue[listType.getListValuesNum()];
-		IDValue c;
+		this.classes = new ID[listType.getListValuesNum()];
+		ID c;
 
 		for (int i = 0; i < listType.getListValuesNum(); i++) {
 			c = listType.getValuesAt(i);
 			this.classes[i] = c;
-			map.put(c, new IValue[] { new IntegerValue(i) });
+			map.put(c, new IValue[] { new Int(i) });
 		}
 	}
 
 	@Override
 	public IValue[] encode(IValue value) {
-		if (!(value instanceof IDValue))
+		if (!(value instanceof ID))
 			throw new IllegalArgumentException("Must be mominal");
-		IValue[] values = map.get(IDValue.getValueFor(value));
+		IValue[] values = map.get(ID.getValueFor(value));
 		if (values == null)
 			throw new IllegalArgumentException("Class not found");
 		return values;
@@ -70,10 +70,10 @@ public class NominalToOrdinal implements IRepresentator {
 	public IValue decode(IValue[] values) {
 		if (values.length != 1)
 			throw new IllegalArgumentException("Invalid value");
-		if (!(values[0] instanceof IntegerValue))
+		if (!(values[0] instanceof Int))
 			throw new IllegalArgumentException("Invalid type");
 
-		int v = IntegerValue.getValueFor(values[0]);
+		int v = Int.getValueFor(values[0]);
 		if (v < 0 && v > classes.length - 1)
 			throw new IllegalArgumentException("Invalid range");
 

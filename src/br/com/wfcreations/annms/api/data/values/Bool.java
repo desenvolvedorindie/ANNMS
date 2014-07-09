@@ -29,28 +29,27 @@
  */
 package br.com.wfcreations.annms.api.data.values;
 
-import java.util.Arrays;
-
-public class ComplexListValue implements IParamValue {
+public class Bool implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	private final IParamValue[] values;
+	public static Bool TRUE = new Bool(true);
 
-	public ComplexListValue(IParamValue[] values) {
-		this.values = values;
+	public static Bool FALSE = new Bool(false);
+
+	public static boolean getValueFor(IValue value) {
+		return (boolean) value.getValue();
 	}
 
-	public IParamValue[] getValue() {
-		return this.values;
+	private final boolean value;
+
+	private Bool(boolean value) {
+		this.value = value;
 	}
 
-	public IParamValue getValueAt(int index) {
-		return this.values[index];
-	}
-
-	public int size() {
-		return this.values.length;
+	@Override
+	public Boolean getValue() {
+		return this.value;
 	}
 
 	@Override
@@ -61,14 +60,14 @@ public class ComplexListValue implements IParamValue {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ComplexListValue other = (ComplexListValue) obj;
-		if (!Arrays.equals(values, other.values))
+		Bool other = (Bool) obj;
+		if (value != other.value)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return Arrays.toString(values);
+		return String.valueOf(this.value).toUpperCase();
 	}
 }

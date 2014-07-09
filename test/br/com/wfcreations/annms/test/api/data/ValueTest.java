@@ -4,26 +4,26 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import br.com.wfcreations.annms.api.data.values.BooleanValue;
-import br.com.wfcreations.annms.api.data.values.IDValue;
-import br.com.wfcreations.annms.api.data.values.IntegerValue;
-import br.com.wfcreations.annms.api.data.values.NullValue;
-import br.com.wfcreations.annms.api.data.values.RealValue;
-import br.com.wfcreations.annms.api.data.values.StringValue;
+import br.com.wfcreations.annms.api.data.values.Bool;
+import br.com.wfcreations.annms.api.data.values.ID;
+import br.com.wfcreations.annms.api.data.values.Int;
+import br.com.wfcreations.annms.api.data.values.Null;
+import br.com.wfcreations.annms.api.data.values.Real;
+import br.com.wfcreations.annms.api.data.values.Str;
 
 public class ValueTest {
 
 	@Test
 	public void testBooleanValue() {
-		assertEquals(true, BooleanValue.TRUE.getValue());
-		assertEquals(false, BooleanValue.FALSE.getValue());
-		assertEquals(BooleanValue.TRUE, BooleanValue.TRUE);
-		assertEquals(BooleanValue.FALSE, BooleanValue.FALSE);
-		assertNotEquals(BooleanValue.TRUE, BooleanValue.FALSE);
-		assertEquals("TRUE", BooleanValue.TRUE.toString());
-		assertEquals("FALSE", BooleanValue.FALSE.toString());
-		assertTrue(BooleanValue.getValueFor(BooleanValue.TRUE));
-		assertFalse(BooleanValue.getValueFor(BooleanValue.FALSE));
+		assertEquals(true, Bool.TRUE.getValue());
+		assertEquals(false, Bool.FALSE.getValue());
+		assertEquals(Bool.TRUE, Bool.TRUE);
+		assertEquals(Bool.FALSE, Bool.FALSE);
+		assertNotEquals(Bool.TRUE, Bool.FALSE);
+		assertEquals("TRUE", Bool.TRUE.toString());
+		assertEquals("FALSE", Bool.FALSE.toString());
+		assertTrue(Bool.getValueFor(Bool.TRUE));
+		assertFalse(Bool.getValueFor(Bool.FALSE));
 	}
 
 	@Test
@@ -33,25 +33,25 @@ public class ValueTest {
 
 	@Test
 	public void testIDValue() {
-		IDValue idv1 = new IDValue("class1");
-		IDValue idv2 = new IDValue("class2");
+		ID idv1 = new ID("class1");
+		ID idv2 = new ID("class2");
 
 		assertEquals("CLASS1", idv1.getValue());
 		assertEquals("CLASS2", idv2.getValue());
 		assertEquals("CLASS1", idv1.toString());
 		assertEquals("CLASS2", idv2.toString());
-		assertEquals(new IDValue("class1"), idv1);
-		assertEquals(new IDValue("CLASS1"), idv1);
-		assertEquals(new IDValue("ClAsS1"), idv1);
-		assertEquals("CLASS1", IDValue.getValueFor(idv1));
+		assertEquals(new ID("class1"), idv1);
+		assertEquals(new ID("CLASS1"), idv1);
+		assertEquals(new ID("ClAsS1"), idv1);
+		assertEquals("CLASS1", ID.getValueFor(idv1));
 	}
 
 	@Test
 	public void testIntegervalue() {
-		IntegerValue iv1 = new IntegerValue();
-		IntegerValue iv2 = new IntegerValue(-10);
-		IntegerValue iv3 = new IntegerValue(0);
-		IntegerValue iv4 = new IntegerValue(10);
+		Int iv1 = new Int();
+		Int iv2 = new Int(-10);
+		Int iv3 = new Int(0);
+		Int iv4 = new Int(10);
 
 		assertTrue(0 == iv1.getValue());
 		assertTrue(-10 == iv2.getValue());
@@ -61,20 +61,20 @@ public class ValueTest {
 		assertEquals("0", iv1.toString());
 		assertEquals("-10", iv2.toString());
 		assertEquals("10", iv4.toString());
-		assertEquals(0, IntegerValue.getValueFor(iv1));
-		assertEquals(-10, IntegerValue.getValueFor(iv2));
+		assertEquals(0, Int.getValueFor(iv1));
+		assertEquals(-10, Int.getValueFor(iv2));
 	}
 
 	@Test
 	public void testInvalidIDFormat() {
 		try {
-			new IDValue("");
+			new ID("");
 		} catch (Exception e) {
 			assertEquals(IllegalArgumentException.class, e.getClass());
 		}
 
 		try {
-			new IDValue("asdsad a sd");
+			new ID("asdsad a sd");
 		} catch (Exception e) {
 			assertEquals(IllegalArgumentException.class, e.getClass());
 		}
@@ -82,16 +82,16 @@ public class ValueTest {
 
 	@Test
 	public void testNullValue() {
-		assertNull(NullValue.VALUE.getValue());
-		assertEquals("NULL", NullValue.VALUE.toString());
+		assertNull(Null.VALUE.getValue());
+		assertEquals("NULL", Null.VALUE.toString());
 	}
 
 	@Test
 	public void testRealValue() {
-		RealValue rv1 = new RealValue();
-		RealValue rv2 = new RealValue(-10.5);
-		RealValue rv3 = new RealValue(0);
-		RealValue rv4 = new RealValue(10.5);
+		Real rv1 = new Real();
+		Real rv2 = new Real(-10.5);
+		Real rv3 = new Real(0);
+		Real rv4 = new Real(10.5);
 
 		assertTrue(0 == rv1.getValue());
 		assertTrue(-10.5 == rv2.getValue());
@@ -101,20 +101,20 @@ public class ValueTest {
 		assertEquals("0.0", rv1.toString());
 		assertEquals("-10.5", rv2.toString());
 		assertEquals("10.5", rv4.toString());
-		assertEquals(0, RealValue.getValueFor(rv1), 0);
-		assertEquals(-10.5, RealValue.getValueFor(rv2), 0);
+		assertEquals(0, Real.getValueFor(rv1), 0);
+		assertEquals(-10.5, Real.getValueFor(rv2), 0);
 	}
 
 	@Test
 	public void testStringValue() {
-		StringValue sv1 = new StringValue();
-		StringValue sv2 = new StringValue("string 1");
-		StringValue sv3 = new StringValue("string 2");
+		Str sv1 = new Str();
+		Str sv2 = new Str("string 1");
+		Str sv3 = new Str("string 2");
 		assertEquals("", sv1.getValue());
 		assertEquals("string 1", sv2.getValue());
 		assertEquals("string 2", sv3.getValue());
-		assertEquals(new StringValue("string 1"), sv2);
-		assertNotEquals(new StringValue("String 1"), sv2);
+		assertEquals(new Str("string 1"), sv2);
+		assertNotEquals(new Str("String 1"), sv2);
 		assertEquals("string 2", sv3.toString());
 		assertNotEquals("String 2", sv3.toString());
 	}

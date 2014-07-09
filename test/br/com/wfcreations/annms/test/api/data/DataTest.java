@@ -40,13 +40,13 @@ import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.api.data.Pattern;
 import br.com.wfcreations.annms.api.data.Select;
-import br.com.wfcreations.annms.api.data.type.DateType;
+import br.com.wfcreations.annms.api.data.type.Date;
 import br.com.wfcreations.annms.api.data.type.ListType;
-import br.com.wfcreations.annms.api.data.type.PrimitiveType;
-import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.type.Primitive;
+import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.RealValue;
-import br.com.wfcreations.annms.api.data.values.StringValue;
+import br.com.wfcreations.annms.api.data.values.Real;
+import br.com.wfcreations.annms.api.data.values.Str;
 
 public class DataTest {
 
@@ -66,20 +66,20 @@ public class DataTest {
 
 	private static String LIST_VALUE3 = "value3";
 
-	private IDValue[] list;
+	private ID[] list;
 
 	private Data data, data2, data3;
 
 	@Before
 	public void setUp() {
-		list = new IDValue[] { new IDValue(LIST_VALUE1), new IDValue(LIST_VALUE2), new IDValue(LIST_VALUE3) };
+		list = new ID[] { new ID(LIST_VALUE1), new ID(LIST_VALUE2), new ID(LIST_VALUE3) };
 
 		Attribute[] attr = new Attribute[5];
-		attr[0] = new Attribute(new IDValue(ATTR1), PrimitiveType.BOOLEAN, true);
-		attr[1] = new Attribute(new IDValue(ATTR2), PrimitiveType.INTEGER, true);
-		attr[2] = new Attribute(new IDValue(ATTR3), PrimitiveType.REAL, true);
-		attr[3] = new Attribute(new IDValue(ATTR4), PrimitiveType.STRING, true);
-		attr[4] = new Attribute(new IDValue(ATTR5), new ListType(list), true);
+		attr[0] = new Attribute(new ID(ATTR1), Primitive.BOOLEAN, true);
+		attr[1] = new Attribute(new ID(ATTR2), Primitive.INTEGER, true);
+		attr[2] = new Attribute(new ID(ATTR3), Primitive.REAL, true);
+		attr[3] = new Attribute(new ID(ATTR4), Primitive.STRING, true);
+		attr[4] = new Attribute(new ID(ATTR5), new ListType(list), true);
 
 		data = new Data("", attr);
 	}
@@ -219,10 +219,10 @@ public class DataTest {
 	}
 
 	public void testIfMargeCorrectly() {
-		Data data2 = new Data("classes", new Attribute[] { new Attribute(new IDValue("class"), new ListType(new IDValue[] { new IDValue("Iris-setosa"), new IDValue("Iris-versicolor"), new IDValue("Iris-virginica") }), true) });
-		data2.add(new Pattern(new IValue[] { new StringValue("Iris-setosa") }));
-		data2.add(new Pattern(new IValue[] { new StringValue("Iris-versicolor") }));
-		data2.add(new Pattern(new IValue[] { new StringValue("Iris-virginica") }));
+		Data data2 = new Data("classes", new Attribute[] { new Attribute(new ID("class"), new ListType(new ID[] { new ID("Iris-setosa"), new ID("Iris-versicolor"), new ID("Iris-virginica") }), true) });
+		data2.add(new Pattern(new IValue[] { new Str("Iris-setosa") }));
+		data2.add(new Pattern(new IValue[] { new Str("Iris-versicolor") }));
+		data2.add(new Pattern(new IValue[] { new Str("Iris-virginica") }));
 
 		Data dataSlice = data.slice(0, 4);
 
@@ -273,10 +273,10 @@ public class DataTest {
 
 	public void testForDataSelect() {
 		Select where = new Select();
-		LinkedHashMap<IDValue, IDValue> col = new LinkedHashMap<IDValue, IDValue>();
-		col.put(new IDValue("sepallenght"), new IDValue("ls"));
-		col.put(new IDValue("sepalwidth"), new IDValue("sw"));
-		col.put(new IDValue("class"), new IDValue("c"));
+		LinkedHashMap<ID, ID> col = new LinkedHashMap<ID, ID>();
+		col.put(new ID("sepallenght"), new ID("ls"));
+		col.put(new ID("sepalwidth"), new ID("sw"));
+		col.put(new ID("class"), new ID("c"));
 		where.columns(col);
 		Data dataSelected = data.fetch(where);
 

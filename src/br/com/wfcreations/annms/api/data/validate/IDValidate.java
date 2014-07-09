@@ -32,7 +32,7 @@ package br.com.wfcreations.annms.api.data.validate;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IValue;
 
 public class IDValidate extends ValidateAbstract {
@@ -64,7 +64,7 @@ public class IDValidate extends ValidateAbstract {
 				result = result && isValid(v);
 			}
 			return result;
-		} else if (!(value instanceof IDValue)) {
+		} else if (!(value instanceof ID)) {
 			error(messageTemplates, INVALID, null);
 			return false;
 		}

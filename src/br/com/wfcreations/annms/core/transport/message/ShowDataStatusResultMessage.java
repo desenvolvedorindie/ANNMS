@@ -7,7 +7,7 @@ import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.type.ListType;
-import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.values.ID;
 
 public class ShowDataStatusResultMessage extends ResultMessage {
 
@@ -25,7 +25,7 @@ public class ShowDataStatusResultMessage extends ResultMessage {
 		Map<String, Object> param = new LinkedHashMap<String, Object>();
 		List<Map<String, Object>> attrs = new ArrayList<Map<String, Object>>();
 		Map<String, Object> properties;
-		IDValue[] listValues;
+		ID[] listValues;
 		int i;
 
 		param.put("NAME", this.name);
@@ -34,7 +34,7 @@ public class ShowDataStatusResultMessage extends ResultMessage {
 			properties.put("NAME", attribute.getID());
 			if (attribute.getType() instanceof ListType) {
 				ListType listDataType = (ListType) attribute.getType();
-				listValues = new IDValue[listDataType.getListValuesNum()];
+				listValues = new ID[listDataType.getListValuesNum()];
 				for (i = 0; i < listDataType.getListValuesNum(); i++)
 					listValues[i] = listDataType.getValuesAt(i);
 

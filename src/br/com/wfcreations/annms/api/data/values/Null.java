@@ -29,27 +29,18 @@
  */
 package br.com.wfcreations.annms.api.data.values;
 
-public class RealValue implements IValue {
+public class Null implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public static double getValueFor(IValue value) {
-		return (double) value.getValue();
-	}
+	public static Null VALUE = new Null();
 
-	private final double value;
-
-	public RealValue() {
-		this(0);
-	}
-
-	public RealValue(double value) {
-		this.value = value;
+	private Null() {
 	}
 
 	@Override
-	public Double getValue() {
-		return this.value;
+	public Object getValue() {
+		return null;
 	}
 
 	@Override
@@ -60,14 +51,11 @@ public class RealValue implements IValue {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		RealValue other = (RealValue) obj;
-		if (Double.doubleToLongBits(value) != Double.doubleToLongBits(other.value))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return String.valueOf(this.value);
+		return "NULL";
 	}
 }

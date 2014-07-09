@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.RealValue;
+import br.com.wfcreations.annms.api.data.values.Real;
 
 public class RealValidate extends ValidateAbstract {
 
@@ -64,7 +64,7 @@ public class RealValidate extends ValidateAbstract {
 				result = result && isValid(v);
 			}
 			return result;
-		} else if (!(value instanceof RealValue)) {
+		} else if (!(value instanceof Real)) {
 			error(messageTemplates, INVALID, null);
 			return false;
 		}

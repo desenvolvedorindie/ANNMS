@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.IntegerValue;
+import br.com.wfcreations.annms.api.data.values.Int;
 
 public class IntValidate extends ValidateAbstract {
 
@@ -64,7 +64,7 @@ public class IntValidate extends ValidateAbstract {
 				result = result && isValid(v);
 			}
 			return result;
-		} else if (!(value instanceof IntegerValue)) {
+		} else if (!(value instanceof Int)) {
 			error(messageTemplates, INVALID, null);
 			return false;
 		}

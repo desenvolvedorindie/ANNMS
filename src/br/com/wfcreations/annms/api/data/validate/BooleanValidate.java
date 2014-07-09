@@ -32,7 +32,7 @@ package br.com.wfcreations.annms.api.data.validate;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.wfcreations.annms.api.data.values.BooleanValue;
+import br.com.wfcreations.annms.api.data.values.Bool;
 import br.com.wfcreations.annms.api.data.values.IValue;
 
 public class BooleanValidate extends ValidateAbstract {
@@ -64,7 +64,7 @@ public class BooleanValidate extends ValidateAbstract {
 			for (IValue v : values) {
 				result = result && isValid(v);
 			}
-		} else if (!(value instanceof BooleanValue)) {
+		} else if (!(value instanceof Bool)) {
 			error(messageTemplates, INVALID, null);
 			return false;
 		}

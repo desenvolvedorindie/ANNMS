@@ -29,18 +29,28 @@
  */
 package br.com.wfcreations.annms.api.data.values;
 
-public class NullValue implements IValue {
+import java.util.Arrays;
+
+public class ComplexList implements IParamValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public static NullValue VALUE = new NullValue();
+	private final IParamValue[] values;
 
-	private NullValue() {
+	public ComplexList(IParamValue[] values) {
+		this.values = values;
 	}
 
-	@Override
-	public Object getValue() {
-		return null;
+	public IParamValue[] getValue() {
+		return this.values;
+	}
+
+	public IParamValue getValueAt(int index) {
+		return this.values[index];
+	}
+
+	public int size() {
+		return this.values.length;
 	}
 
 	@Override
@@ -51,11 +61,14 @@ public class NullValue implements IValue {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		ComplexList other = (ComplexList) obj;
+		if (!Arrays.equals(values, other.values))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "NULL";
+		return Arrays.toString(values);
 	}
 }

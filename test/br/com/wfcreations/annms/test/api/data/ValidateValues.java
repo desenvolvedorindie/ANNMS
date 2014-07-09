@@ -42,8 +42,8 @@ import br.com.wfcreations.annms.api.data.validate.IntValidate;
 import br.com.wfcreations.annms.api.data.validate.RealValidate;
 import br.com.wfcreations.annms.api.data.validate.ValidateAbstract;
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.IntegerValue;
-import br.com.wfcreations.annms.api.data.values.RealValue;
+import br.com.wfcreations.annms.api.data.values.Int;
+import br.com.wfcreations.annms.api.data.values.Real;
 
 public class ValidateValues {
 
@@ -66,20 +66,20 @@ public class ValidateValues {
 	@Test
 	public void betweenTest() {
 		ValidateAbstract validate = new BetweenValidate(1, 5, true);
-		IntegerValue integer = new IntegerValue(5);
-		RealValue real = new RealValue(5);
+		Int integer = new Int(5);
+		Real real = new Real(5);
 		IValue[] values = new IValue[] { integer, real };
-		assertTrue(validate.isValid(new IntegerValue(2)));
-		assertFalse(validate.isValid(new RealValue(10)));
+		assertTrue(validate.isValid(new Int(2)));
+		assertFalse(validate.isValid(new Real(10)));
 		assertTrue(validate.isValid(values));
 	}
 
 	@Test
 	public void intTest() {
 		ValidateAbstract validate = new IntValidate(true);
-		IntegerValue integer = new IntegerValue(9);
-		RealValue real = new RealValue(5.2);
-		IValue[] values = new IValue[] { integer, new IntegerValue(2) };
+		Int integer = new Int(9);
+		Real real = new Real(5.2);
+		IValue[] values = new IValue[] { integer, new Int(2) };
 		assertTrue(validate.isValid(integer));
 		assertFalse(validate.isValid(real));
 		assertTrue(validate.isValid(values));
@@ -88,9 +88,9 @@ public class ValidateValues {
 	@Test
 	public void realTest() {
 		ValidateAbstract validate = new RealValidate(true);
-		IntegerValue integer = new IntegerValue(10);
-		RealValue real = new RealValue(5.2);
-		IValue[] values = new IValue[] { real, new RealValue(2.5) };
+		Int integer = new Int(10);
+		Real real = new Real(5.2);
+		IValue[] values = new IValue[] { real, new Real(2.5) };
 		assertFalse(validate.isValid(integer));
 		assertTrue(validate.isValid(real));
 		assertTrue(validate.isValid(values));

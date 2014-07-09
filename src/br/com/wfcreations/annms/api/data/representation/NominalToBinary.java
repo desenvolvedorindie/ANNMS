@@ -33,24 +33,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.type.ListType;
-import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.RealValue;
+import br.com.wfcreations.annms.api.data.values.Real;
 
 public class NominalToBinary implements IRepresentator {
 
 	private static final long serialVersionUID = 1L;
 
-	private Map<IDValue, IValue[]> map = new HashMap<IDValue, IValue[]>();
+	private Map<ID, IValue[]> map = new HashMap<ID, IValue[]>();
 
-	private IDValue[] classes;
+	private ID[] classes;
 
 	public NominalToBinary(ListType listType) {
 		if (listType.getListValuesNum() < 2)
 			throw new IllegalArgumentException("Must have more than 1 class");
 
-		this.classes = new IDValue[listType.getListValuesNum()];
-		IDValue c;
+		this.classes = new ID[listType.getListValuesNum()];
+		ID c;
 
 		for (int i = 0; i < listType.getListValuesNum(); i++) {
 			c = listType.getValuesAt(i);
@@ -60,21 +60,21 @@ public class NominalToBinary implements IRepresentator {
 	}
 
 	private static IValue[] generate(int size, int index) {
-		IValue[] value = new RealValue[size];
+		IValue[] value = new Real[size];
 		for (int i = 0; i < size; i++) {
 			if (i == index)
-				value[i] = new RealValue(1);
+				value[i] = new Real(1);
 			else
-				value[i] = new RealValue();
+				value[i] = new Real();
 		}
 		return value;
 	}
 
 	@Override
 	public IValue[] encode(IValue value) {
-		if (!(value instanceof IDValue))
+		if (!(value instanceof ID))
 			throw new IllegalArgumentException("Must be mominal");
-		IValue[] values = map.get(IDValue.getValueFor(value));
+		IValue[] values = map.get(ID.getValueFor(value));
 		if (values == null)
 			throw new IllegalArgumentException("Class not found");
 		return values;
@@ -91,9 +91,9 @@ public class NominalToBinary implements IRepresentator {
 		double v = 0;
 
 		for (int i = 0; i < values.length; i++) {
-			if (!(values[i] instanceof RealValue))
+			if (!(values[i] instanceof Real))
 				throw new IllegalArgumentException("Invalid data type");
-			v = RealValue.getValueFor(values[i]);
+			v = Real.getValueFor(values[i]);
 			if (v == 1) {
 				oneCount++;
 				pos = i;
@@ -114,7 +114,7 @@ public class NominalToBinary implements IRepresentator {
 		return classes.length;
 	}
 
-	public IDValue getClassAt(int index) {
+	public ID getClassAt(int index) {
 		return classes[index];
 	}
 

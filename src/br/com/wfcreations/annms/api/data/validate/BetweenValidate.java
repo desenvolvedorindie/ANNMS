@@ -33,8 +33,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.IntegerValue;
-import br.com.wfcreations.annms.api.data.values.RealValue;
+import br.com.wfcreations.annms.api.data.values.Int;
+import br.com.wfcreations.annms.api.data.values.Real;
 
 public class BetweenValidate extends ValidateAbstract {
 
@@ -68,27 +68,27 @@ public class BetweenValidate extends ValidateAbstract {
 
 		boolean result = true;
 
-		if (value instanceof IntegerValue) {
+		if (value instanceof Int) {
 			if (this.inclusive) {
-				if (this.min > ((IntegerValue) value).getValue() || ((IntegerValue) value).getValue() > this.max) {
+				if (this.min > ((Int) value).getValue() || ((Int) value).getValue() > this.max) {
 					this.error(messageTemplates, NOT_BETWEEN, null);
 					return false;
 				}
 			} else {
-				if (this.min >= ((IntegerValue) value).getValue() || ((IntegerValue) value).getValue() >= this.max) {
+				if (this.min >= ((Int) value).getValue() || ((Int) value).getValue() >= this.max) {
 					this.error(messageTemplates, NOT_BETWEEN_STRICT, null);
 					return false;
 				}
 			}
 
-		} else if (value instanceof RealValue) {
+		} else if (value instanceof Real) {
 			if (this.inclusive) {
-				if (this.min > ((RealValue) value).getValue() || ((RealValue) value).getValue() > this.max) {
+				if (this.min > ((Real) value).getValue() || ((Real) value).getValue() > this.max) {
 					this.error(messageTemplates, NOT_BETWEEN, null);
 					return false;
 				}
 			} else {
-				if (this.min >= ((RealValue) value).getValue() || ((RealValue) value).getValue() >= this.max) {
+				if (this.min >= ((Real) value).getValue() || ((Real) value).getValue() >= this.max) {
 					this.error(messageTemplates, NOT_BETWEEN_STRICT, null);
 					return false;
 				}

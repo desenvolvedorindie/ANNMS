@@ -34,9 +34,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.StringValue;
+import br.com.wfcreations.annms.api.data.values.Str;
 
 public class InArrayValidate extends ValidateAbstract {
 
@@ -65,10 +65,10 @@ public class InArrayValidate extends ValidateAbstract {
 	public boolean isValid(Object value) {
 		String v = "";
 		boolean result = true;
-		if (value instanceof IDValue) {
-			v = IDValue.getValueFor((IValue) value);
-		} else if (value instanceof StringValue) {
-			v = StringValue.getValueFor((IValue) value);
+		if (value instanceof ID) {
+			v = ID.getValueFor((IValue) value);
+		} else if (value instanceof Str) {
+			v = Str.getValueFor((IValue) value);
 		} else if ((value instanceof IValue[]) && this.isArray) {
 			IValue[] values = (IValue[]) value;
 			for (IValue va : values) {

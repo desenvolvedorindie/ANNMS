@@ -29,26 +29,26 @@
  */
 package br.com.wfcreations.annms.api.data.values;
 
-public class BooleanValue implements IValue {
+public class Int implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public static BooleanValue TRUE = new BooleanValue(true);
-
-	public static BooleanValue FALSE = new BooleanValue(false);
-
-	public static boolean getValueFor(IValue value) {
-		return (boolean) value.getValue();
+	public static int getValueFor(IValue value) {
+		return (int) value.getValue();
 	}
 
-	private final boolean value;
+	private final int value;
 
-	private BooleanValue(boolean value) {
+	public Int() {
+		this(0);
+	}
+
+	public Int(int value) {
 		this.value = value;
 	}
 
 	@Override
-	public Boolean getValue() {
+	public Integer getValue() {
 		return this.value;
 	}
 
@@ -60,7 +60,7 @@ public class BooleanValue implements IValue {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BooleanValue other = (BooleanValue) obj;
+		Int other = (Int) obj;
 		if (value != other.value)
 			return false;
 		return true;
@@ -68,6 +68,6 @@ public class BooleanValue implements IValue {
 
 	@Override
 	public String toString() {
-		return String.valueOf(this.value).toUpperCase();
+		return String.valueOf(this.value);
 	}
 }

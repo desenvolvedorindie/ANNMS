@@ -27,39 +27,29 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.type;
+package br.com.wfcreations.annms.api.data.values;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.StringValue;
-
-public class DateType implements IType {
+public class Real implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	private final SimpleDateFormat sdf;
+	public static double getValueFor(IValue value) {
+		return (double) value.getValue();
+	}
 
-	private final String dateFormat;
+	private final double value;
 
-	public DateType(String dateFormat) {
-		this.sdf = new SimpleDateFormat(dateFormat);
-		this.dateFormat = dateFormat;
+	public Real() {
+		this(0);
+	}
+
+	public Real(double value) {
+		this.value = value;
 	}
 
 	@Override
-	public boolean valid(IValue value) {
-		if (!(value instanceof StringValue))
-			return false;
-
-		sdf.setLenient(false);
-		try {
-			sdf.parse((String) value.getValue());
-			return true;
-		} catch (ParseException e) {
-			return false;
-		}
+	public Double getValue() {
+		return this.value;
 	}
 
 	@Override
@@ -70,17 +60,14 @@ public class DateType implements IType {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DateType other = (DateType) obj;
-		if (dateFormat == null) {
-			if (other.dateFormat != null)
-				return false;
-		} else if (!dateFormat.equals(other.dateFormat))
+		Real other = (Real) obj;
+		if (Double.doubleToLongBits(value) != Double.doubleToLongBits(other.value))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "DATE(" + dateFormat + ")";
+		return String.valueOf(this.value);
 	}
 }

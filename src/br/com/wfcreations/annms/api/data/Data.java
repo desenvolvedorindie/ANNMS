@@ -36,7 +36,7 @@ import java.util.Collections;
 import java.util.List;
 
 import br.com.wfcreations.annms.api.data.type.IType;
-import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.lang.ArrayUtils;
 
 public class Data implements Serializable {
@@ -122,14 +122,14 @@ public class Data implements Serializable {
 		return attributes.get(index);
 	}
 
-	public Attribute getAttributeByID(IDValue id) {
+	public Attribute getAttributeByID(ID id) {
 		for (Attribute attribute : attributes)
 			if (attribute.getID().equals(id))
 				return attribute;
 		return null;
 	}
 
-	public Data renameAttribute(int index, IDValue newID) {
+	public Data renameAttribute(int index, ID newID) {
 		for (int i = 0; i < getAttributesNum(); i++) {
 			if (i == index)
 				continue;
@@ -140,7 +140,7 @@ public class Data implements Serializable {
 		return this;
 	}
 
-	public int indexOfAttribute(IDValue id) {
+	public int indexOfAttribute(ID id) {
 		for (int i = 0; i < attributes.size(); i++)
 			if (attributes.get(i).getID().equals(id))
 				return i;
@@ -219,8 +219,8 @@ public class Data implements Serializable {
 			Data data2 = null;
 			int index;
 
-			IDValue[] key = where.columns().keySet().toArray(new IDValue[where.columns().size()]);
-			IDValue[] value = where.columns().values().toArray(new IDValue[where.columns().size()]);
+			ID[] key = where.columns().keySet().toArray(new ID[where.columns().size()]);
+			ID[] value = where.columns().values().toArray(new ID[where.columns().size()]);
 
 			index = this.indexOfAttribute(key[0]);
 			if (index < 0)

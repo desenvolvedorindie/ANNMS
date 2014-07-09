@@ -32,27 +32,31 @@ package br.com.wfcreations.annms.api.data;
 import java.io.Serializable;
 
 import br.com.wfcreations.annms.api.data.type.IType;
-import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.NullValue;
+import br.com.wfcreations.annms.api.data.values.Null;
 
 public class Attribute implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final IDValue id;
+	private final ID id;
 
 	private final IType type;
 
 	private final boolean notNull;
 
-	public Attribute(IDValue id, IType type, boolean notNull) {
+	public Attribute(ID id, IType type, boolean notNull) {
+		if (id == null)
+			throw new IllegalArgumentException("ID can't be null");
+		if (type == null)
+			throw new IllegalArgumentException("Type can't be null");
 		this.id = id;
 		this.type = type;
 		this.notNull = notNull;
 	};
 
-	public IDValue getID() {
+	public ID getID() {
 		return id;
 	}
 
@@ -65,11 +69,11 @@ public class Attribute implements Serializable {
 	}
 
 	public boolean validate(IValue value) {
-		return (!notNull && value instanceof NullValue) || type.valid(value);
+		return (!notNull && value instanceof Null) || type.valid(value);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Attribute [name=%s, type=%s]", this.id, this.type.toString());
+		return String.format("Attribute [name=%s, type=%s, notNull=%s]", this.id.toString(), this.type.toString(), this.notNull);
 	}
 }

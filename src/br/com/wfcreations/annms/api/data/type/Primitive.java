@@ -27,49 +27,38 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.values;
+package br.com.wfcreations.annms.api.data.type;
 
-public class StringValue implements IValue {
+import br.com.wfcreations.annms.api.data.values.Bool;
+import br.com.wfcreations.annms.api.data.values.IValue;
+import br.com.wfcreations.annms.api.data.values.Int;
+import br.com.wfcreations.annms.api.data.values.Real;
+import br.com.wfcreations.annms.api.data.values.Str;
+
+public enum Primitive implements IType {
+
+	BOOLEAN(Bool.class),
+
+	INTEGER(Int.class),
+
+	REAL(Real.class),
+
+	STRING(Str.class);
+
+	private final Class<? extends IValue> representation;
 
 	private static final long serialVersionUID = 1L;
 
-	public static String getValueFor(IValue value) {
-		return (String) value.getValue();
+	private Primitive(Class<? extends IValue> representation) {
+		this.representation = representation;
 	}
 
-	private final String value;
-
-	public StringValue() {
-		this("");
-	}
-
-	public StringValue(String value) {
-		this.value = value;
-	}
-
-	public String getValue() {
-		return this.value;
+	public Class<? extends IValue> getRepresentation() {
+		return representation;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		StringValue other = (StringValue) obj;
-		if (value == null) {
-			if (other.value != null)
-				return false;
-		} else if (!value.equals(other.value))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return this.value;
+	public boolean valid(IValue value) {
+		return (value.getClass().equals(getRepresentation()));
 	}
 }

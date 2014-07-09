@@ -27,29 +27,39 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.values;
+package br.com.wfcreations.annms.api.data.type;
 
-public class IntegerValue implements IValue {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import br.com.wfcreations.annms.api.data.values.IValue;
+import br.com.wfcreations.annms.api.data.values.Str;
+
+public class Date implements IType {
 
 	private static final long serialVersionUID = 1L;
 
-	public static int getValueFor(IValue value) {
-		return (int) value.getValue();
-	}
+	private final SimpleDateFormat sdf;
 
-	private final int value;
+	private final String dateFormat;
 
-	public IntegerValue() {
-		this(0);
-	}
-
-	public IntegerValue(int value) {
-		this.value = value;
+	public Date(String dateFormat) {
+		this.sdf = new SimpleDateFormat(dateFormat);
+		this.dateFormat = dateFormat;
 	}
 
 	@Override
-	public Integer getValue() {
-		return this.value;
+	public boolean valid(IValue value) {
+		if (!(value instanceof Str))
+			return false;
+
+		sdf.setLenient(false);
+		try {
+			sdf.parse((String) value.getValue());
+			return true;
+		} catch (ParseException e) {
+			return false;
+		}
 	}
 
 	@Override
@@ -60,14 +70,17 @@ public class IntegerValue implements IValue {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		IntegerValue other = (IntegerValue) obj;
-		if (value != other.value)
+		Date other = (Date) obj;
+		if (dateFormat == null) {
+			if (other.dateFormat != null)
+				return false;
+		} else if (!dateFormat.equals(other.dateFormat))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return String.valueOf(this.value);
+		return "DATE(" + dateFormat + ")";
 	}
 }

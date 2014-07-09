@@ -37,17 +37,17 @@ import org.antlr.v4.runtime.misc.NotNull;
 import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Param;
 import br.com.wfcreations.annms.api.data.type.IType;
-import br.com.wfcreations.annms.api.data.type.DateType;
+import br.com.wfcreations.annms.api.data.type.Date;
 import br.com.wfcreations.annms.api.data.type.ListType;
-import br.com.wfcreations.annms.api.data.type.PrimitiveType;
-import br.com.wfcreations.annms.api.data.values.BooleanValue;
-import br.com.wfcreations.annms.api.data.values.ComplexListValue;
-import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.type.Primitive;
+import br.com.wfcreations.annms.api.data.values.Bool;
+import br.com.wfcreations.annms.api.data.values.ComplexList;
+import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.IntegerValue;
-import br.com.wfcreations.annms.api.data.values.NullValue;
-import br.com.wfcreations.annms.api.data.values.RealValue;
-import br.com.wfcreations.annms.api.data.values.StringValue;
+import br.com.wfcreations.annms.api.data.values.Int;
+import br.com.wfcreations.annms.api.data.values.Null;
+import br.com.wfcreations.annms.api.data.values.Real;
+import br.com.wfcreations.annms.api.data.values.Str;
 import br.com.wfcreations.annms.core.sqlann.statements.CreateDataStatement;
 import br.com.wfcreations.annms.core.sqlann.statements.CreateNeuralNetworkStatement;
 import br.com.wfcreations.annms.core.sqlann.statements.DropDataStatement;
@@ -262,9 +262,9 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 			String dataName = ctx.ID(2).getText().toUpperCase();
 
-			IDValue[] inputs = (IDValue[]) visit(ctx.list(0));
+			ID[] inputs = (ID[]) visit(ctx.list(0));
 
-			IDValue[] outputs = (IDValue[]) visit(ctx.list(1));
+			ID[] outputs = (ID[]) visit(ctx.list(1));
 
 			String query = ctx.getText().toUpperCase();
 
@@ -297,47 +297,47 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 			else if (ctx.NOT() != null) {
 				return null;
 			}
-			return new Attribute(new IDValue(ctx.ID().getText()), dataType, notNull);
+			return new Attribute(new ID(ctx.ID().getText()), dataType, notNull);
 		}
 		return null;
 	}
 
 	@Override
-	public PrimitiveType visitBooleanDataType(@NotNull SQLANNParser.BooleanDataTypeContext ctx) {
+	public Primitive visitBooleanDataType(@NotNull SQLANNParser.BooleanDataTypeContext ctx) {
 		if (ctx != null && ctx.BOOLEAN() != null) {
-			return PrimitiveType.BOOLEAN;
+			return Primitive.BOOLEAN;
 		}
 		return null;
 	}
 
 	@Override
-	public PrimitiveType visitIntegerDataType(@NotNull SQLANNParser.IntegerDataTypeContext ctx) {
+	public Primitive visitIntegerDataType(@NotNull SQLANNParser.IntegerDataTypeContext ctx) {
 		if (ctx != null && ctx.INTEGER() != null) {
-			return PrimitiveType.INTEGER;
+			return Primitive.INTEGER;
 		}
 		return null;
 	}
 
 	@Override
-	public PrimitiveType visitRealDataType(@NotNull SQLANNParser.RealDataTypeContext ctx) {
+	public Primitive visitRealDataType(@NotNull SQLANNParser.RealDataTypeContext ctx) {
 		if (ctx != null && ctx.REAL() != null) {
-			return PrimitiveType.REAL;
+			return Primitive.REAL;
 		}
 		return null;
 	}
 
 	@Override
-	public PrimitiveType visitStringDataType(@NotNull SQLANNParser.StringDataTypeContext ctx) {
+	public Primitive visitStringDataType(@NotNull SQLANNParser.StringDataTypeContext ctx) {
 		if (ctx != null && ctx.STRING() != null) {
-			return PrimitiveType.STRING;
+			return Primitive.STRING;
 		}
 		return null;
 	}
 
 	@Override
-	public DateType visitDateDataType(@NotNull SQLANNParser.DateDataTypeContext ctx) {
+	public Date visitDateDataType(@NotNull SQLANNParser.DateDataTypeContext ctx) {
 		if (ctx != null && ctx.DATE() != null && ctx.String() != null) {
-			return new DateType(SQLANNUtils.formatString(ctx.String().getText()));
+			return new Date(SQLANNUtils.formatString(ctx.String().getText()));
 		}
 		return null;
 	}
@@ -345,7 +345,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public ListType visitListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx) {
 		if (ctx != null && ctx.list() != null) {
-			IDValue[] listValues = (IDValue[]) visit(ctx.list());
+			ID[] listValues = (ID[]) visit(ctx.list());
 			return new ListType(listValues);
 		}
 		return null;
@@ -354,9 +354,9 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public String[] visitList(@NotNull SQLANNParser.ListContext ctx) {
 		if (ctx != null && ctx.OPEN_BRACKETS() != null && ctx.CLOSE_BRACKETS() != null && ctx.ID() != null && ctx.ID().size() > 0) {
-			ArrayList<IDValue> ids = new ArrayList<IDValue>();
+			ArrayList<ID> ids = new ArrayList<ID>();
 			for (int i = 0; i < ctx.ID().size(); i++) {
-				ids.add(new IDValue(ctx.ID(i).getText()));
+				ids.add(new ID(ctx.ID(i).getText()));
 			}
 			return ids.toArray(new String[ctx.ID().size()]);
 		}
@@ -383,61 +383,61 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 				values[i] = (IValue) visit(ctx.paramValue(i));
 			}
 
-			String name = ctx.ID().getText().toUpperCase();
+			String id = ctx.ID().getText();
 
-			return new Param(name, values);
+			return new Param(new ID(id), values);
 		}
 		return null;
 	}
 
 	@Override
-	public BooleanValue visitBooleanValue(@NotNull SQLANNParser.BooleanValueContext ctx) {
+	public Bool visitBooleanValue(@NotNull SQLANNParser.BooleanValueContext ctx) {
 		if (ctx != null && (ctx.TRUE() != null || ctx.FALSE() != null)) {
 			if (ctx.TRUE() != null) {
-				return BooleanValue.TRUE;
+				return Bool.TRUE;
 			} else {
-				return BooleanValue.FALSE;
+				return Bool.FALSE;
 			}
 		}
 		return null;
 	}
 
 	@Override
-	public NullValue visitNullValue(@NotNull SQLANNParser.NullValueContext ctx) {
+	public Null visitNullValue(@NotNull SQLANNParser.NullValueContext ctx) {
 		if (ctx != null && ctx.NULL() != null) {
-			return NullValue.VALUE;
+			return Null.VALUE;
 		}
 		return null;
 	}
 
 	@Override
-	public IntegerValue visitIntegerValue(@NotNull SQLANNParser.IntegerValueContext ctx) {
+	public Int visitIntegerValue(@NotNull SQLANNParser.IntegerValueContext ctx) {
 		if (ctx != null && ctx.Integer() != null) {
-			return new IntegerValue(Integer.parseInt(ctx.Integer().getText()));
+			return new Int(Integer.parseInt(ctx.Integer().getText()));
 		}
 		return null;
 	}
 
 	@Override
-	public RealValue visitRealValue(@NotNull SQLANNParser.RealValueContext ctx) {
+	public Real visitRealValue(@NotNull SQLANNParser.RealValueContext ctx) {
 		if (ctx != null && ctx.Real() != null) {
-			return new RealValue(Double.parseDouble(ctx.Real().getText()));
+			return new Real(Double.parseDouble(ctx.Real().getText()));
 		}
 		return null;
 	}
 
 	@Override
-	public StringValue visitStringValue(@NotNull SQLANNParser.StringValueContext ctx) {
+	public Str visitStringValue(@NotNull SQLANNParser.StringValueContext ctx) {
 		if (ctx != null && ctx.String() != null) {
-			return new StringValue(SQLANNUtils.formatString(ctx.String().getText()));
+			return new Str(SQLANNUtils.formatString(ctx.String().getText()));
 		}
 		return null;
 	}
 
 	@Override
-	public IDValue visitIdValue(@NotNull SQLANNParser.IdValueContext ctx) {
+	public ID visitIdValue(@NotNull SQLANNParser.IdValueContext ctx) {
 		if (ctx != null && ctx.ID() != null) {
-			return new IDValue(ctx.ID().getText());
+			return new ID(ctx.ID().getText());
 		}
 		return null;
 	}
@@ -455,13 +455,13 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	}
 
 	@Override
-	public ComplexListValue visitComplexList(@NotNull SQLANNParser.ComplexListContext ctx) {
+	public ComplexList visitComplexList(@NotNull SQLANNParser.ComplexListContext ctx) {
 		if (ctx != null && ctx.paramValue() != null && ctx.OPEN_BRACKETS() != null && ctx.CLOSE_BRACKETS() != null && ctx.paramValue().size() > 0) {
 			IValue[] values = new IValue[ctx.paramValue().size()];
 			for (int i = 0; i < ctx.paramValue().size(); i++) {
 				values[i] = (IValue) visit(ctx.paramValue(i));
 			}
-			return new ComplexListValue(values);
+			return new ComplexList(values);
 		}
 		return null;
 	}

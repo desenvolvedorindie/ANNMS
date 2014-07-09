@@ -31,27 +31,28 @@ package br.com.wfcreations.annms.api.data;
 
 import java.io.Serializable;
 
+import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IParamValue;
 
 public class Param implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final String name;
+	private final ID id;
 
 	private final IParamValue[] values;
 
-	public Param(String name, IParamValue[] values) {
-		this.name = name;
+	public Param(ID id, IParamValue[] values) {
+		this.id = id;
 		this.values = values;
 	};
 
-	public String getName() {
-		return name;
+	public ID getID() {
+		return id;
 	};
 
-	public boolean nameIs(String name) {
-		return this.name.equalsIgnoreCase(name);
+	public boolean nameIs(ID id) {
+		return this.id.equals(id);
 	}
 
 	public IParamValue[] getValues() {

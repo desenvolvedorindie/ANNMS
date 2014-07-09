@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.api.lang.ArrayUtils;
 
@@ -41,21 +41,21 @@ public class ListType implements IType {
 
 	private static final long serialVersionUID = 1L;
 
-	private final List<IDValue> listValues;
+	private final List<ID> listValues;
 
-	public ListType(IDValue[] listValues) {
+	public ListType(ID[] listValues) {
 		if (listValues.length == 0)
 			throw new IllegalArgumentException("Empty list values");
 		if (ArrayUtils.hasDuplicate(listValues))
 			throw new IllegalArgumentException("Duplicated value");
-		for (IDValue id : listValues)
+		for (ID id : listValues)
 			if (id == null)
 				throw new IllegalArgumentException("Null or empty value");
 
 		this.listValues = new ArrayList<>(Arrays.asList(listValues));
 	}
 
-	public IDValue getValuesAt(int index) {
+	public ID getValuesAt(int index) {
 		return listValues.get(index);
 	}
 
@@ -65,7 +65,7 @@ public class ListType implements IType {
 
 	@Override
 	public boolean valid(IValue value) {
-		return value instanceof IDValue && Arrays.asList(listValues).contains(value.getValue());
+		return value instanceof ID && Arrays.asList(listValues).contains(value.getValue());
 	}
 
 	@Override
