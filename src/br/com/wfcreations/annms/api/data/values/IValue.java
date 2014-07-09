@@ -29,9 +29,7 @@
  */
 package br.com.wfcreations.annms.api.data.values;
 
+public interface IValue extends IParamValue {
 
-@SuppressWarnings("serial")
-public abstract class Value implements IParamValue {
-
-	public abstract Object getValue();
+	public Object getValue();
 }

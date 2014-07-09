@@ -35,7 +35,7 @@ import java.util.List;
 
 import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.api.data.Pattern;
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 
 public class DataRepresentation implements Serializable {
 
@@ -54,11 +54,11 @@ public class DataRepresentation implements Serializable {
 		if (representators.length != data.getAttributesNum())
 			throw new IllegalArgumentException("Representators ivalid lenght");
 
-		Value[] tmp;
+		IValue[] tmp;
 		ArrayList<Pattern> patternsList = new ArrayList<>(data.getPatternsNum());
 
 		for (int i = 0; i < data.getPatternsNum(); i++) {
-			tmp = new Value[0];
+			tmp = new IValue[0];
 			for (int j = 0; j < data.getAttributesNum(); j++)
 				org.apache.commons.lang3.ArrayUtils.addAll(tmp, data.getPatternAt(i).getValueAt(j));
 			patternsList.add(new Pattern(tmp));

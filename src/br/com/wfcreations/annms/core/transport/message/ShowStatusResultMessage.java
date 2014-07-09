@@ -12,6 +12,7 @@ public class ShowStatusResultMessage extends ResultMessage {
 	public Object toThriftResult() {
 		Map<String, String> param = new HashMap<>();
 		param.put("SERVER_VERSION", ANNMS.VERSION);
+		param.put("SQLANN_VERSION", ANNMS.SQLANN_VERSION);
 		param.put("API_VERSION", ANNMSAPI.VERSION);
 		return param;
 	}

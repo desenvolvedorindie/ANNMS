@@ -31,21 +31,21 @@ package br.com.wfcreations.annms.api.data;
 
 import java.io.Serializable;
 
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 
 public class Pattern implements IPattern, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected final Value[] values;
+	protected final IValue[] values;
 
 	protected Data parentData;
 
-	public Pattern(Value[] values) {
+	public Pattern(IValue[] values) {
 		this.values = values.clone();
 	}
 
-	public Value getValueAt(int index) {
+	public IValue getValueAt(int index) {
 		return values[index];
 	}
 
@@ -55,7 +55,7 @@ public class Pattern implements IPattern, Serializable {
 
 	@Override
 	public Pattern clone() {
-		Value[] newValues = new Value[values.length];
+		IValue[] newValues = new IValue[values.length];
 		System.arraycopy(values, 0, newValues, 0, values.length);
 		return new Pattern(newValues);
 	}

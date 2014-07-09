@@ -29,15 +29,19 @@
  */
 package br.com.wfcreations.annms.api.data.values;
 
-public class StringValue extends Value {
+public class StringValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public static String getValueFor(Value value) {
+	public static String getValueFor(IValue value) {
 		return (String) value.getValue();
 	}
 
 	private final String value;
+
+	public StringValue() {
+		this("");
+	}
 
 	public StringValue(String value) {
 		this.value = value;

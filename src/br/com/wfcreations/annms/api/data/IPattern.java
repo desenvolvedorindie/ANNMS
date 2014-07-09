@@ -29,11 +29,11 @@
  */
 package br.com.wfcreations.annms.api.data;
 
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 
 public interface IPattern {
 
-	public Value getValueAt(int index);
+	public IValue getValueAt(int index);
 
 	public int getValuesNum();
 	

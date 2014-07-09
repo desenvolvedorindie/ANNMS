@@ -31,31 +31,29 @@ package br.com.wfcreations.annms.api.data;
 
 import java.io.Serializable;
 
-import br.com.wfcreations.annms.api.data.representation.IRepresentator;
 import br.com.wfcreations.annms.api.data.type.IType;
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.api.data.values.NullValue;
 
 public class Attribute implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final String name;
+	private final IDValue id;
 
 	private final IType type;
 
 	private final boolean notNull;
 
-	private IRepresentator representator;
-
-	public Attribute(String name, IType type, boolean notNull) {
-		this.name = name;
+	public Attribute(IDValue id, IType type, boolean notNull) {
+		this.id = id;
 		this.type = type;
 		this.notNull = notNull;
 	};
 
-	public String getName() {
-		return name;
+	public IDValue getID() {
+		return id;
 	}
 
 	public IType getType() {
@@ -66,20 +64,12 @@ public class Attribute implements Serializable {
 		return notNull;
 	}
 
-	public boolean validate(Value value) {
+	public boolean validate(IValue value) {
 		return (!notNull && value instanceof NullValue) || type.valid(value);
-	}
-
-	public IRepresentator getVisitor() {
-		return this.representator;
-	}
-
-	public void setVisitor(IRepresentator visitor) {
-		this.representator = visitor;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Attribute [name=%s, type=%s]", this.name, this.type.toString());
+		return String.format("Attribute [name=%s, type=%s]", this.id, this.type.toString());
 	}
 }

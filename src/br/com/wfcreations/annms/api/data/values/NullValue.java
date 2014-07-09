@@ -29,11 +29,11 @@
  */
 package br.com.wfcreations.annms.api.data.values;
 
-public class NullValue extends Value {
+public class NullValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public static NullValue INSTANCE = new NullValue();
+	public static NullValue VALUE = new NullValue();
 
 	private NullValue() {
 	}

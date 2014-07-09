@@ -31,18 +31,20 @@ package br.com.wfcreations.annms.api.data;
 
 import java.util.LinkedHashMap;
 
+import br.com.wfcreations.annms.api.data.values.IDValue;
+
 public class Select {
 
-	protected LinkedHashMap<String, String> columns;
+	protected LinkedHashMap<IDValue, IDValue> columns;
 
 	public Select() {
 	}
 
-	public void columns(LinkedHashMap<String, String> columns) {
+	public void columns(LinkedHashMap<IDValue, IDValue> columns) {
 		this.columns = columns;
 	}
 
-	public LinkedHashMap<String, String> columns() {
+	public LinkedHashMap<IDValue, IDValue> columns() {
 		return this.columns;
 	}
 }

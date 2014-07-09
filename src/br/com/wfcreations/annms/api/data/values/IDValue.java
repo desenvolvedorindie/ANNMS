@@ -29,18 +29,25 @@
  */
 package br.com.wfcreations.annms.api.data.values;
 
-public class IDValue extends Value {
+public class IDValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public static String getValueFor(Value value) {
+	public static String getValueFor(IValue value) {
 		return (String) value.getValue();
 	}
 
 	private final String value;
 
 	public IDValue(String value) {
-		this.value = value;
+		this.value = value.toUpperCase();
+		if (!valid(this.value))
+			throw new IllegalArgumentException("Invalid ID format");
+	}
+
+	private boolean valid(String value) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
@@ -60,13 +67,13 @@ public class IDValue extends Value {
 		if (value == null) {
 			if (other.value != null)
 				return false;
-		} else if (!value.equals(other.value))
+		} else if (!value.equalsIgnoreCase(other.value))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return String.valueOf(this.value);
+		return String.valueOf(this.value).toUpperCase();
 	}
 }

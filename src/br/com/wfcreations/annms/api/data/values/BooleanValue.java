@@ -29,7 +29,7 @@
  */
 package br.com.wfcreations.annms.api.data.values;
 
-public class BooleanValue extends Value {
+public class BooleanValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public class BooleanValue extends Value {
 
 	public static BooleanValue FALSE = new BooleanValue(false);
 
-	public static boolean getValueFor(Value value) {
+	public static boolean getValueFor(IValue value) {
 		return (boolean) value.getValue();
 	}
 
@@ -68,6 +68,6 @@ public class BooleanValue extends Value {
 
 	@Override
 	public String toString() {
-		return String.valueOf(this.value);
+		return String.valueOf(this.value).toUpperCase();
 	}
 }

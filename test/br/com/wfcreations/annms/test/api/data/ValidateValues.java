@@ -41,7 +41,7 @@ import br.com.wfcreations.annms.api.data.validate.BetweenValidate;
 import br.com.wfcreations.annms.api.data.validate.IntValidate;
 import br.com.wfcreations.annms.api.data.validate.RealValidate;
 import br.com.wfcreations.annms.api.data.validate.ValidateAbstract;
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.api.data.values.IntegerValue;
 import br.com.wfcreations.annms.api.data.values.RealValue;
 
@@ -68,7 +68,7 @@ public class ValidateValues {
 		ValidateAbstract validate = new BetweenValidate(1, 5, true);
 		IntegerValue integer = new IntegerValue(5);
 		RealValue real = new RealValue(5);
-		Value[] values = new Value[] { integer, real };
+		IValue[] values = new IValue[] { integer, real };
 		assertTrue(validate.isValid(new IntegerValue(2)));
 		assertFalse(validate.isValid(new RealValue(10)));
 		assertTrue(validate.isValid(values));
@@ -79,7 +79,7 @@ public class ValidateValues {
 		ValidateAbstract validate = new IntValidate(true);
 		IntegerValue integer = new IntegerValue(9);
 		RealValue real = new RealValue(5.2);
-		Value[] values = new Value[] { integer, new IntegerValue(2) };
+		IValue[] values = new IValue[] { integer, new IntegerValue(2) };
 		assertTrue(validate.isValid(integer));
 		assertFalse(validate.isValid(real));
 		assertTrue(validate.isValid(values));
@@ -90,7 +90,7 @@ public class ValidateValues {
 		ValidateAbstract validate = new RealValidate(true);
 		IntegerValue integer = new IntegerValue(10);
 		RealValue real = new RealValue(5.2);
-		Value[] values = new Value[] { real, new RealValue(2.5) };
+		IValue[] values = new IValue[] { real, new RealValue(2.5) };
 		assertFalse(validate.isValid(integer));
 		assertTrue(validate.isValid(real));
 		assertTrue(validate.isValid(values));

@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.values.BooleanValue;
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 
 public class BooleanValidate extends ValidateAbstract {
 
@@ -59,9 +59,9 @@ public class BooleanValidate extends ValidateAbstract {
 		this.setValue(value);
 
 		boolean result = true;
-		if ((value instanceof Value[]) && this.isArray) {
-			Value[] values = (Value[]) value;
-			for (Value v : values) {
+		if ((value instanceof IValue[]) && this.isArray) {
+			IValue[] values = (IValue[]) value;
+			for (IValue v : values) {
 				result = result && isValid(v);
 			}
 		} else if (!(value instanceof BooleanValue)) {

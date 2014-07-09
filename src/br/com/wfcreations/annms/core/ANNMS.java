@@ -33,13 +33,19 @@ import br.com.wfcreations.annms.core.config.Config;
 
 public class ANNMS {
 
-	public static final String VERSION = "1.0.0-dev";
-
 	public static final short MAJOR = 1;
 
 	public static final short MINOR = 0;
 
 	public static final short REVISION = 0;
+
+	public static final String VERSION = String.format("%s.%s.%s", MAJOR, MINOR, REVISION);
+
+	public static final short SQLANN_MAJOR = 1;
+
+	public static final short SQLANN_MINOR = 0;
+
+	public static final String SQLANN_VERSION = String.format("%s.%s", SQLANN_MAJOR, SQLANN_MINOR);
 
 	public static final ANNMS instance = new ANNMS();
 

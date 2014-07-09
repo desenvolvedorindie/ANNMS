@@ -29,7 +29,7 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
@@ -39,11 +39,11 @@ public class RunStatement implements SQLANNStatement {
 
 	public final String modelName;
 
-	public final Value[] values;
+	public final IValue[] values;
 
 	public final String query;
 
-	public RunStatement(String modelName, Value[] values, String query) {
+	public RunStatement(String modelName, IValue[] values, String query) {
 		this.modelName = modelName;
 		this.values = values;
 		this.query = query;

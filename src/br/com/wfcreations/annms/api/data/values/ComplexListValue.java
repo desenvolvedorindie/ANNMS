@@ -35,17 +35,17 @@ public class ComplexListValue implements IParamValue {
 
 	private static final long serialVersionUID = 1L;
 
-	private final Value[] values;
+	private final IParamValue[] values;
 
-	public ComplexListValue(Value[] values) {
+	public ComplexListValue(IParamValue[] values) {
 		this.values = values;
 	}
 
-	public Value[] getValue() {
+	public IParamValue[] getValue() {
 		return this.values;
 	}
 
-	public Value getValueAt(int index) {
+	public IParamValue getValueAt(int index) {
 		return this.values[index];
 	}
 

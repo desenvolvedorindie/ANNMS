@@ -30,35 +30,35 @@
 package br.com.wfcreations.annms.api.data.type;
 
 import br.com.wfcreations.annms.api.data.values.BooleanValue;
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.api.data.values.IntegerValue;
 import br.com.wfcreations.annms.api.data.values.RealValue;
 import br.com.wfcreations.annms.api.data.values.StringValue;
 
-public class PrimitiveType implements IType {
+public enum PrimitiveType implements IType {
+
+	BOOLEAN(BooleanValue.class),
+
+	INTEGER(IntegerValue.class),
+
+	REAL(RealValue.class),
+
+	STRING(StringValue.class);
+
+	private final Class<? extends IValue> representation;
 
 	private static final long serialVersionUID = 1L;
 
-	public static PrimitiveType BOOLEAN = new PrimitiveType(BooleanValue.class);
-
-	public static PrimitiveType INTEGER = new PrimitiveType(IntegerValue.class);
-
-	public static PrimitiveType REAL = new PrimitiveType(RealValue.class);
-
-	public static PrimitiveType STRING = new PrimitiveType(StringValue.class);
-
-	private final Class<? extends Value> representation;
-
-	private PrimitiveType(Class<? extends Value> representation) {
+	private PrimitiveType(Class<? extends IValue> representation) {
 		this.representation = representation;
 	}
 
-	public Class<? extends Value> getRepresentation() {
+	public Class<? extends IValue> getRepresentation() {
 		return representation;
 	}
 
 	@Override
-	public boolean valid(Value value) {
+	public boolean valid(IValue value) {
 		return (value.getClass().equals(getRepresentation()));
 	}
 }

@@ -43,7 +43,7 @@ import br.com.wfcreations.annms.api.data.type.PrimitiveType;
 import br.com.wfcreations.annms.api.data.values.BooleanValue;
 import br.com.wfcreations.annms.api.data.values.ComplexListValue;
 import br.com.wfcreations.annms.api.data.values.IDValue;
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.api.data.values.IntegerValue;
 import br.com.wfcreations.annms.api.data.values.NullValue;
 import br.com.wfcreations.annms.api.data.values.RealValue;
@@ -174,7 +174,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 			String dataName = ctx.ID().getText().toUpperCase();
 
-			Value[] values = (Value[]) visit(ctx.values());
+			IValue[] values = (IValue[]) visit(ctx.values());
 
 			String query = ctx.getText().toUpperCase();
 
@@ -188,7 +188,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 		if (ctx != null && ctx.RUN() != null && ctx.VALUES() != null && ctx.OPEN_PARENTHESIS() != null && ctx.CLOSE_PARENTHESIS() != null && ctx.ID() != null && ctx.values() != null) {
 			String modelName = ctx.ID().getText().toUpperCase();
 
-			Value[] values = (Value[]) visit(ctx.values());
+			IValue[] values = (IValue[]) visit(ctx.values());
 
 			String query = ctx.getText().toUpperCase();
 
@@ -297,7 +297,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 			else if (ctx.NOT() != null) {
 				return null;
 			}
-			return new Attribute(ctx.ID().getText().toUpperCase(), dataType, notNull);
+			return new Attribute(new IDValue(ctx.ID().getText()), dataType, notNull);
 		}
 		return null;
 	}
@@ -345,7 +345,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public ListType visitListDataType(@NotNull SQLANNParser.ListDataTypeContext ctx) {
 		if (ctx != null && ctx.list() != null) {
-			String[] listValues = (String[]) visit(ctx.list());
+			IDValue[] listValues = (IDValue[]) visit(ctx.list());
 			return new ListType(listValues);
 		}
 		return null;
@@ -354,9 +354,9 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public String[] visitList(@NotNull SQLANNParser.ListContext ctx) {
 		if (ctx != null && ctx.OPEN_BRACKETS() != null && ctx.CLOSE_BRACKETS() != null && ctx.ID() != null && ctx.ID().size() > 0) {
-			ArrayList<String> ids = new ArrayList<>();
+			ArrayList<IDValue> ids = new ArrayList<IDValue>();
 			for (int i = 0; i < ctx.ID().size(); i++) {
-				ids.add(ctx.ID(i).getText().toUpperCase());
+				ids.add(new IDValue(ctx.ID(i).getText()));
 			}
 			return ids.toArray(new String[ctx.ID().size()]);
 		}
@@ -378,9 +378,9 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public Param visitParam(@NotNull SQLANNParser.ParamContext ctx) {
 		if (ctx != null && ctx.ID() != null) {
-			Value[] values = new Value[ctx.paramValue() == null ? 0 : ctx.paramValue().size()];
+			IValue[] values = new IValue[ctx.paramValue() == null ? 0 : ctx.paramValue().size()];
 			for (int i = 0; i < ctx.paramValue().size(); i++) {
-				values[i] = (Value) visit(ctx.paramValue(i));
+				values[i] = (IValue) visit(ctx.paramValue(i));
 			}
 
 			String name = ctx.ID().getText().toUpperCase();
@@ -405,7 +405,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public NullValue visitNullValue(@NotNull SQLANNParser.NullValueContext ctx) {
 		if (ctx != null && ctx.NULL() != null) {
-			return NullValue.INSTANCE;
+			return NullValue.VALUE;
 		}
 		return null;
 	}
@@ -443,11 +443,11 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	}
 
 	@Override
-	public Value[] visitValues(@NotNull SQLANNParser.ValuesContext ctx) {
+	public IValue[] visitValues(@NotNull SQLANNParser.ValuesContext ctx) {
 		if (ctx != null && ctx.value() != null && ctx.value().size() > 0) {
-			Value[] values = new Value[ctx.value().size()];
+			IValue[] values = new IValue[ctx.value().size()];
 			for (int i = 0; i < ctx.value().size(); i++) {
-				values[i] = (Value) visit(ctx.value(i));
+				values[i] = (IValue) visit(ctx.value(i));
 			}
 			return values;
 		}
@@ -457,9 +457,9 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public ComplexListValue visitComplexList(@NotNull SQLANNParser.ComplexListContext ctx) {
 		if (ctx != null && ctx.paramValue() != null && ctx.OPEN_BRACKETS() != null && ctx.CLOSE_BRACKETS() != null && ctx.paramValue().size() > 0) {
-			Value[] values = new Value[ctx.paramValue().size()];
+			IValue[] values = new IValue[ctx.paramValue().size()];
 			for (int i = 0; i < ctx.paramValue().size(); i++) {
-				values[i] = (Value) visit(ctx.paramValue(i));
+				values[i] = (IValue) visit(ctx.paramValue(i));
 			}
 			return new ComplexListValue(values);
 		}

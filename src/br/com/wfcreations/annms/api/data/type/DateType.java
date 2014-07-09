@@ -32,29 +32,27 @@ package br.com.wfcreations.annms.api.data.type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.api.data.values.StringValue;
 
 public class DateType implements IType {
 
 	private static final long serialVersionUID = 1L;
 
+	private final SimpleDateFormat sdf;
+
 	private final String dateFormat;
 
 	public DateType(String dateFormat) {
+		this.sdf = new SimpleDateFormat(dateFormat);
 		this.dateFormat = dateFormat;
 	}
 
-	public String getDateFormat() {
-		return dateFormat;
-	}
-
 	@Override
-	public boolean valid(Value value) {
-		if (!value.getClass().equals(StringValue.class)) {
+	public boolean valid(IValue value) {
+		if (!(value instanceof StringValue))
 			return false;
-		}
-		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+
 		sdf.setLenient(false);
 		try {
 			sdf.parse((String) value.getValue());
@@ -62,6 +60,23 @@ public class DateType implements IType {
 		} catch (ParseException e) {
 			return false;
 		}
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DateType other = (DateType) obj;
+		if (dateFormat == null) {
+			if (other.dateFormat != null)
+				return false;
+		} else if (!dateFormat.equals(other.dateFormat))
+			return false;
+		return true;
 	}
 
 	@Override

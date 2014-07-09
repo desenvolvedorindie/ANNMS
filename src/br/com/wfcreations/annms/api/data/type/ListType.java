@@ -31,21 +31,31 @@ package br.com.wfcreations.annms.api.data.type;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import br.com.wfcreations.annms.api.data.values.IDValue;
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
+import br.com.wfcreations.annms.api.lang.ArrayUtils;
 
 public class ListType implements IType {
 
 	private static final long serialVersionUID = 1L;
 
-	private final ArrayList<String> listValues;
+	private final List<IDValue> listValues;
 
-	public ListType(String[] listValues) {
+	public ListType(IDValue[] listValues) {
+		if (listValues.length == 0)
+			throw new IllegalArgumentException("Empty list values");
+		if (ArrayUtils.hasDuplicate(listValues))
+			throw new IllegalArgumentException("Duplicated value");
+		for (IDValue id : listValues)
+			if (id == null)
+				throw new IllegalArgumentException("Null or empty value");
+
 		this.listValues = new ArrayList<>(Arrays.asList(listValues));
 	}
 
-	public String getListValuesAt(int index) {
+	public IDValue getValuesAt(int index) {
 		return listValues.get(index);
 	}
 
@@ -54,8 +64,8 @@ public class ListType implements IType {
 	}
 
 	@Override
-	public boolean valid(Value value) {
-		return value.getClass().equals(IDValue.class) && Arrays.asList(listValues).contains(value.getValue());
+	public boolean valid(IValue value) {
+		return value instanceof IDValue && Arrays.asList(listValues).contains(value.getValue());
 	}
 
 	@Override
@@ -71,7 +81,7 @@ public class ListType implements IType {
 			return false;
 		boolean eq = true;
 		for (int i = 0; i < this.getListValuesNum(); i++) {
-			eq = eq && this.getListValuesAt(i).equals(other.getListValuesAt(i));
+			eq = eq && this.getValuesAt(i).equals(other.getValuesAt(i));
 			if (!eq)
 				return false;
 		}

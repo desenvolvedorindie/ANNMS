@@ -29,16 +29,8 @@
  */
 package br.com.wfcreations.annms.test.api.data;
 
-import java.util.Arrays;
-
 import org.junit.AfterClass;
 import org.junit.Test;
-
-import br.com.wfcreations.annms.api.data.representation.NominalToBinary;
-import br.com.wfcreations.annms.api.data.type.ListType;
-import br.com.wfcreations.annms.api.data.values.IDValue;
-import br.com.wfcreations.annms.api.data.values.Value;
-import br.com.wfcreations.annms.api.data.values.RealValue;
 
 public class EncodingTest {
 
@@ -48,17 +40,7 @@ public class EncodingTest {
 
 	@Test
 	public void TestForBinaryEncoding() {
-		String[] classes = new String[] { "class1", "class2", "class3" };
 
-		ListType listType = new ListType(classes);
-		
-		NominalToBinary b = new NominalToBinary(listType);
-		System.out.println(Arrays.toString(b.encode(new IDValue(classes[0]))));
-		System.out.println(Arrays.toString(b.encode(new IDValue(classes[1]))));
-		System.out.println(Arrays.toString(b.encode(new IDValue(classes[2]))));
-		System.out.println(b.decode(new Value[] { new RealValue(1), new RealValue(0), new RealValue(0) }));
-		System.out.println(b.decode(new Value[] { new RealValue(0), new RealValue(1), new RealValue(0) }));
-		System.out.println(b.decode(new Value[] { new RealValue(0), new RealValue(0), new RealValue(1) }));
 	}
 
 }

@@ -34,40 +34,40 @@ import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.type.ListType;
 import br.com.wfcreations.annms.api.data.values.IDValue;
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.api.data.values.IntegerValue;
 
 public class NominalToOrdinal implements IRepresentator {
 
 	private static final long serialVersionUID = 1L;
 
-	private String[] classes;
+	private IDValue[] classes;
 
-	private Map<String, Value[]> map = new HashMap<>();
+	private Map<IDValue, IValue[]> map = new HashMap<IDValue, IValue[]>();
 
 	public NominalToOrdinal(ListType listType) {
-		this.classes = new String[listType.getListValuesNum()];
-		String c;
+		this.classes = new IDValue[listType.getListValuesNum()];
+		IDValue c;
 
 		for (int i = 0; i < listType.getListValuesNum(); i++) {
-			c = listType.getListValuesAt(i);
+			c = listType.getValuesAt(i);
 			this.classes[i] = c;
-			map.put(c, new Value[] { new IntegerValue(i) });
+			map.put(c, new IValue[] { new IntegerValue(i) });
 		}
 	}
 
 	@Override
-	public Value[] encode(Value value) {
+	public IValue[] encode(IValue value) {
 		if (!(value instanceof IDValue))
 			throw new IllegalArgumentException("Must be mominal");
-		Value[] values = map.get(IDValue.getValueFor(value));
+		IValue[] values = map.get(IDValue.getValueFor(value));
 		if (values == null)
 			throw new IllegalArgumentException("Class not found");
 		return values;
 	}
 
 	@Override
-	public Value decode(Value[] values) {
+	public IValue decode(IValue[] values) {
 		if (values.length != 1)
 			throw new IllegalArgumentException("Invalid value");
 		if (!(values[0] instanceof IntegerValue))
@@ -77,7 +77,7 @@ public class NominalToOrdinal implements IRepresentator {
 		if (v < 0 && v > classes.length - 1)
 			throw new IllegalArgumentException("Invalid range");
 
-		return new IDValue(classes[v]);
+		return classes[v];
 	}
 
 	@Override

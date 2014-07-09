@@ -32,7 +32,7 @@ package br.com.wfcreations.annms.api.data.validate;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.api.data.values.RealValue;
 
 public class RealValidate extends ValidateAbstract {
@@ -57,10 +57,10 @@ public class RealValidate extends ValidateAbstract {
 	@Override
 	public boolean isValid(Object value) {
 		this.setValue(value);
-		if (value instanceof Value[] && this.isArray) {
-			Value[] values = (Value[]) value;
+		if (value instanceof IValue[] && this.isArray) {
+			IValue[] values = (IValue[]) value;
 			boolean result = true;
-			for (Value v : values) {
+			for (IValue v : values) {
 				result = result && isValid(v);
 			}
 			return result;

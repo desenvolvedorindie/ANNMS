@@ -31,13 +31,13 @@ package br.com.wfcreations.annms.api.data.representation;
 
 import java.io.Serializable;
 
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 
 public interface IRepresentator extends Serializable {
 
-	public Value[] encode(Value value);
+	public IValue[] encode(IValue value);
 
-	public Value decode(Value[] values);
+	public IValue decode(IValue[] values);
 
 	public int getLength();
 }

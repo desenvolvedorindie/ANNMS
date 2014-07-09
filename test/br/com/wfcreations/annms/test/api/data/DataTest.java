@@ -31,40 +31,57 @@ package br.com.wfcreations.annms.test.api.data;
 
 import java.util.LinkedHashMap;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.api.data.Pattern;
 import br.com.wfcreations.annms.api.data.Select;
+import br.com.wfcreations.annms.api.data.type.DateType;
 import br.com.wfcreations.annms.api.data.type.ListType;
 import br.com.wfcreations.annms.api.data.type.PrimitiveType;
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IDValue;
+import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.api.data.values.RealValue;
 import br.com.wfcreations.annms.api.data.values.StringValue;
 
-public class DataTest extends TestCase {
+public class DataTest {
 
-	private static Data data;
+	private static String ATTR1 = "booleanattr";
 
-	@BeforeClass
+	private static String ATTR2 = "integerattr";
+
+	private static String ATTR3 = "realattr";
+
+	private static String ATTR4 = "stringattr";
+
+	private static String ATTR5 = "listattr";
+
+	private static String LIST_VALUE1 = "value1";
+
+	private static String LIST_VALUE2 = "value2";
+
+	private static String LIST_VALUE3 = "value3";
+
+	private IDValue[] list;
+
+	private Data data, data2, data3;
+
+	@Before
 	public void setUp() {
-		Attribute[] attr = new Attribute[5];
-		attr[0] = new Attribute("sepallenght", PrimitiveType.REAL, true);
-		attr[1] = new Attribute("sepalwidth", PrimitiveType.REAL, true);
-		attr[2] = new Attribute("petallenght", PrimitiveType.REAL, true);
-		attr[3] = new Attribute("petalwidth", PrimitiveType.REAL, true);
-		attr[4] = new Attribute("class", new ListType(new String[] { "Iris-setosa", "Iris-versicolor", "Iris-virginica" }), true);
-		data = new Data("iris", attr);
-	}
+		list = new IDValue[] { new IDValue(LIST_VALUE1), new IDValue(LIST_VALUE2), new IDValue(LIST_VALUE3) };
 
-	private void addData() {
-		data.add(new Pattern(new Value[] { new RealValue(5.1), new RealValue(3.5), new RealValue(1.4), new RealValue(0.2), new StringValue("Iris-setosa") }));
-		data.add(new Pattern(new Value[] { new RealValue(7.0), new RealValue(3.2), new RealValue(4.7), new RealValue(1.4), new StringValue("Iris-versicolor") }));
-		data.add(new Pattern(new Value[] { new RealValue(6.3), new RealValue(3.3), new RealValue(6.0), new RealValue(2.5), new StringValue("Iris-virginica") }));
+		Attribute[] attr = new Attribute[5];
+		attr[0] = new Attribute(new IDValue(ATTR1), PrimitiveType.BOOLEAN, true);
+		attr[1] = new Attribute(new IDValue(ATTR2), PrimitiveType.INTEGER, true);
+		attr[2] = new Attribute(new IDValue(ATTR3), PrimitiveType.REAL, true);
+		attr[3] = new Attribute(new IDValue(ATTR4), PrimitiveType.STRING, true);
+		attr[4] = new Attribute(new IDValue(ATTR5), new ListType(list), true);
+
+		data = new Data("", attr);
 	}
 
 	@Test
@@ -73,20 +90,18 @@ public class DataTest extends TestCase {
 
 		assertEquals("iris", data.getName());
 		assertEquals(5, data.getAttributesNum());
-		assertEquals("sepallenght", data.getAttributeAt(0).getName());
-		assertEquals("sepalwidth", data.getAttributeAt(1).getName());
-		assertEquals("petallenght", data.getAttributeAt(2).getName());
-		assertEquals("petalwidth", data.getAttributeAt(3).getName());
-		assertEquals("class", data.getAttributeAt(4).getName());
+		assertEquals("sepallenght", data.getAttributeAt(0).getID());
+		assertEquals("sepalwidth", data.getAttributeAt(1).getID());
+		assertEquals("petallenght", data.getAttributeAt(2).getID());
+		assertEquals("petalwidth", data.getAttributeAt(3).getID());
+		assertEquals("class", data.getAttributeAt(4).getID());
 		// Class
-		assertEquals("Iris-setosa", ((ListType) data.getAttributeAt(4).getType()).getListValuesAt(0));
-		assertEquals("Iris-versicolor", ((ListType) data.getAttributeAt(4).getType()).getListValuesAt(1));
-		assertEquals("Iris-virginica", ((ListType) data.getAttributeAt(4).getType()).getListValuesAt(2));
+		assertEquals("Iris-setosa", ((ListType) data.getAttributeAt(4).getType()).getValuesAt(0));
+		assertEquals("Iris-versicolor", ((ListType) data.getAttributeAt(4).getType()).getValuesAt(1));
+		assertEquals("Iris-virginica", ((ListType) data.getAttributeAt(4).getType()).getValuesAt(2));
 	}
 
-	@Test
 	public void testIfAddedPatternsCorrectly() {
-		addData();
 
 		assertEquals(3, data.getPatternsNum());
 		for (int i = 0; i < data.getPatternsNum(); i++) {
@@ -120,19 +135,18 @@ public class DataTest extends TestCase {
 	}
 
 	public void testIfCloneCorrectly() {
-		addData();
 		Data dataClone = data.clone();
 
 		assertEquals("iris", dataClone.getName());
-		assertEquals("sepallenght", dataClone.getAttributeAt(0).getName());
-		assertEquals("sepalwidth", dataClone.getAttributeAt(1).getName());
-		assertEquals("petallenght", dataClone.getAttributeAt(2).getName());
-		assertEquals("petalwidth", dataClone.getAttributeAt(3).getName());
-		assertEquals("class", dataClone.getAttributeAt(4).getName());
+		assertEquals("sepallenght", dataClone.getAttributeAt(0).getID());
+		assertEquals("sepalwidth", dataClone.getAttributeAt(1).getID());
+		assertEquals("petallenght", dataClone.getAttributeAt(2).getID());
+		assertEquals("petalwidth", dataClone.getAttributeAt(3).getID());
+		assertEquals("class", dataClone.getAttributeAt(4).getID());
 		// Class
-		assertEquals("Iris-setosa", ((ListType) dataClone.getAttributeAt(4).getType()).getListValuesAt(0));
-		assertEquals("Iris-versicolor", ((ListType) dataClone.getAttributeAt(4).getType()).getListValuesAt(1));
-		assertEquals("Iris-virginica", ((ListType) dataClone.getAttributeAt(4).getType()).getListValuesAt(2));
+		assertEquals("Iris-setosa", ((ListType) dataClone.getAttributeAt(4).getType()).getValuesAt(0));
+		assertEquals("Iris-versicolor", ((ListType) dataClone.getAttributeAt(4).getType()).getValuesAt(1));
+		assertEquals("Iris-virginica", ((ListType) dataClone.getAttributeAt(4).getType()).getValuesAt(2));
 
 		assertEquals(3, dataClone.getPatternsNum());
 		for (int i = 0; i < dataClone.getPatternsNum(); i++) {
@@ -167,15 +181,14 @@ public class DataTest extends TestCase {
 	}
 
 	public void testIfSliceCorrectly() {
-		addData();
 		Data dataSlice = data.slice(0, 4);
 		assertEquals("iris", dataSlice.getName());
 		assertEquals(4, dataSlice.getAttributesNum());
 
-		assertEquals("sepallenght", dataSlice.getAttributeAt(0).getName());
-		assertEquals("sepalwidth", dataSlice.getAttributeAt(1).getName());
-		assertEquals("petallenght", dataSlice.getAttributeAt(2).getName());
-		assertEquals("petalwidth", dataSlice.getAttributeAt(3).getName());
+		assertEquals("sepallenght", dataSlice.getAttributeAt(0).getID());
+		assertEquals("sepalwidth", dataSlice.getAttributeAt(1).getID());
+		assertEquals("petallenght", dataSlice.getAttributeAt(2).getID());
+		assertEquals("petalwidth", dataSlice.getAttributeAt(3).getID());
 
 		assertEquals(3, dataSlice.getPatternsNum());
 		for (int i = 0; i < dataSlice.getPatternsNum(); i++) {
@@ -206,11 +219,10 @@ public class DataTest extends TestCase {
 	}
 
 	public void testIfMargeCorrectly() {
-		addData();
-		Data data2 = new Data("classes", new Attribute[] { new Attribute("class", new ListType(new String[] { "Iris-setosa", "Iris-versicolor", "Iris-virginica" }), true) });
-		data2.add(new Pattern(new Value[] { new StringValue("Iris-setosa") }));
-		data2.add(new Pattern(new Value[] { new StringValue("Iris-versicolor") }));
-		data2.add(new Pattern(new Value[] { new StringValue("Iris-virginica") }));
+		Data data2 = new Data("classes", new Attribute[] { new Attribute(new IDValue("class"), new ListType(new IDValue[] { new IDValue("Iris-setosa"), new IDValue("Iris-versicolor"), new IDValue("Iris-virginica") }), true) });
+		data2.add(new Pattern(new IValue[] { new StringValue("Iris-setosa") }));
+		data2.add(new Pattern(new IValue[] { new StringValue("Iris-versicolor") }));
+		data2.add(new Pattern(new IValue[] { new StringValue("Iris-virginica") }));
 
 		Data dataSlice = data.slice(0, 4);
 
@@ -218,15 +230,15 @@ public class DataTest extends TestCase {
 
 		assertEquals("iris_classes", marged.getName());
 		assertEquals(5, data.getAttributesNum());
-		assertEquals("sepallenght", marged.getAttributeAt(0).getName());
-		assertEquals("sepalwidth", marged.getAttributeAt(1).getName());
-		assertEquals("petallenght", marged.getAttributeAt(2).getName());
-		assertEquals("petalwidth", marged.getAttributeAt(3).getName());
-		assertEquals("class", marged.getAttributeAt(4).getName());
+		assertEquals("sepallenght", marged.getAttributeAt(0).getID());
+		assertEquals("sepalwidth", marged.getAttributeAt(1).getID());
+		assertEquals("petallenght", marged.getAttributeAt(2).getID());
+		assertEquals("petalwidth", marged.getAttributeAt(3).getID());
+		assertEquals("class", marged.getAttributeAt(4).getID());
 		// Class
-		assertEquals("Iris-setosa", ((ListType) marged.getAttributeAt(4).getType()).getListValuesAt(0));
-		assertEquals("Iris-versicolor", ((ListType) marged.getAttributeAt(4).getType()).getListValuesAt(1));
-		assertEquals("Iris-virginica", ((ListType) marged.getAttributeAt(4).getType()).getListValuesAt(2));
+		assertEquals("Iris-setosa", ((ListType) marged.getAttributeAt(4).getType()).getValuesAt(0));
+		assertEquals("Iris-versicolor", ((ListType) marged.getAttributeAt(4).getType()).getValuesAt(1));
+		assertEquals("Iris-virginica", ((ListType) marged.getAttributeAt(4).getType()).getValuesAt(2));
 
 		assertEquals(3, marged.getPatternsNum());
 		for (int i = 0; i < marged.getPatternsNum(); i++) {
@@ -260,13 +272,11 @@ public class DataTest extends TestCase {
 	}
 
 	public void testForDataSelect() {
-		addData();
-
 		Select where = new Select();
-		LinkedHashMap<String, String> col = new LinkedHashMap<String, String>();
-		col.put("sepallenght", "ls");
-		col.put("sepalwidth", "sw");
-		col.put("class", "c");
+		LinkedHashMap<IDValue, IDValue> col = new LinkedHashMap<IDValue, IDValue>();
+		col.put(new IDValue("sepallenght"), new IDValue("ls"));
+		col.put(new IDValue("sepalwidth"), new IDValue("sw"));
+		col.put(new IDValue("class"), new IDValue("c"));
 		where.columns(col);
 		Data dataSelected = data.fetch(where);
 

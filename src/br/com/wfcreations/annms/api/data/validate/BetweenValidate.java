@@ -32,7 +32,7 @@ package br.com.wfcreations.annms.api.data.validate;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.api.data.values.IntegerValue;
 import br.com.wfcreations.annms.api.data.values.RealValue;
 
@@ -93,9 +93,9 @@ public class BetweenValidate extends ValidateAbstract {
 					return false;
 				}
 			}
-		} else if (value instanceof Value[]) {
-			Value[] values = (Value[]) value;
-			for (Value v : values) {
+		} else if (value instanceof IValue[]) {
+			IValue[] values = (IValue[]) value;
+			for (IValue v : values) {
 				result = result && isValid(v);
 			}
 		} else {

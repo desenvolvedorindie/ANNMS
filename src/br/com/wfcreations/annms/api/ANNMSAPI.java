@@ -31,11 +31,11 @@ package br.com.wfcreations.annms.api;
 
 public class ANNMSAPI {
 
-    public static final String VERSION = "1.0.0-dev";
-    
-    public static final short MAJOR = 1;
-    
-    public static final short MINOR = 0;
-    
-    public static final short REVISION = 0;
+	public static final short MAJOR = 1;
+
+	public static final short MINOR = 0;
+
+	public static final short REVISION = 0;
+
+	public static final String VERSION = String.format("%s.%s.%s", MAJOR, MINOR, REVISION);
 }

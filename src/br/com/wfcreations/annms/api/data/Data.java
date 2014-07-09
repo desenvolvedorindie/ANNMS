@@ -36,6 +36,7 @@ import java.util.Collections;
 import java.util.List;
 
 import br.com.wfcreations.annms.api.data.type.IType;
+import br.com.wfcreations.annms.api.data.values.IDValue;
 import br.com.wfcreations.annms.api.lang.ArrayUtils;
 
 public class Data implements Serializable {
@@ -62,7 +63,7 @@ public class Data implements Serializable {
 	private static boolean checkDuplicateAttribute(List<Attribute> attributes1, List<Attribute> attributes2) {
 		for (Attribute attr1 : attributes1)
 			for (Attribute attr2 : attributes2)
-				if (attr1.getName().equals(attr2.getName()))
+				if (attr1.getID().equals(attr2.getID()))
 					return true;
 		return false;
 	}
@@ -86,7 +87,7 @@ public class Data implements Serializable {
 			throw new IllegalArgumentException("Invalid values numbers");
 		for (int i = 0; i < attributes.size(); i++)
 			if (!attributes.get(i).validate(pattern.getValueAt(i)))
-				throw new IllegalArgumentException("Invalid value type for attribute " + attributes.get(i).getName());
+				throw new IllegalArgumentException("Invalid value type for attribute " + attributes.get(i).getID());
 	}
 
 	public String getName() {
@@ -106,7 +107,7 @@ public class Data implements Serializable {
 		String[] attributeNames = new String[attributes.size()];
 		int i = 0;
 		for (Attribute attr : attributes)
-			attributeNames[i++] = attr.getName();
+			attributeNames[i++] = attr.getID().getValue();
 		return attributeNames;
 	}
 
@@ -121,27 +122,27 @@ public class Data implements Serializable {
 		return attributes.get(index);
 	}
 
-	public Attribute getAttributeByName(String name) {
+	public Attribute getAttributeByID(IDValue id) {
 		for (Attribute attribute : attributes)
-			if (attribute.getName().equals(name))
+			if (attribute.getID().equals(id))
 				return attribute;
 		return null;
 	}
 
-	public Data renameAttribute(int index, String newName) {
+	public Data renameAttribute(int index, IDValue newID) {
 		for (int i = 0; i < getAttributesNum(); i++) {
 			if (i == index)
 				continue;
-			if (attributes.get(i).getName().equals(newName))
+			if (attributes.get(i).getID().equals(newID))
 				throw new IllegalArgumentException("Attribute name '" + name + "' already present at position #" + i);
 		}
-		this.attributes.set(index, new Attribute(newName, attributes.get(index).getType(), attributes.get(index).isNotNull()));
+		this.attributes.set(index, new Attribute(newID, attributes.get(index).getType(), attributes.get(index).isNotNull()));
 		return this;
 	}
 
-	public int indexOfAttribute(String name) {
+	public int indexOfAttribute(IDValue id) {
 		for (int i = 0; i < attributes.size(); i++)
-			if (attributes.get(i).getName().equals(name))
+			if (attributes.get(i).getID().equals(id))
 				return i;
 		return -1;
 	}
@@ -218,8 +219,8 @@ public class Data implements Serializable {
 			Data data2 = null;
 			int index;
 
-			String[] key = where.columns().keySet().toArray(new String[where.columns().size()]);
-			String[] value = where.columns().values().toArray(new String[where.columns().size()]);
+			IDValue[] key = where.columns().keySet().toArray(new IDValue[where.columns().size()]);
+			IDValue[] value = where.columns().values().toArray(new IDValue[where.columns().size()]);
 
 			index = this.indexOfAttribute(key[0]);
 			if (index < 0)
@@ -257,7 +258,7 @@ public class Data implements Serializable {
 		sb.append(getName());
 		sb.append(String.format("%n"));
 		for (int i = 0; i < getAttributesNum(); i++) {
-			sb.append(attributes.get(i).getName());
+			sb.append(attributes.get(i).getID());
 			sb.append('(');
 			sb.append(attributes.get(i).getType());
 			sb.append(')');

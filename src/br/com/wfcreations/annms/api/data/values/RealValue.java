@@ -29,18 +29,18 @@
  */
 package br.com.wfcreations.annms.api.data.values;
 
-public class RealValue extends Value {
+public class RealValue implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public static double getValueFor(Value value) {
+	public static double getValueFor(IValue value) {
 		return (double) value.getValue();
 	}
 
 	private final double value;
 
 	public RealValue() {
-		value = 0;
+		this(0);
 	}
 
 	public RealValue(double value) {

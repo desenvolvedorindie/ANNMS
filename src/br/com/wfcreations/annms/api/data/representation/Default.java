@@ -29,19 +29,19 @@
  */
 package br.com.wfcreations.annms.api.data.representation;
 
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 
 public class Default implements IRepresentator {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Value[] encode(Value value) {
-		return new Value[] { value };
+	public IValue[] encode(IValue value) {
+		return new IValue[] { value };
 	}
 
 	@Override
-	public Value decode(Value[] values) {
+	public IValue decode(IValue[] values) {
 		if (values.length != 1)
 			throw new IllegalArgumentException("Invalid value lenght");
 		return values[0];

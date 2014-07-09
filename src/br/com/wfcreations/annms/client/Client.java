@@ -51,7 +51,13 @@ import br.com.wfcreations.annms.client.config.ClientPropertiesConfigLoader;
 
 public class Client {
 
-	public static String VERSION = "1.0.0-dev";
+	public static final short MAJOR = 1;
+
+	public static final short MINOR = 0;
+
+	public static final short REVISION = 0;
+
+	public static String VERSION = String.format("%s.%s.%s", MAJOR, MINOR, REVISION);
 
 	public static String CONFIG_FILE_PATH = "conf/client.config";
 
@@ -108,8 +114,9 @@ public class Client {
 			JsonNode actualObj = mapper.readTree(result.data);
 
 			String severVersion = actualObj.get(0).get("SHOW STATUS").get("SERVER_VERSION").asText();
+			String sqlannVersion = actualObj.get(0).get("SHOW STATUS").get("SQLANN_VERSION").asText();
 			String apiVersion = actualObj.get(0).get("SHOW STATUS").get("API_VERSION").asText();
-			System.out.println(String.format("Server Version: %s (API: %s)", severVersion, apiVersion));
+			System.out.println(String.format("Server Version: %s (API: %s and SQLANN: %s) ", severVersion, apiVersion, sqlannVersion));
 
 			System.out.println(String.format("%s@%s", configuration.user_username, "localhost"));
 

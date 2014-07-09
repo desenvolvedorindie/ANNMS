@@ -34,33 +34,33 @@ import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.type.ListType;
 import br.com.wfcreations.annms.api.data.values.IDValue;
-import br.com.wfcreations.annms.api.data.values.Value;
+import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.api.data.values.RealValue;
 
 public class NominalToBinary implements IRepresentator {
 
 	private static final long serialVersionUID = 1L;
 
-	private Map<String, Value[]> map = new HashMap<String, Value[]>();
+	private Map<IDValue, IValue[]> map = new HashMap<IDValue, IValue[]>();
 
-	private String[] classes;
+	private IDValue[] classes;
 
 	public NominalToBinary(ListType listType) {
 		if (listType.getListValuesNum() < 2)
 			throw new IllegalArgumentException("Must have more than 1 class");
 
-		this.classes = new String[listType.getListValuesNum()];
-		String c;
+		this.classes = new IDValue[listType.getListValuesNum()];
+		IDValue c;
 
 		for (int i = 0; i < listType.getListValuesNum(); i++) {
-			c = listType.getListValuesAt(i);
+			c = listType.getValuesAt(i);
 			this.classes[i] = c;
 			map.put(c, generate(classes.length, i));
 		}
 	}
 
-	private static Value[] generate(int size, int index) {
-		Value[] value = new RealValue[size];
+	private static IValue[] generate(int size, int index) {
+		IValue[] value = new RealValue[size];
 		for (int i = 0; i < size; i++) {
 			if (i == index)
 				value[i] = new RealValue(1);
@@ -71,17 +71,17 @@ public class NominalToBinary implements IRepresentator {
 	}
 
 	@Override
-	public Value[] encode(Value value) {
+	public IValue[] encode(IValue value) {
 		if (!(value instanceof IDValue))
 			throw new IllegalArgumentException("Must be mominal");
-		Value[] values = map.get(IDValue.getValueFor(value));
+		IValue[] values = map.get(IDValue.getValueFor(value));
 		if (values == null)
 			throw new IllegalArgumentException("Class not found");
 		return values;
 	}
 
 	@Override
-	public Value decode(Value[] values) {
+	public IValue decode(IValue[] values) {
 		if (values.length != map.size())
 			throw new IllegalArgumentException("Invalid values lenght");
 
@@ -106,7 +106,7 @@ public class NominalToBinary implements IRepresentator {
 			throw new IllegalArgumentException("Invalid 1's count");
 		if (zeroCount + 1 != map.size())
 			throw new IllegalArgumentException("Invalid 0's count");
-		return new IDValue(classes[pos]);
+		return classes[pos];
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class NominalToBinary implements IRepresentator {
 		return classes.length;
 	}
 
-	public String getClassAt(int index) {
+	public IDValue getClassAt(int index) {
 		return classes[index];
 	}
 
