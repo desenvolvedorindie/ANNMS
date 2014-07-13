@@ -27,43 +27,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data;
+package br.com.wfcreations.annms.api.data.type;
 
 import java.io.Serializable;
 
-import br.com.wfcreations.annms.api.data.values.ID;
-import br.com.wfcreations.annms.api.data.values.IParamValue;
+import br.com.wfcreations.annms.api.data.values.IValue;
 
-public class Param implements Serializable {
+public interface IType extends Serializable {
 
-	private static final long serialVersionUID = 1L;
+	public boolean valid(IValue value);
 
-	private final ID id;
-
-	private final IParamValue[] values;
-
-	public Param(ID id, IParamValue[] values) {
-		this.id = id;
-		this.values = values;
-	};
-
-	public ID getID() {
-		return id;
-	};
-
-	public boolean nameIs(ID id) {
-		return this.id.equals(id);
-	}
-
-	public IParamValue[] getValues() {
-		return values;
-	};
-
-	public IParamValue getValueAt(int index) {
-		return values[index];
-	}
-
-	public int size() {
-		return this.values.length;
-	}
+	public boolean equals(Object other);
 }

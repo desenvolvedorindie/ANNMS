@@ -27,34 +27,45 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.concurrent;
+package br.com.wfcreations.annms.api.data.representation;
 
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class NamedThreadFactory implements ThreadFactory {
+import org.apache.commons.lang3.ArrayUtils;
 
-	protected final String id;
+import br.com.wfcreations.annms.api.data.Data;
+import br.com.wfcreations.annms.api.data.Pattern;
+import br.com.wfcreations.annms.api.data.values.IValue;
 
-	protected final int priority;
+public class DataRepresentation implements Serializable {
 
-	protected final AtomicInteger n = new AtomicInteger(1);
+	private static final long serialVersionUID = 1L;
 
-	public NamedThreadFactory(String id) {
-		this(id, Thread.NORM_PRIORITY);
+	private Data data;
+
+	private IRepresentator[] representators;
+
+	public DataRepresentation(Data data, IRepresentator[] representators) {
+		this.data = data;
+		this.representators = representators;
 	}
 
-	public NamedThreadFactory(String id, int priority) {
-		this.id = id;
-		this.priority = priority;
-	}
+	public List<Pattern> encode() {
+		if (representators.length != data.getAttributesNum())
+			throw new IllegalArgumentException("Representators ivalid lenght");
 
-	@Override
-	public Thread newThread(Runnable runnable) {
-		String name = id + ":" + n.getAndIncrement();
-		Thread thread = new Thread(runnable, name);
-		thread.setPriority(priority);
-		thread.setDaemon(true);
-		return thread;
+		IValue[] tmp;
+		ArrayList<Pattern> patternsList = new ArrayList<>(data.getPatternsNum());
+
+		for (int i = 0; i < data.getPatternsNum(); i++) {
+			tmp = new IValue[0];
+			for (int j = 0; j < data.getAttributesNum(); j++)
+				ArrayUtils.addAll(tmp, data.getPatternAt(i).getValueAt(j));
+			patternsList.add(new Pattern(tmp));
+		}
+
+		return patternsList;
 	}
 }

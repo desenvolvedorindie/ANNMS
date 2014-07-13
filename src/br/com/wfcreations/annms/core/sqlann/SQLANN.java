@@ -305,7 +305,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public Primitive visitBooleanDataType(@NotNull SQLANNParser.BooleanDataTypeContext ctx) {
 		if (ctx != null && ctx.BOOLEAN() != null) {
-			return Primitive.BOOLEAN;
+			return Primitive.BOOL;
 		}
 		return null;
 	}
@@ -313,7 +313,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public Primitive visitIntegerDataType(@NotNull SQLANNParser.IntegerDataTypeContext ctx) {
 		if (ctx != null && ctx.INTEGER() != null) {
-			return Primitive.INTEGER;
+			return Primitive.INT;
 		}
 		return null;
 	}
@@ -329,7 +329,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public Primitive visitStringDataType(@NotNull SQLANNParser.StringDataTypeContext ctx) {
 		if (ctx != null && ctx.STRING() != null) {
-			return Primitive.STRING;
+			return Primitive.STR;
 		}
 		return null;
 	}

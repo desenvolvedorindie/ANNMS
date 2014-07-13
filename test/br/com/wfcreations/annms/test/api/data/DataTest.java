@@ -40,12 +40,11 @@ import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.api.data.Pattern;
 import br.com.wfcreations.annms.api.data.Select;
-import br.com.wfcreations.annms.api.data.type.Date;
 import br.com.wfcreations.annms.api.data.type.ListType;
 import br.com.wfcreations.annms.api.data.type.Primitive;
+import br.com.wfcreations.annms.api.data.utils.DataUtils;
 import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Real;
 import br.com.wfcreations.annms.api.data.values.Str;
 
 public class DataTest {
@@ -68,17 +67,17 @@ public class DataTest {
 
 	private ID[] list;
 
-	private Data data, data2, data3;
+	private Data data;
 
 	@Before
 	public void setUp() {
 		list = new ID[] { new ID(LIST_VALUE1), new ID(LIST_VALUE2), new ID(LIST_VALUE3) };
 
 		Attribute[] attr = new Attribute[5];
-		attr[0] = new Attribute(new ID(ATTR1), Primitive.BOOLEAN, true);
-		attr[1] = new Attribute(new ID(ATTR2), Primitive.INTEGER, true);
+		attr[0] = new Attribute(new ID(ATTR1), Primitive.BOOL, true);
+		attr[1] = new Attribute(new ID(ATTR2), Primitive.INT, true);
 		attr[2] = new Attribute(new ID(ATTR3), Primitive.REAL, true);
-		attr[3] = new Attribute(new ID(ATTR4), Primitive.STRING, true);
+		attr[3] = new Attribute(new ID(ATTR4), Primitive.STR, true);
 		attr[4] = new Attribute(new ID(ATTR5), new ListType(list), true);
 
 		data = new Data("", attr);
@@ -226,7 +225,7 @@ public class DataTest {
 
 		Data dataSlice = data.slice(0, 4);
 
-		Data marged = Data.merge(dataSlice, data2);
+		Data marged = DataUtils.merge(dataSlice, data2);
 
 		assertEquals("iris_classes", marged.getName());
 		assertEquals(5, data.getAttributesNum());
@@ -278,9 +277,9 @@ public class DataTest {
 		col.put(new ID("sepalwidth"), new ID("sw"));
 		col.put(new ID("class"), new ID("c"));
 		where.columns(col);
-		Data dataSelected = data.fetch(where);
+		Data dataSelected = DataUtils.fetch(data, where);
 
-		System.out.println(dataSelected);
+		System.out.println(DataUtils.dump(dataSelected));
 
 		data.removeAllPatterns();
 	}

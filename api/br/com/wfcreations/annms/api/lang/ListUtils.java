@@ -27,46 +27,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data;
+package br.com.wfcreations.annms.api.lang;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 
-import br.com.wfcreations.annms.api.data.values.IValue;
+public abstract class ListUtils {
 
-public class Pattern implements IPattern, Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	protected final IValue[] values;
-
-	protected Data parentData;
-
-	public Pattern(IValue[] values) {
-		this.values = values.clone();
-	}
-
-	public IValue getValueAt(int index) {
-		return values[index];
-	}
-
-	public int getValuesNum() {
-		return this.values.length;
-	}
-
-	@Override
-	public Pattern clone() {
-		IValue[] newValues = new IValue[values.length];
-		System.arraycopy(values, 0, newValues, 0, values.length);
-		return new Pattern(newValues);
-	}
-
-	@Override
-	public void setParentData(Data data) {
-		this.parentData = data;
-	}
-
-	@Override
-	public Data getParentData() {
-		return this.parentData;
+	public static <E> ArrayList<ArrayList<E>> createArrayListOfArrayList(int size) {
+		ArrayList<ArrayList<E>> arrayList = new ArrayList<ArrayList<E>>(size);
+		for (int i = 0; i < size; i++) {
+			arrayList.add(new ArrayList<E>());
+		}
+		return arrayList;
 	}
 }

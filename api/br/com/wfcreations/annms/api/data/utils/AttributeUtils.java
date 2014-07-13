@@ -27,63 +27,50 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.values;
+package br.com.wfcreations.annms.api.data.utils;
 
-public class ID implements IValue {
+import java.util.List;
 
-	private static final long serialVersionUID = 1L;
+import br.com.wfcreations.annms.api.data.Attribute;
+import br.com.wfcreations.annms.api.data.Data;
+import br.com.wfcreations.annms.api.data.type.IType;
 
-	private static final String REGEX = "^[a-zA-Z][a-zA-Z0-9$_-]*$";
+public abstract class AttributeUtils {
 
-	public static String getValueFor(IValue value) {
-		return (String) value.getValue();
+	public static boolean checkDuplicateAttribute(Attribute[] attributes1, Attribute[] attributes2) {
+		for (Attribute attr1 : attributes1)
+			for (Attribute attr2 : attributes2)
+				if (attr1.getID().equals(attr2.getID()))
+					return true;
+		return false;
 	}
 
-	private final String value;
-
-	public ID(String value) {
-		this.value = value.toUpperCase();
-		if (!valid(this.value))
-			throw new IllegalArgumentException("Invalid ID format");
+	public static boolean checkDuplicateAttribute(List<Attribute> attributes1, List<Attribute> attributes2) {
+		for (Attribute attr1 : attributes1)
+			for (Attribute attr2 : attributes2)
+				if (attr1.getID().equals(attr2.getID()))
+					return true;
+		return false;
 	}
 
-	private boolean valid(String value) {
-		// TODO
-		return value.matches(REGEX);
+	public static String[] getAttributesNames(Data data) {
+		String[] attributeNames = new String[data.getAttributesNum()];
+		for (int i = 0; i < data.getAttributesNum(); i++)
+			attributeNames[i] = data.getAttributeAt(i).getID().getValue();
+		return attributeNames;
 	}
 
-	@Override
-	public String getValue() {
-		return this.value;
+	public static boolean hasAttributeType(Data data, IType dataType) {
+		for (int i = 0; i < data.getAttributesNum(); i++)
+			if (data.getAttributeAt(i).getType().equals(dataType))
+				return true;
+		return false;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ID other = (ID) obj;
-		if (value == null) {
-			if (other.value != null)
-				return false;
-		} else if (!value.equals(other.value))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return String.valueOf(this.value).toUpperCase();
+	public static Attribute[] cloneAttributes(Data data) {
+		Attribute[] attributes = new Attribute[data.getAttributesNum()];
+		for (int i = 0; i < data.getAttributesNum(); i++)
+			attributes[i] = data.getAttributeAt(i);
+		return attributes;
 	}
 }

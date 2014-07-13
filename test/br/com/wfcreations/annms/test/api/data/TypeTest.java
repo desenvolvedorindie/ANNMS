@@ -23,23 +23,23 @@ public class TypeTest {
 
 	@Test
 	public void testPrimitiveBooleanType() {
-		assertTrue(Primitive.BOOLEAN.valid(Bool.TRUE));
-		assertTrue(Primitive.BOOLEAN.valid(Bool.FALSE));
-		assertFalse(Primitive.BOOLEAN.valid(Null.VALUE));
-		assertEquals(Bool.class, Primitive.BOOLEAN.getRepresentation());
-		assertEquals("BOOLEAN", Primitive.BOOLEAN.toString());
+		assertTrue(Primitive.BOOL.valid(Bool.TRUE));
+		assertTrue(Primitive.BOOL.valid(Bool.FALSE));
+		assertFalse(Primitive.BOOL.valid(Null.VALUE));
+		assertEquals(Bool.class, Primitive.BOOL.getRepresentation());
+		assertEquals("BOOLEAN", Primitive.BOOL.toString());
 	}
 
 	@Test
 	public void testPrimitiveIntegerType() {
-		assertTrue(Primitive.INTEGER.valid(new Int()));
-		assertTrue(Primitive.INTEGER.valid(new Int(10)));
-		assertTrue(Primitive.INTEGER.valid(new Int(-10)));
-		assertTrue(Primitive.INTEGER.valid(new Int(0)));
-		assertFalse(Primitive.INTEGER.valid(new Real()));
-		assertFalse(Primitive.INTEGER.valid(Null.VALUE));
-		assertEquals(Int.class, Primitive.INTEGER.getRepresentation());
-		assertEquals("INTEGER", Primitive.INTEGER.toString());
+		assertTrue(Primitive.INT.valid(new Int()));
+		assertTrue(Primitive.INT.valid(new Int(10)));
+		assertTrue(Primitive.INT.valid(new Int(-10)));
+		assertTrue(Primitive.INT.valid(new Int(0)));
+		assertFalse(Primitive.INT.valid(new Real()));
+		assertFalse(Primitive.INT.valid(Null.VALUE));
+		assertEquals(Int.class, Primitive.INT.getRepresentation());
+		assertEquals("INTEGER", Primitive.INT.toString());
 	}
 
 	@Test
@@ -55,10 +55,10 @@ public class TypeTest {
 
 	@Test
 	public void testPrimitiveString() {
-		assertTrue(Primitive.STRING.valid(new Str()));
-		assertTrue(Primitive.STRING.valid(new Str("value")));
-		assertEquals(Str.class, Primitive.STRING.getRepresentation());
-		assertEquals("STRING", Primitive.STRING.toString());
+		assertTrue(Primitive.STR.valid(new Str()));
+		assertTrue(Primitive.STR.valid(new Str("value")));
+		assertEquals(Str.class, Primitive.STR.getRepresentation());
+		assertEquals("STRING", Primitive.STR.toString());
 	}
 
 	@Test

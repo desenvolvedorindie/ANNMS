@@ -27,34 +27,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.core.concurrent;
+package br.com.wfcreations.annms.api.lang;
 
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.HashSet;
+import java.util.Set;
 
-public class NamedThreadFactory implements ThreadFactory {
+public abstract class ArrayUtils {
 
-	protected final String id;
-
-	protected final int priority;
-
-	protected final AtomicInteger n = new AtomicInteger(1);
-
-	public NamedThreadFactory(String id) {
-		this(id, Thread.NORM_PRIORITY);
-	}
-
-	public NamedThreadFactory(String id, int priority) {
-		this.id = id;
-		this.priority = priority;
-	}
-
-	@Override
-	public Thread newThread(Runnable runnable) {
-		String name = id + ":" + n.getAndIncrement();
-		Thread thread = new Thread(runnable, name);
-		thread.setPriority(priority);
-		thread.setDaemon(true);
-		return thread;
+	public static <T> boolean hasDuplicate(T[] array) {
+		Set<T> tempSet = new HashSet<T>();
+		for (T element : array)
+			if (!tempSet.add(element))
+				return true;
+		return false;
 	}
 }

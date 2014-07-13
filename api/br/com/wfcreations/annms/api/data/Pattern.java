@@ -27,43 +27,49 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.representation;
+package br.com.wfcreations.annms.api.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import br.com.wfcreations.annms.api.data.Data;
-import br.com.wfcreations.annms.api.data.Pattern;
 import br.com.wfcreations.annms.api.data.values.IValue;
 
-public class DataRepresentation implements Serializable {
+public class Pattern implements IPattern, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Data data;
+	protected final IValue[] values;
 
-	private IRepresentator[] representators;
+	protected Data parentData;
 
-	public DataRepresentation(Data data, IRepresentator[] representators) {
-		this.data = data;
-		this.representators = representators;
+	public Pattern(IValue[] values) {
+		this.values = values.clone();
 	}
 
-	public List<Pattern> encode() {
-		if (representators.length != data.getAttributesNum())
-			throw new IllegalArgumentException("Representators ivalid lenght");
+	public IValue getValueAt(int index) {
+		return values[index];
+	}
 
-		IValue[] tmp;
-		ArrayList<Pattern> patternsList = new ArrayList<>(data.getPatternsNum());
+	public int getValuesNum() {
+		return this.values.length;
+	}
 
-		for (int i = 0; i < data.getPatternsNum(); i++) {
-			tmp = new IValue[0];
-			for (int j = 0; j < data.getAttributesNum(); j++)
-				org.apache.commons.lang3.ArrayUtils.addAll(tmp, data.getPatternAt(i).getValueAt(j));
-			patternsList.add(new Pattern(tmp));
-		}
+	@Override
+	public Pattern clone() {
+		IValue[] newValues = this.values.clone();
+		return new Pattern(newValues);
+	}
 
-		return patternsList;
+	public IValue[] cloneValues() {
+		return this.values.clone();
+	}
+
+	@Override
+	public void setParentData(Data data) {
+		this.parentData = data;
+	}
+
+	@Override
+	public Data getParentData() {
+		return this.parentData;
 	}
 }

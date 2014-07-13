@@ -27,14 +27,14 @@ public class AttributeTest {
 		id1 = new ID(ATTR1_ID);
 		id2 = new ID(ATTR2_ID);
 
-		attr1 = new Attribute(id1, Primitive.BOOLEAN, true);
-		attr2 = new Attribute(id2, Primitive.INTEGER, false);
+		attr1 = new Attribute(id1, Primitive.BOOL, true);
+		attr2 = new Attribute(id2, Primitive.INT, false);
 	}
 
 	@Test
 	public void testAttributes() {
 		assertEquals(id1, attr1.getID());
-		assertEquals(Primitive.BOOLEAN, attr1.getType());
+		assertEquals(Primitive.BOOL, attr1.getType());
 		assertTrue(attr1.isNotNull());
 		assertEquals("Attribute [name=ID1, type=BOOLEAN, notNull=true]", attr1.toString());
 	}
@@ -51,11 +51,11 @@ public class AttributeTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testAttributeNullID() {
-		new Attribute(null, Primitive.BOOLEAN, false);
+		new Attribute(null, Primitive.BOOL, false);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testAttributeTypeNull() {
-		new Attribute(new ID("tes"), null, false);
+		new Attribute(ID.create("tes"), null, false);
 	}
 }

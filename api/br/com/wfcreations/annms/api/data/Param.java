@@ -27,20 +27,43 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.lang;
+package br.com.wfcreations.annms.api.data;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public final class ListUtils {
+import br.com.wfcreations.annms.api.data.values.ID;
+import br.com.wfcreations.annms.api.data.values.IParamValue;
 
-	private ListUtils() {
+public class Param implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private final ID id;
+
+	private final IParamValue[] values;
+
+	public Param(ID id, IParamValue[] values) {
+		this.id = id;
+		this.values = values;
+	};
+
+	public ID getID() {
+		return id;
+	};
+
+	public boolean idIs(ID id) {
+		return this.id.equals(id);
 	}
 
-	public static <E> ArrayList<ArrayList<E>> createArrayListOfArrayList(int size) {
-		ArrayList<ArrayList<E>> arrayList = new ArrayList<ArrayList<E>>(size);
-		for (int i = 0; i < size; i++) {
-			arrayList.add(new ArrayList<E>());
-		}
-		return arrayList;
+	public IParamValue[] getValues() {
+		return values;
+	};
+
+	public IParamValue getValueAt(int index) {
+		return values[index];
+	}
+
+	public int size() {
+		return this.values.length;
 	}
 }

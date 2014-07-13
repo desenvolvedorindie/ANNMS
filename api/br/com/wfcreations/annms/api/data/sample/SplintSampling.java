@@ -27,38 +27,59 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.type;
+package br.com.wfcreations.annms.api.data.sample;
 
-import br.com.wfcreations.annms.api.data.values.Bool;
-import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Int;
-import br.com.wfcreations.annms.api.data.values.Real;
-import br.com.wfcreations.annms.api.data.values.Str;
+import java.util.Collections;
+import java.util.List;
+import java.util.Vector;
 
-public enum Primitive implements IType {
+import br.com.wfcreations.annms.api.data.Data;
+import br.com.wfcreations.annms.api.data.utils.AttributeUtils;
 
-	BOOLEAN(Bool.class),
+public class SplintSampling implements ISampling {
 
-	INTEGER(Int.class),
+	protected float percent;
 
-	REAL(Real.class),
-
-	STRING(Str.class);
-
-	private final Class<? extends IValue> representation;
-
-	private static final long serialVersionUID = 1L;
-
-	private Primitive(Class<? extends IValue> representation) {
-		this.representation = representation;
-	}
-
-	public Class<? extends IValue> getRepresentation() {
-		return representation;
+	public SplintSampling(float percent) {
+		this.percent = percent;
 	}
 
 	@Override
-	public boolean valid(IValue value) {
-		return (value.getClass().equals(getRepresentation()));
+	public List<Data> sample(Data data) {
+		List<Data> dataList = new Vector<>(2);
+		int data1PatternCount = (int) (data.getPatternsNum() * percent);
+		int data2PatternCount = data.getPatternsNum() - data1PatternCount;
+
+		List<Integer> randomIndices = new Vector<Integer>(data.getPatternsNum());
+		for (int i = 0; i < data.getPatternsNum(); i++) {
+			randomIndices.add(i);
+		}
+
+		Collections.shuffle(randomIndices);
+
+		Data data1 = new Data(data.getName() + "_1", AttributeUtils.cloneAttributes(data));
+
+		for (int i = 0; i < data1PatternCount; i++)
+			data1.add(data.getPatternAt(randomIndices.get(i)).clone());
+
+		Data data2 = new Data(data.getName() + "_2", AttributeUtils.cloneAttributes(data1));
+
+		int totalPatternCount = data1PatternCount + data2PatternCount;
+
+		for (int i = data2PatternCount; i < totalPatternCount; i++)
+			data2.add(data.getPatternAt(randomIndices.get(i)).clone());
+
+		dataList.add(data1);
+		dataList.add(data2);
+		return dataList;
+	}
+
+	public float getPercent() {
+		return this.percent;
+	}
+
+	public SplintSampling setPercent(float percent) {
+		this.percent = percent;
+		return this;
 	}
 }

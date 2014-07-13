@@ -27,19 +27,46 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.lang;
+package br.com.wfcreations.annms.api.data.type;
 
-import java.util.HashSet;
-import java.util.Set;
+import br.com.wfcreations.annms.api.data.values.Bool;
+import br.com.wfcreations.annms.api.data.values.IValue;
+import br.com.wfcreations.annms.api.data.values.Int;
+import br.com.wfcreations.annms.api.data.values.Real;
+import br.com.wfcreations.annms.api.data.values.Str;
 
-public final class ArrayUtils {
+public enum Primitive implements IType {
 
-	public static <T> boolean hasDuplicate(T[] array) {
-		Set<T> tempSet = new HashSet<T>();
-		for (T element : array)
-			if (!tempSet.add(element))
-				return true;
-		return false;
+	BOOL("BOOLEAN", Bool.class),
+
+	INT("INTEGER", Int.class),
+
+	REAL("REAL", Real.class),
+
+	STR("STRING", Str.class);
+
+	private static final long serialVersionUID = 1L;
+
+	protected final String name;
+
+	protected final Class<? extends IValue> representation;
+
+	private Primitive(String name, Class<? extends IValue> representation) {
+		this.name = name;
+		this.representation = representation;
 	}
 
+	public Class<? extends IValue> getRepresentation() {
+		return representation;
+	}
+
+	@Override
+	public boolean valid(IValue value) {
+		return (value.getClass().equals(getRepresentation()));
+	}
+
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

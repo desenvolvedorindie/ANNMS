@@ -1,7 +1,5 @@
 package br.com.wfcreations.annms.test.api.data;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
