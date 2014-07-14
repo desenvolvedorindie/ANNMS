@@ -36,7 +36,7 @@ import java.util.Vector;
 import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.api.data.Pattern;
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.lang.ArrayUtils;
+import br.com.wfcreations.lang.ArrayUtils;
 
 public class AttributeFilter implements Serializable {
 
