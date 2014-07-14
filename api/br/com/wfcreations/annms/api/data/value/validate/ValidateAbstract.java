@@ -27,57 +27,44 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.validate;
+package br.com.wfcreations.annms.api.data.value.validate;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-import br.com.wfcreations.annms.api.data.values.ID;
-import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Str;
+public abstract class ValidateAbstract implements IValidate {
 
-public class InArrayValidate extends ValidateAbstract {
+	private static final long serialVersionUID = 1L;
 
-	protected static final String INVALID = "invalid";
+	protected Map<String, Object> messages = new LinkedHashMap<String, Object>();
 
-	protected static Map<String, String> messageTemplates = new HashMap<String, String>();
+	protected ArrayList<String> errors = new ArrayList<String>();
 
-	static {
-		messageTemplates.put(INVALID, "Invalid type given. BooleanValue expected");
+	private Object value;
+
+	protected void error(Map<String, String> messageTemplates, String key, Object value) {
+		errors.add(key);
+		if (value == null)
+			value = this.value;
+		// this.messages.put(key, messageTemplates.get(key).replace("%value",
+		// value.toString()));
 	}
 
-	protected boolean isArray = false;
-
-	protected final List<String> values;
-
-	public InArrayValidate(String[] values) {
-		this(values, false);
+	public Map<String, Object> getMessage() {
+		return this.messages;
 	}
 
-	public InArrayValidate(String[] values, boolean isArray) {
-		this.values = Arrays.asList(values);
-		this.isArray = isArray;
+	public int messageLength() {
+		return this.messages.size();
 	}
 
-	@Override
-	public boolean isValid(Object value) {
-		String v = "";
-		boolean result = true;
-		if (value instanceof ID) {
-			v = ID.getValueFor((IValue) value);
-		} else if (value instanceof Str) {
-			v = Str.getValueFor((IValue) value);
-		} else if ((value instanceof IValue[]) && this.isArray) {
-			IValue[] values = (IValue[]) value;
-			for (IValue va : values) {
-				result = result && isValid(va);
-			}
-		} else {
-			result = false;
-		}
-		return values.contains(v) && result;
+	public Object getValue() {
+		return value;
 	}
 
+	public ValidateAbstract setValue(Object value) {
+		this.value = value;
+		return this;
+	}
 }

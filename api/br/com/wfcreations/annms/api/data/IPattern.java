@@ -29,15 +29,13 @@
  */
 package br.com.wfcreations.annms.api.data;
 
-import br.com.wfcreations.annms.api.data.values.IValue;
+import java.io.Serializable;
 
-public interface IPattern {
+import br.com.wfcreations.annms.api.data.value.IValue;
+
+public interface IPattern extends Serializable {
 
 	public IValue getValueAt(int index);
 
 	public int getValuesNum();
-	
-	public void setParentData(Data data);
-	
-	public Data getParentData();
 }

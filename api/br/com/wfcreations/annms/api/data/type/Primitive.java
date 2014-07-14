@@ -29,11 +29,11 @@
  */
 package br.com.wfcreations.annms.api.data.type;
 
-import br.com.wfcreations.annms.api.data.values.Bool;
-import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Int;
-import br.com.wfcreations.annms.api.data.values.Real;
-import br.com.wfcreations.annms.api.data.values.Str;
+import br.com.wfcreations.annms.api.data.value.Bool;
+import br.com.wfcreations.annms.api.data.value.IValue;
+import br.com.wfcreations.annms.api.data.value.Int;
+import br.com.wfcreations.annms.api.data.value.Real;
+import br.com.wfcreations.annms.api.data.value.Str;
 
 public enum Primitive implements IType {
 

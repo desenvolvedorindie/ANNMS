@@ -37,13 +37,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.wfcreations.annms.api.data.validate.BetweenValidate;
-import br.com.wfcreations.annms.api.data.validate.IntValidate;
-import br.com.wfcreations.annms.api.data.validate.RealValidate;
-import br.com.wfcreations.annms.api.data.validate.ValidateAbstract;
-import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Int;
-import br.com.wfcreations.annms.api.data.values.Real;
+import br.com.wfcreations.annms.api.data.value.ComplexList;
+import br.com.wfcreations.annms.api.data.value.IValue;
+import br.com.wfcreations.annms.api.data.value.Int;
+import br.com.wfcreations.annms.api.data.value.Real;
+import br.com.wfcreations.annms.api.data.value.validate.BetweenValidate;
+import br.com.wfcreations.annms.api.data.value.validate.IntValidate;
+import br.com.wfcreations.annms.api.data.value.validate.RealValidate;
+import br.com.wfcreations.annms.api.data.value.validate.ValidateAbstract;
 
 public class ValidateValues {
 
@@ -69,9 +70,10 @@ public class ValidateValues {
 		Int integer = new Int(5);
 		Real real = new Real(5);
 		IValue[] values = new IValue[] { integer, real };
+		ComplexList cl = new ComplexList(values);
 		assertTrue(validate.isValid(new Int(2)));
 		assertFalse(validate.isValid(new Real(10)));
-		assertTrue(validate.isValid(values));
+		assertTrue(validate.isValid(cl));
 	}
 
 	@Test
@@ -80,9 +82,10 @@ public class ValidateValues {
 		Int integer = new Int(9);
 		Real real = new Real(5.2);
 		IValue[] values = new IValue[] { integer, new Int(2) };
+		ComplexList cl = new ComplexList(values);
 		assertTrue(validate.isValid(integer));
 		assertFalse(validate.isValid(real));
-		assertTrue(validate.isValid(values));
+		assertTrue(validate.isValid(cl));
 	}
 
 	@Test
@@ -91,8 +94,9 @@ public class ValidateValues {
 		Int integer = new Int(10);
 		Real real = new Real(5.2);
 		IValue[] values = new IValue[] { real, new Real(2.5) };
+		ComplexList cl = new ComplexList(values);
 		assertFalse(validate.isValid(integer));
 		assertTrue(validate.isValid(real));
-		assertTrue(validate.isValid(values));
+		assertTrue(validate.isValid(cl));
 	}
 }

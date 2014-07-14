@@ -27,35 +27,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data;
+package br.com.wfcreations.annms.api.data.value;
 
-import br.com.wfcreations.annms.api.data.value.IValue;
-
-public class Pattern implements IPattern {
+public class Null implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	protected final IValue[] values;
+	public static Null VALUE = new Null();
 
-	public Pattern(IValue[] values) {
-		this.values = values.clone();
-	}
-
-	public IValue getValueAt(int index) {
-		return values[index];
-	}
-
-	public int getValuesNum() {
-		return this.values.length;
+	private Null() {
 	}
 
 	@Override
-	public Pattern clone() {
-		IValue[] newValues = this.values.clone();
-		return new Pattern(newValues);
+	public Object getValue() {
+		return null;
 	}
 
-	public IValue[] cloneValues() {
-		return this.values.clone();
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "NULL";
 	}
 }

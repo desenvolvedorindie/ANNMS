@@ -27,47 +27,47 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.validate;
+package br.com.wfcreations.annms.api.data.value;
 
-import java.util.HashMap;
-import java.util.Map;
+public class Int implements IValue {
 
-import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Int;
+	private static final long serialVersionUID = 1L;
 
-public class IntValidate extends ValidateAbstract {
-
-	protected static final String INVALID = "invalid";
-
-	protected static Map<String, String> messageTemplates = new HashMap<String, String>();
-
-	static {
-		messageTemplates.put(INVALID, "Invalid type given. IntegerValue expected");
+	public static int getValueFor(IValue value) {
+		return (int) value.getValue();
 	}
 
-	protected boolean isArray = false;
+	private final int value;
 
-	public IntValidate() {
+	public Int() {
+		this(0);
 	}
 
-	public IntValidate(boolean isArray) {
-		this.isArray = isArray;
+	public Int(int value) {
+		this.value = value;
 	}
 
 	@Override
-	public boolean isValid(Object value) {
-		this.setValue(value);
-		if (value instanceof IValue[] && this.isArray) {
-			IValue[] values = (IValue[]) value;
-			boolean result = true;
-			for (IValue v : values) {
-				result = result && isValid(v);
-			}
-			return result;
-		} else if (!(value instanceof Int)) {
-			error(messageTemplates, INVALID, null);
+	public Integer getValue() {
+		return this.value;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
+		Int other = (Int) obj;
+		if (value != other.value)
+			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(this.value);
 	}
 }

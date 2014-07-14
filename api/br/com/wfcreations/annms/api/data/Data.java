@@ -35,7 +35,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import br.com.wfcreations.annms.api.data.values.ID;
+import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.lang.ArrayUtils;
 
 public class Data implements Serializable {

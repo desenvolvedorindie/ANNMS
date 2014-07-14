@@ -27,16 +27,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.validate;
+package br.com.wfcreations.annms.api.data.value.validate;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Int;
-import br.com.wfcreations.annms.api.data.values.Real;
+import br.com.wfcreations.annms.api.data.value.ComplexList;
+import br.com.wfcreations.annms.api.data.value.IParamValue;
+import br.com.wfcreations.annms.api.data.value.Int;
+import br.com.wfcreations.annms.api.data.value.Real;
 
 public class BetweenValidate extends ValidateAbstract {
+
+	private static final long serialVersionUID = 1L;
 
 	protected static final String NOT_BETWEEN = "notBetween";
 
@@ -63,7 +66,7 @@ public class BetweenValidate extends ValidateAbstract {
 	}
 
 	@Override
-	public boolean isValid(Object value) {
+	public boolean isValid(IParamValue value) {
 		this.setValue(value);
 
 		boolean result = true;
@@ -93,9 +96,9 @@ public class BetweenValidate extends ValidateAbstract {
 					return false;
 				}
 			}
-		} else if (value instanceof IValue[]) {
-			IValue[] values = (IValue[]) value;
-			for (IValue v : values) {
+		} else if (value instanceof ComplexList) {
+			ComplexList values = (ComplexList) value;
+			for (IParamValue v : values.getValues()) {
 				result = result && isValid(v);
 			}
 		} else {

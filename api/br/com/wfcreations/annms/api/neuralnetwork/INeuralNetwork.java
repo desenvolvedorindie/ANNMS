@@ -32,7 +32,7 @@ package br.com.wfcreations.annms.api.neuralnetwork;
 import java.io.Serializable;
 
 import br.com.wfcreations.annms.api.data.Param;
-import br.com.wfcreations.annms.api.data.values.IValue;
+import br.com.wfcreations.annms.api.data.value.IValue;
 
 public interface INeuralNetwork extends Serializable {
 

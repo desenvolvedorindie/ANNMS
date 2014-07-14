@@ -27,41 +27,50 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.validate;
+package br.com.wfcreations.annms.api.data.value.validate;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
-public abstract class ValidateAbstract implements IValidate {
+import br.com.wfcreations.annms.api.data.value.ComplexList;
+import br.com.wfcreations.annms.api.data.value.IParamValue;
+import br.com.wfcreations.annms.api.data.value.Real;
 
-	protected Map<String, Object> messages = new LinkedHashMap<String, Object>();
+public class RealValidate extends ValidateAbstract {
 
-	protected ArrayList<String> errors = new ArrayList<String>();
+	private static final long serialVersionUID = 1L;
 
-	private Object value;
+	protected static final String INVALID = "invalid";
 
-	protected void error(Map<String, String> messageTemplates, String key, Object value) {
-		errors.add(key);
-		if (value == null)
-			value = this.value;
-		//this.messages.put(key, messageTemplates.get(key).replace("%value", value.toString()));
+	protected static Map<String, String> messageTemplates = new HashMap<String, String>();
+
+	static {
+		messageTemplates.put(INVALID, "Invalid type given. RealValue expected");
 	}
 
-	public Map<String, Object> getMessage() {
-		return this.messages;
+	protected boolean isArray = false;
+
+	public RealValidate() {
 	}
 
-	public int messageLength() {
-		return this.messages.size();
+	public RealValidate(boolean isArray) {
+		this.isArray = isArray;
 	}
 
-	public Object getValue() {
-		return value;
-	}
-
-	public ValidateAbstract setValue(Object value) {
-		this.value = value;
-		return this;
+	@Override
+	public boolean isValid(IParamValue value) {
+		this.setValue(value);
+		if (value instanceof ComplexList && this.isArray) {
+			ComplexList values = (ComplexList) value;
+			boolean result = true;
+			for (IParamValue v : values.getValues()) {
+				result = result && isValid(v);
+			}
+			return result;
+		} else if (!(value instanceof Real)) {
+			error(messageTemplates, INVALID, null);
+			return false;
+		}
+		return true;
 	}
 }

@@ -1,4 +1,5 @@
 /*
+
  * Copyright (c) Welsiton Ferreira (wfcreations@gmail.com)
  * All rights reserved.
  *
@@ -31,8 +32,8 @@ package br.com.wfcreations.annms.api.data;
 
 import java.io.Serializable;
 
-import br.com.wfcreations.annms.api.data.values.ID;
-import br.com.wfcreations.annms.api.data.values.IParamValue;
+import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.api.data.value.IParamValue;
 
 public class Param implements Serializable {
 

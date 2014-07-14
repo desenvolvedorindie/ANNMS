@@ -36,7 +36,7 @@ import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.api.data.Pattern;
 import br.com.wfcreations.annms.api.data.Select;
-import br.com.wfcreations.annms.api.data.values.ID;
+import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.lang.ArrayUtils;
 
 public abstract class DataUtils {

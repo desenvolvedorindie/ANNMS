@@ -27,47 +27,16 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.values;
+package br.com.wfcreations.annms.api.data.value.validate;
 
-public class Bool implements IValue {
+import java.io.Serializable;
+import java.util.Map;
 
-	private static final long serialVersionUID = 1L;
+import br.com.wfcreations.annms.api.data.value.IParamValue;
 
-	public static Bool TRUE = new Bool(true);
+public interface IValidate extends Serializable {
 
-	public static Bool FALSE = new Bool(false);
+	public boolean isValid(IParamValue value);
 
-	public static boolean getValueFor(IValue value) {
-		return (boolean) value.getValue();
-	}
-
-	private final boolean value;
-
-	private Bool(boolean value) {
-		this.value = value;
-	}
-
-	@Override
-	public Boolean getValue() {
-		return this.value;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Bool other = (Bool) obj;
-		if (value != other.value)
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return String.valueOf(this.value).toUpperCase();
-	}
+	public Map<String, Object> getMessage();
 }

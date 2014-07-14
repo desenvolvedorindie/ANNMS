@@ -43,9 +43,9 @@ import br.com.wfcreations.annms.api.data.Select;
 import br.com.wfcreations.annms.api.data.type.ListType;
 import br.com.wfcreations.annms.api.data.type.Primitive;
 import br.com.wfcreations.annms.api.data.utils.DataUtils;
-import br.com.wfcreations.annms.api.data.values.ID;
-import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Str;
+import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.api.data.value.IValue;
+import br.com.wfcreations.annms.api.data.value.Str;
 
 public class DataTest {
 

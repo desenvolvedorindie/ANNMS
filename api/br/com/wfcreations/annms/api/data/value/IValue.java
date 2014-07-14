@@ -27,48 +27,9 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.validate;
+package br.com.wfcreations.annms.api.data.value;
 
-import java.util.HashMap;
-import java.util.Map;
+public interface IValue extends IParamValue {
 
-import br.com.wfcreations.annms.api.data.values.Bool;
-import br.com.wfcreations.annms.api.data.values.IValue;
-
-public class BooleanValidate extends ValidateAbstract {
-
-	protected static final String INVALID = "invalid";
-
-	protected static Map<String, String> messageTemplates = new HashMap<String, String>();
-
-	static {
-		messageTemplates.put(INVALID, "Invalid type given. BooleanValue expected");
-	}
-
-	protected boolean isArray = false;
-
-	public BooleanValidate() {
-	}
-
-	public BooleanValidate(boolean isArray) {
-		this.isArray = isArray;
-	}
-
-	@Override
-	public boolean isValid(Object value) {
-		this.setValue(value);
-
-		boolean result = true;
-		if ((value instanceof IValue[]) && this.isArray) {
-			IValue[] values = (IValue[]) value;
-			for (IValue v : values) {
-				result = result && isValid(v);
-			}
-		} else if (!(value instanceof Bool)) {
-			error(messageTemplates, INVALID, null);
-			return false;
-		}
-		return result;
-	}
-
+	public Object getValue();
 }

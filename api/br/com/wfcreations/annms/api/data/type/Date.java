@@ -32,8 +32,8 @@ package br.com.wfcreations.annms.api.data.type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Str;
+import br.com.wfcreations.annms.api.data.value.IValue;
+import br.com.wfcreations.annms.api.data.value.Str;
 
 public class Date implements IType {
 

@@ -4,12 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import br.com.wfcreations.annms.api.data.values.Bool;
-import br.com.wfcreations.annms.api.data.values.ID;
-import br.com.wfcreations.annms.api.data.values.Int;
-import br.com.wfcreations.annms.api.data.values.Null;
-import br.com.wfcreations.annms.api.data.values.Real;
-import br.com.wfcreations.annms.api.data.values.Str;
+import br.com.wfcreations.annms.api.data.value.Bool;
+import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.api.data.value.Int;
+import br.com.wfcreations.annms.api.data.value.Null;
+import br.com.wfcreations.annms.api.data.value.Real;
+import br.com.wfcreations.annms.api.data.value.Str;
 
 public class ValueTest {
 

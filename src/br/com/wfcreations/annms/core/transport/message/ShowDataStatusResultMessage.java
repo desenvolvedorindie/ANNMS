@@ -7,7 +7,7 @@ import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.type.ListType;
-import br.com.wfcreations.annms.api.data.values.ID;
+import br.com.wfcreations.annms.api.data.value.ID;
 
 public class ShowDataStatusResultMessage extends ResultMessage {
 

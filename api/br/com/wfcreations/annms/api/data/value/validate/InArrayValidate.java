@@ -27,13 +27,61 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.validate;
+package br.com.wfcreations.annms.api.data.value.validate;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public interface IValidate {
+import br.com.wfcreations.annms.api.data.value.ComplexList;
+import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.api.data.value.IParamValue;
+import br.com.wfcreations.annms.api.data.value.IValue;
+import br.com.wfcreations.annms.api.data.value.Str;
 
-	public boolean isValid(Object value);
+public class InArrayValidate extends ValidateAbstract {
 
-	public Map<String, Object> getMessage();
+	private static final long serialVersionUID = 1L;
+
+	protected static final String INVALID = "invalid";
+
+	protected static Map<String, String> messageTemplates = new HashMap<String, String>();
+
+	static {
+		messageTemplates.put(INVALID, "Invalid type given. BooleanValue expected");
+	}
+
+	protected boolean isArray = false;
+
+	protected final List<String> values;
+
+	public InArrayValidate(String[] values) {
+		this(values, false);
+	}
+
+	public InArrayValidate(String[] values, boolean isArray) {
+		this.values = Arrays.asList(values);
+		this.isArray = isArray;
+	}
+
+	@Override
+	public boolean isValid(IParamValue value) {
+		String v = "";
+		boolean result = true;
+		if (value instanceof ID) {
+			v = ID.getValueFor((IValue) value);
+		} else if (value instanceof Str) {
+			v = Str.getValueFor((IValue) value);
+		} else if ((value instanceof ComplexList) && this.isArray) {
+			ComplexList values = (ComplexList) value;
+			for (IParamValue va : values.getValues()) {
+				result = result && isValid(va);
+			}
+		} else {
+			result = false;
+		}
+		return values.contains(v) && result;
+	}
+
 }

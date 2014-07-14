@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.wfcreations.annms.api.data.Param;
-import br.com.wfcreations.annms.api.data.values.ID;
-import br.com.wfcreations.annms.api.data.values.IParamValue;
+import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.api.data.value.IParamValue;
 
 public class ParamTest {
 

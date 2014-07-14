@@ -32,9 +32,9 @@ package br.com.wfcreations.annms.api.data;
 import java.io.Serializable;
 
 import br.com.wfcreations.annms.api.data.type.IType;
-import br.com.wfcreations.annms.api.data.values.ID;
-import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Null;
+import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.api.data.value.IValue;
+import br.com.wfcreations.annms.api.data.value.Null;
 
 public class Attribute implements Serializable {
 

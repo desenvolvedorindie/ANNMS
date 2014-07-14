@@ -27,28 +27,30 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.values;
+package br.com.wfcreations.annms.api.data.value;
 
-public class Str implements IValue {
+import java.util.Arrays;
+
+public class ComplexList implements IParamValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public static String getValueFor(IValue value) {
-		return (String) value.getValue();
+	private final IParamValue[] values;
+
+	public ComplexList(IParamValue[] values) {
+		this.values = values;
 	}
 
-	private final String value;
-
-	public Str() {
-		this("");
+	public IParamValue[] getValues() {
+		return this.values;
 	}
 
-	public Str(String value) {
-		this.value = value;
+	public IParamValue getValueAt(int index) {
+		return this.values[index];
 	}
 
-	public String getValue() {
-		return this.value;
+	public int size() {
+		return this.values.length;
 	}
 
 	@Override
@@ -59,17 +61,14 @@ public class Str implements IValue {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Str other = (Str) obj;
-		if (value == null) {
-			if (other.value != null)
-				return false;
-		} else if (!value.equals(other.value))
+		ComplexList other = (ComplexList) obj;
+		if (!Arrays.equals(values, other.values))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return this.value;
+		return Arrays.toString(values);
 	}
 }

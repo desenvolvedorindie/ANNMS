@@ -33,9 +33,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.type.ListType;
-import br.com.wfcreations.annms.api.data.values.ID;
-import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Int;
+import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.api.data.value.IValue;
+import br.com.wfcreations.annms.api.data.value.Int;
 
 public class NominalToOrdinal implements IAttributeFilter {
 

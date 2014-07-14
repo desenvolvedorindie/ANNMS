@@ -27,44 +27,47 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.validate;
+package br.com.wfcreations.annms.api.data.value.validate;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Real;
+import br.com.wfcreations.annms.api.data.value.ComplexList;
+import br.com.wfcreations.annms.api.data.value.IParamValue;
+import br.com.wfcreations.annms.api.data.value.Int;
 
-public class RealValidate extends ValidateAbstract {
+public class IntValidate extends ValidateAbstract {
+
+	private static final long serialVersionUID = 1L;
 
 	protected static final String INVALID = "invalid";
 
 	protected static Map<String, String> messageTemplates = new HashMap<String, String>();
 
 	static {
-		messageTemplates.put(INVALID, "Invalid type given. RealValue expected");
+		messageTemplates.put(INVALID, "Invalid type given. IntegerValue expected");
 	}
 
 	protected boolean isArray = false;
 
-	public RealValidate() {
+	public IntValidate() {
 	}
 
-	public RealValidate(boolean isArray) {
+	public IntValidate(boolean isArray) {
 		this.isArray = isArray;
 	}
 
 	@Override
-	public boolean isValid(Object value) {
+	public boolean isValid(IParamValue value) {
 		this.setValue(value);
-		if (value instanceof IValue[] && this.isArray) {
-			IValue[] values = (IValue[]) value;
+		if (value instanceof ComplexList && this.isArray) {
+			ComplexList values = (ComplexList) value;
 			boolean result = true;
-			for (IValue v : values) {
+			for (IParamValue v : values.getValues()) {
 				result = result && isValid(v);
 			}
 			return result;
-		} else if (!(value instanceof Real)) {
+		} else if (!(value instanceof Int)) {
 			error(messageTemplates, INVALID, null);
 			return false;
 		}

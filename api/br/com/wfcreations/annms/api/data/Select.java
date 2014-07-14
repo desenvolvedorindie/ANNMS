@@ -31,7 +31,7 @@ package br.com.wfcreations.annms.api.data;
 
 import java.util.LinkedHashMap;
 
-import br.com.wfcreations.annms.api.data.values.ID;
+import br.com.wfcreations.annms.api.data.value.ID;
 
 public class Select {
 

@@ -27,67 +27,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.values;
+package br.com.wfcreations.annms.api.data.value.validate;
 
-public class ID implements IValue {
+import java.util.HashMap;
+import java.util.Map;
+
+import br.com.wfcreations.annms.api.data.value.ComplexList;
+import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.api.data.value.IParamValue;
+
+public class IDValidate extends ValidateAbstract {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String REGEX = "^[a-zA-Z][a-zA-Z0-9$_-]*$";
+	protected static final String INVALID = "invalid";
 
-	public static ID create(String value) {
-		return new ID(value);
+	protected static Map<String, String> messageTemplates = new HashMap<String, String>();
+
+	static {
+		messageTemplates.put(INVALID, "Invalid type given. IDValue expected");
 	}
 
-	public static String getValueFor(IValue value) {
-		return (String) value.getValue();
+	protected boolean isArray = false;
+
+	public IDValidate() {
 	}
 
-	private final String value;
-
-	public ID(String value) {
-		this.value = value.toUpperCase();
-		if (!valid(this.value))
-			throw new IllegalArgumentException("Invalid ID format");
-	}
-
-	private boolean valid(String value) {
-		// TODO
-		return value.matches(REGEX);
+	public IDValidate(boolean isArray) {
+		this.isArray = isArray;
 	}
 
 	@Override
-	public String getValue() {
-		return this.value;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
+	public boolean isValid(IParamValue value) {
+		this.setValue(value);
+		if (value instanceof ComplexList && this.isArray) {
+			ComplexList values = (ComplexList) value;
+			boolean result = true;
+			for (IParamValue v : values.getValues()) {
+				result = result && isValid(v);
+			}
+			return result;
+		} else if (!(value instanceof ID)) {
+			error(messageTemplates, INVALID, null);
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ID other = (ID) obj;
-		if (value == null) {
-			if (other.value != null)
-				return false;
-		} else if (!value.equals(other.value))
-			return false;
+		}
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(this.value).toUpperCase();
-	}
 }

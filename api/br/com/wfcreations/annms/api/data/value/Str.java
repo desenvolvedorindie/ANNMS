@@ -27,28 +27,27 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.values;
+package br.com.wfcreations.annms.api.data.value;
 
-public class Real implements IValue {
+public class Str implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public static double getValueFor(IValue value) {
-		return (double) value.getValue();
+	public static String getValueFor(IValue value) {
+		return (String) value.getValue();
 	}
 
-	private final double value;
+	private final String value;
 
-	public Real() {
-		this(0);
+	public Str() {
+		this("");
 	}
 
-	public Real(double value) {
+	public Str(String value) {
 		this.value = value;
 	}
 
-	@Override
-	public Double getValue() {
+	public String getValue() {
 		return this.value;
 	}
 
@@ -60,14 +59,17 @@ public class Real implements IValue {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Real other = (Real) obj;
-		if (Double.doubleToLongBits(value) != Double.doubleToLongBits(other.value))
+		Str other = (Str) obj;
+		if (value == null) {
+			if (other.value != null)
+				return false;
+		} else if (!value.equals(other.value))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return String.valueOf(this.value);
+		return this.value;
 	}
 }

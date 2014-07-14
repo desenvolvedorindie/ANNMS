@@ -30,7 +30,7 @@
 package br.com.wfcreations.annms.core.sqlann.statements;
 
 import br.com.wfcreations.annms.api.data.Param;
-import br.com.wfcreations.annms.api.data.values.ID;
+import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;

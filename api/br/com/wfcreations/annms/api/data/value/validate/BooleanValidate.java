@@ -27,35 +27,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data;
+package br.com.wfcreations.annms.api.data.value.validate;
 
-import br.com.wfcreations.annms.api.data.value.IValue;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Pattern implements IPattern {
+import br.com.wfcreations.annms.api.data.value.Bool;
+import br.com.wfcreations.annms.api.data.value.ComplexList;
+import br.com.wfcreations.annms.api.data.value.IParamValue;
+
+public class BooleanValidate extends ValidateAbstract {
 
 	private static final long serialVersionUID = 1L;
 
-	protected final IValue[] values;
+	protected static final String INVALID = "invalid";
 
-	public Pattern(IValue[] values) {
-		this.values = values.clone();
+	protected static Map<String, String> messageTemplates = new HashMap<String, String>();
+
+	static {
+		messageTemplates.put(INVALID, "Invalid type given. BooleanValue expected");
 	}
 
-	public IValue getValueAt(int index) {
-		return values[index];
+	protected boolean isArray = false;
+
+	public BooleanValidate() {
 	}
 
-	public int getValuesNum() {
-		return this.values.length;
+	public BooleanValidate(boolean isArray) {
+		this.isArray = isArray;
 	}
 
 	@Override
-	public Pattern clone() {
-		IValue[] newValues = this.values.clone();
-		return new Pattern(newValues);
+	public boolean isValid(IParamValue value) {
+		this.setValue(value);
+
+		boolean result = true;
+		if ((value instanceof ComplexList) && this.isArray) {
+			ComplexList values = (ComplexList) value;
+			for (IParamValue v : values.getValues()) {
+				result = result && isValid(v);
+			}
+		} else if (!(value instanceof Bool)) {
+			error(messageTemplates, INVALID, null);
+			return false;
+		}
+		return result;
 	}
 
-	public IValue[] cloneValues() {
-		return this.values.clone();
-	}
 }

@@ -29,7 +29,7 @@
  */
 package br.com.wfcreations.annms.api.data.filter.attribute;
 
-import br.com.wfcreations.annms.api.data.values.IValue;
+import br.com.wfcreations.annms.api.data.value.IValue;
 
 public class Default implements IAttributeFilter {
 

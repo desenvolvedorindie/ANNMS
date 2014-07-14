@@ -27,47 +27,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.values;
+package br.com.wfcreations.annms.api.data.value;
 
-public class Int implements IValue {
+import java.io.Serializable;
 
-	private static final long serialVersionUID = 1L;
+public interface IParamValue extends Serializable {
 
-	public static int getValueFor(IValue value) {
-		return (int) value.getValue();
-	}
-
-	private final int value;
-
-	public Int() {
-		this(0);
-	}
-
-	public Int(int value) {
-		this.value = value;
-	}
-
-	@Override
-	public Integer getValue() {
-		return this.value;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Int other = (Int) obj;
-		if (value != other.value)
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return String.valueOf(this.value);
-	}
 }

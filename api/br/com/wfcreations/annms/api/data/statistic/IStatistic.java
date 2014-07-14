@@ -27,48 +27,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.values;
+package br.com.wfcreations.annms.api.data.statistic;
 
-import java.util.Arrays;
+import java.io.Serializable;
 
-public class ComplexList implements IParamValue {
+import br.com.wfcreations.annms.api.data.Data;
+import br.com.wfcreations.annms.api.data.statistic.descriptor.IStatisticalDescriptor;
 
-	private static final long serialVersionUID = 1L;
+public interface IStatistic extends Serializable {
 
-	private final IParamValue[] values;
-
-	public ComplexList(IParamValue[] values) {
-		this.values = values;
-	}
-
-	public IParamValue[] getValue() {
-		return this.values;
-	}
-
-	public IParamValue getValueAt(int index) {
-		return this.values[index];
-	}
-
-	public int size() {
-		return this.values.length;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ComplexList other = (ComplexList) obj;
-		if (!Arrays.equals(values, other.values))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return Arrays.toString(values);
-	}
+	public IStatisticalDescriptor calculate(Data data, int attributeIndex);
 }

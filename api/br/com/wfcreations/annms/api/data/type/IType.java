@@ -31,7 +31,7 @@ package br.com.wfcreations.annms.api.data.type;
 
 import java.io.Serializable;
 
-import br.com.wfcreations.annms.api.data.values.IValue;
+import br.com.wfcreations.annms.api.data.value.IValue;
 
 public interface IType extends Serializable {
 

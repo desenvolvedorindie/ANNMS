@@ -27,20 +27,29 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.values;
+package br.com.wfcreations.annms.api.data.value;
 
-public class Null implements IValue {
+public class Real implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public static Null VALUE = new Null();
+	public static double getValueFor(IValue value) {
+		return (double) value.getValue();
+	}
 
-	private Null() {
+	private final double value;
+
+	public Real() {
+		this(0);
+	}
+
+	public Real(double value) {
+		this.value = value;
 	}
 
 	@Override
-	public Object getValue() {
-		return null;
+	public Double getValue() {
+		return this.value;
 	}
 
 	@Override
@@ -51,11 +60,14 @@ public class Null implements IValue {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		Real other = (Real) obj;
+		if (Double.doubleToLongBits(value) != Double.doubleToLongBits(other.value))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "NULL";
+		return String.valueOf(this.value);
 	}
 }
