@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.representation;
+package br.com.wfcreations.annms.api.data.filter.attribute;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +37,7 @@ import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IValue;
 import br.com.wfcreations.annms.api.data.values.Real;
 
-public class NominalToBinary implements IRepresentator {
+public class NominalToBinary implements IAttributeFilter {
 
 	private static final long serialVersionUID = 1L;
 

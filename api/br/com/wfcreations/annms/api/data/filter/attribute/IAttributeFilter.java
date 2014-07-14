@@ -27,61 +27,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.representation;
+package br.com.wfcreations.annms.api.data.filter.attribute;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
 
-import br.com.wfcreations.annms.api.data.type.ListType;
-import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IValue;
-import br.com.wfcreations.annms.api.data.values.Int;
 
-public class NominalToOrdinal implements IRepresentator {
+public interface IAttributeFilter extends Serializable {
 
-	private static final long serialVersionUID = 1L;
+	public IValue[] encode(IValue value);
 
-	private ID[] classes;
+	public IValue decode(IValue[] values);
 
-	private Map<ID, IValue[]> map = new HashMap<ID, IValue[]>();
-
-	public NominalToOrdinal(ListType listType) {
-		this.classes = new ID[listType.getListValuesNum()];
-		ID c;
-
-		for (int i = 0; i < listType.getListValuesNum(); i++) {
-			c = listType.getValuesAt(i);
-			this.classes[i] = c;
-			map.put(c, new IValue[] { new Int(i) });
-		}
-	}
-
-	@Override
-	public IValue[] encode(IValue value) {
-		if (!(value instanceof ID))
-			throw new IllegalArgumentException("Must be mominal");
-		IValue[] values = map.get(ID.getValueFor(value));
-		if (values == null)
-			throw new IllegalArgumentException("Class not found");
-		return values;
-	}
-
-	@Override
-	public IValue decode(IValue[] values) {
-		if (values.length != 1)
-			throw new IllegalArgumentException("Invalid value");
-		if (!(values[0] instanceof Int))
-			throw new IllegalArgumentException("Invalid type");
-
-		int v = Int.getValueFor(values[0]);
-		if (v < 0 && v > classes.length - 1)
-			throw new IllegalArgumentException("Invalid range");
-
-		return classes[v];
-	}
-
-	@Override
-	public int getLength() {
-		return 1;
-	}
+	public int getLength();
 }

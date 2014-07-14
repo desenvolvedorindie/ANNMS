@@ -27,28 +27,74 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.representation;
+package br.com.wfcreations.annms.api.data.filter.attribute;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Vector;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import br.com.wfcreations.annms.api.data.Data;
+import br.com.wfcreations.annms.api.data.Pattern;
 import br.com.wfcreations.annms.api.data.values.IValue;
 
-public class Default implements IRepresentator {
+public class AttributeFilter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Override
-	public IValue[] encode(IValue value) {
-		return new IValue[] { value };
+	protected Data data;
+
+	protected IAttributeFilter[] representators;
+
+	public AttributeFilter(Data data, IAttributeFilter[] representators) {
+		this.data = data;
+		this.representators = representators;
 	}
 
-	@Override
-	public IValue decode(IValue[] values) {
-		if (values.length != 1)
-			throw new IllegalArgumentException("Invalid value lenght");
-		return values[0];
+	public List<Pattern> encode() {
+		if (getRepresentators().length != getData().getAttributesNum())
+			throw new IllegalArgumentException("Representators ivalid lenght");
+
+		IValue[] tmp;
+		List<Pattern> patternsList = new Vector<Pattern>(getData().getPatternsNum());
+
+		for (int i = 0; i < getData().getPatternsNum(); i++) {
+			tmp = new IValue[0];
+			for (int j = 0; j < getData().getAttributesNum(); j++)
+				ArrayUtils.addAll(tmp, getData().getPatternAt(i).getValueAt(j));
+			patternsList.add(new Pattern(tmp));
+		}
+
+		return patternsList;
 	}
 
-	@Override
-	public int getLength() {
-		return 1;
+	public List<Pattern> decode(List<Pattern> patterns) {
+		List<Pattern> patternsList = new Vector<Pattern>(patterns.size());
+		// TODO
+		return patternsList;
+	}
+
+	public int calculateAttributeNum() {
+		int count = 0;
+		for (IAttributeFilter representator : representators)
+			count += representator.getLength();
+		return count;
+	}
+
+	public Data getData() {
+		return data;
+	}
+
+	public void setData(Data data) {
+		this.data = data;
+	}
+
+	public IAttributeFilter[] getRepresentators() {
+		return representators;
+	}
+
+	public void setRepresentators(IAttributeFilter[] representators) {
+		this.representators = representators;
 	}
 }

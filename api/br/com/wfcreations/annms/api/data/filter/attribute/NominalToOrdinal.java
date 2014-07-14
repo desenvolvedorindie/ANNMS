@@ -27,45 +27,61 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.representation;
+package br.com.wfcreations.annms.api.data.filter.attribute;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-import br.com.wfcreations.annms.api.data.Data;
-import br.com.wfcreations.annms.api.data.Pattern;
+import br.com.wfcreations.annms.api.data.type.ListType;
+import br.com.wfcreations.annms.api.data.values.ID;
 import br.com.wfcreations.annms.api.data.values.IValue;
+import br.com.wfcreations.annms.api.data.values.Int;
 
-public class DataRepresentation implements Serializable {
+public class NominalToOrdinal implements IAttributeFilter {
 
 	private static final long serialVersionUID = 1L;
 
-	private Data data;
+	private ID[] classes;
 
-	private IRepresentator[] representators;
+	private Map<ID, IValue[]> map = new HashMap<ID, IValue[]>();
 
-	public DataRepresentation(Data data, IRepresentator[] representators) {
-		this.data = data;
-		this.representators = representators;
+	public NominalToOrdinal(ListType listType) {
+		this.classes = new ID[listType.getListValuesNum()];
+		ID c;
+
+		for (int i = 0; i < listType.getListValuesNum(); i++) {
+			c = listType.getValuesAt(i);
+			this.classes[i] = c;
+			map.put(c, new IValue[] { new Int(i) });
+		}
 	}
 
-	public List<Pattern> encode() {
-		if (representators.length != data.getAttributesNum())
-			throw new IllegalArgumentException("Representators ivalid lenght");
+	@Override
+	public IValue[] encode(IValue value) {
+		if (!(value instanceof ID))
+			throw new IllegalArgumentException("Must be mominal");
+		IValue[] values = map.get(ID.getValueFor(value));
+		if (values == null)
+			throw new IllegalArgumentException("Class not found");
+		return values;
+	}
 
-		IValue[] tmp;
-		ArrayList<Pattern> patternsList = new ArrayList<>(data.getPatternsNum());
+	@Override
+	public IValue decode(IValue[] values) {
+		if (values.length != 1)
+			throw new IllegalArgumentException("Invalid value");
+		if (!(values[0] instanceof Int))
+			throw new IllegalArgumentException("Invalid type");
 
-		for (int i = 0; i < data.getPatternsNum(); i++) {
-			tmp = new IValue[0];
-			for (int j = 0; j < data.getAttributesNum(); j++)
-				ArrayUtils.addAll(tmp, data.getPatternAt(i).getValueAt(j));
-			patternsList.add(new Pattern(tmp));
-		}
+		int v = Int.getValueFor(values[0]);
+		if (v < 0 && v > classes.length - 1)
+			throw new IllegalArgumentException("Invalid range");
 
-		return patternsList;
+		return classes[v];
+	}
+
+	@Override
+	public int getLength() {
+		return 1;
 	}
 }

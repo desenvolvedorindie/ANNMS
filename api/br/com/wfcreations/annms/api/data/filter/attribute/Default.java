@@ -27,17 +27,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.representation;
-
-import java.io.Serializable;
+package br.com.wfcreations.annms.api.data.filter.attribute;
 
 import br.com.wfcreations.annms.api.data.values.IValue;
 
-public interface IRepresentator extends Serializable {
+public class Default implements IAttributeFilter {
 
-	public IValue[] encode(IValue value);
+	private static final long serialVersionUID = 1L;
 
-	public IValue decode(IValue[] values);
+	@Override
+	public IValue[] encode(IValue value) {
+		return new IValue[] { value };
+	}
 
-	public int getLength();
+	@Override
+	public IValue decode(IValue[] values) {
+		if (values.length != 1)
+			throw new IllegalArgumentException("Invalid value lenght");
+		return values[0];
+	}
+
+	@Override
+	public int getLength() {
+		return 1;
+	}
 }
