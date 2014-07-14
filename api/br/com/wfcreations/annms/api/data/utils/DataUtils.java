@@ -32,13 +32,12 @@ package br.com.wfcreations.annms.api.data.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.api.data.Pattern;
 import br.com.wfcreations.annms.api.data.Select;
 import br.com.wfcreations.annms.api.data.values.ID;
+import br.com.wfcreations.annms.api.lang.ArrayUtils;
 
 public abstract class DataUtils {
 
@@ -84,9 +83,9 @@ public abstract class DataUtils {
 
 		List<Pattern> patterns = new ArrayList<Pattern>(first.getPatternsNum());
 		for (int i = 0; i < first.getPatternsNum(); i++)
-			patterns.add(new Pattern(ArrayUtils.addAll(first.getPatternAt(i).cloneValues(), first.getPatternAt(i).cloneValues())));
+			patterns.add(new Pattern(ArrayUtils.concat(first.getPatternAt(i).cloneValues(), first.getPatternAt(i).cloneValues())));
 
-		return new Data(first.getName() + "_" + second.getName(), ArrayUtils.addAll(attr1, attr2)).addAll(patterns);
+		return new Data(first.getName() + "_" + second.getName(), ArrayUtils.concat(attr1, attr2)).addAll(patterns);
 	}
 
 	public static Data fetch(Data dataSource, Select where) {
