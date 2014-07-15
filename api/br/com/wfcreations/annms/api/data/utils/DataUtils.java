@@ -83,9 +83,9 @@ public abstract class DataUtils {
 
 		List<Pattern> patterns = new ArrayList<Pattern>(first.getPatternsNum());
 		for (int i = 0; i < first.getPatternsNum(); i++)
-			patterns.add(new Pattern(ArrayUtils.concat(first.getPatternAt(i).cloneValues(), first.getPatternAt(i).cloneValues())));
+			patterns.add(new Pattern(ArrayUtils.addAll(first.getPatternAt(i).cloneValues(), first.getPatternAt(i).cloneValues())));
 
-		return new Data(first.getName() + "_" + second.getName(), ArrayUtils.concat(attr1, attr2)).addAll(patterns);
+		return new Data(first.getName() + "_" + second.getName(), ArrayUtils.addAll(attr1, attr2)).addAll(patterns);
 	}
 
 	public static Data fetch(Data dataSource, Select where) {

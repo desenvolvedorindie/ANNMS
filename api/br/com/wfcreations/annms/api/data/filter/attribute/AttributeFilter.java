@@ -61,7 +61,7 @@ public class AttributeFilter implements Serializable {
 		for (int i = 0; i < getData().getPatternsNum(); i++) {
 			tmp = new IValue[0];
 			for (int j = 0; j < getData().getAttributesNum(); j++)
-				ArrayUtils.addAll(tmp, getData().getPatternAt(i).getValueAt(j));
+				tmp = ArrayUtils.addAll(tmp, getData().getPatternAt(i).getValueAt(j));
 			patternsList.add(new Pattern(tmp));
 		}
 
