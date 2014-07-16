@@ -29,11 +29,17 @@
  */
 package br.com.wfcreations.annms.api.data.filter.attribute;
 
+import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.value.IValue;
 
 public class Default implements IAttributeFilter {
 
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	public boolean acceptAttribute(Attribute attribute) {
+		return true;
+	}
 
 	@Override
 	public IValue[] encode(IValue value) {

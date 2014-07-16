@@ -32,6 +32,7 @@ package br.com.wfcreations.annms.api.data.filter.attribute;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.type.ListType;
 import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.api.data.value.IValue;
@@ -68,6 +69,11 @@ public class NominalToBinary implements IAttributeFilter {
 				value[i] = new Real();
 		}
 		return value;
+	}
+
+	@Override
+	public boolean acceptAttribute(Attribute attribute) {
+		return attribute.getType() instanceof ListType;
 	}
 
 	@Override

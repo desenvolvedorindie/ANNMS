@@ -40,8 +40,11 @@ public class SplintSampling implements ISampling {
 
 	protected float percent;
 
-	public SplintSampling(float percent) {
+	protected boolean shuffle;
+
+	public SplintSampling(float percent, boolean shuffle) {
 		this.percent = percent;
+		this.shuffle = shuffle;
 	}
 
 	@Override
@@ -55,7 +58,8 @@ public class SplintSampling implements ISampling {
 			randomIndices.add(i);
 		}
 
-		Collections.shuffle(randomIndices);
+		if (this.isShuffle())
+			Collections.shuffle(randomIndices);
 
 		Data data1 = new Data(data.getName() + "_1", AttributeUtils.cloneAttributes(data));
 
@@ -81,5 +85,13 @@ public class SplintSampling implements ISampling {
 	public SplintSampling setPercent(float percent) {
 		this.percent = percent;
 		return this;
+	}
+
+	public boolean isShuffle() {
+		return shuffle;
+	}
+
+	public void setShuffle(boolean shuffle) {
+		this.shuffle = shuffle;
 	}
 }

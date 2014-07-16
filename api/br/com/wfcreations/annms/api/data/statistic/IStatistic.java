@@ -32,9 +32,8 @@ package br.com.wfcreations.annms.api.data.statistic;
 import java.io.Serializable;
 
 import br.com.wfcreations.annms.api.data.Data;
-import br.com.wfcreations.annms.api.data.statistic.descriptor.IStatisticalDescriptor;
 
 public interface IStatistic extends Serializable {
 
-	public IStatisticalDescriptor calculate(Data data, int attributeIndex);
+	public void calculate(Data data, int attributeIndex);
 }

@@ -1,4 +1,5 @@
 /*
+
  * Copyright (c) Welsiton Ferreira (wfcreations@gmail.com)
  * All rights reserved.
  *
@@ -27,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.filter.attribute;
+package br.com.wfcreations.annms.api.data.filter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -35,10 +36,11 @@ import java.util.Vector;
 
 import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.api.data.Pattern;
+import br.com.wfcreations.annms.api.data.filter.attribute.IAttributeFilter;
 import br.com.wfcreations.annms.api.data.value.IValue;
 import br.com.wfcreations.lang.ArrayUtils;
 
-public class AttributeFilter implements Serializable {
+public class DataAttributeFilter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,7 +48,7 @@ public class AttributeFilter implements Serializable {
 
 	protected IAttributeFilter[] representators;
 
-	public AttributeFilter(Data data, IAttributeFilter[] representators) {
+	public DataAttributeFilter(Data data, IAttributeFilter[] representators) {
 		this.data = data;
 		this.representators = representators;
 	}

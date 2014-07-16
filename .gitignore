@@ -2,3 +2,4 @@ bin/*
 /users.o
 data/*
 neuralnetworks/*
+/bin

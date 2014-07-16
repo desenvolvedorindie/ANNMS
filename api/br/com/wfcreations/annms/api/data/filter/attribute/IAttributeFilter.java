@@ -31,9 +31,12 @@ package br.com.wfcreations.annms.api.data.filter.attribute;
 
 import java.io.Serializable;
 
+import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.value.IValue;
 
 public interface IAttributeFilter extends Serializable {
+
+	public boolean acceptAttribute(Attribute attribute);
 
 	public IValue[] encode(IValue value);
 

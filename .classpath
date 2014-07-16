@@ -15,11 +15,11 @@
 	<classpathentry kind="lib" path="lib/jackson-annotations-2.2.3.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-core-2.2.3.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-databind-2.2.3.jar"/>
-	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/reflections-0.9.9-RC1.jar"/>
-	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/guava-17.0.jar"/>
-	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/javassist.jar"/>
-	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/antlr-4.3-complete.jar"/>
-	<classpathentry kind="lib" path="E:/Dropbox/Meu TCC/Projeto/workspace/ANNMS/lib/commons-lang3-3.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/reflections-0.9.9-RC1.jar"/>
+	<classpathentry kind="lib" path="lib/guava-17.0.jar"/>
+	<classpathentry kind="lib" path="lib/javassist.jar"/>
+	<classpathentry kind="lib" path="lib/antlr-4.3-complete.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.3.2.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/javalib-lang"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

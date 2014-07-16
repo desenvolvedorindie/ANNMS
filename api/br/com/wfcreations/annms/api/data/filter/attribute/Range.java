@@ -29,7 +29,13 @@
  */
 package br.com.wfcreations.annms.api.data.filter.attribute;
 
-public class Range {
+import br.com.wfcreations.annms.api.data.Attribute;
+import br.com.wfcreations.annms.api.data.type.Primitive;
+import br.com.wfcreations.annms.api.data.value.IValue;
+
+public class Range implements IAttributeFilter {
+
+	private static final long serialVersionUID = 1L;
 
 	protected double minimum = 0;
 
@@ -45,34 +51,51 @@ public class Range {
 		this.maximum = maximum;
 	}
 
+	@Override
+	public boolean acceptAttribute(Attribute attribute) {
+		return attribute.getType().equals(Primitive.INT) || attribute.getType().equals(Primitive.REAL);
+	}
+
 	public void normalize(Object set) {
 		/*
-		if (set.lenght() < 1)
-			throw new IllegalArgumentException("Empty data set");
+		 * if (set.lenght() < 1) throw new
+		 * IllegalArgumentException("Empty data set");
+		 * 
+		 * double[] maximumValues = new double[set.inputsNum()]; double[]
+		 * minimumValues = new double[set.inputsNum()];
+		 * 
+		 * for (int i = 0; i < set.inputsNum(); i++) { maximumValues[i] =
+		 * Double.MIN_VALUE; minimumValues[i] = Double.MAX_VALUE; }
+		 * 
+		 * for (UnsupervisedPattern pattern : set.getPatterns()) { for (int i =
+		 * 0; i < set.inputsNum(); i++) { if (pattern.getInputAt(i) >
+		 * maximumValues[i]) maximumValues[i] = pattern.getInputAt(i); if
+		 * (pattern.getInputAt(i) < minimumValues[i]) minimumValues[i] =
+		 * pattern.getInputAt(i); } }
+		 * 
+		 * for (UnsupervisedPattern patterns : set.getPatterns()) { double[]
+		 * normalizedVector = new double[set.inputsNum()]; for (int i = 0; i <
+		 * patterns.getInputs().length; i++) normalizedVector[i] = this.minimum
+		 * + ((patterns.getInputAt(i) - minimumValues[i]) * (this.maximum -
+		 * this.minimum)) / (maximumValues[i] - minimumValues[i]);
+		 * patterns.setInputs(normalizedVector); }
+		 */
+	}
 
-		double[] maximumValues = new double[set.inputsNum()];
-		double[] minimumValues = new double[set.inputsNum()];
+	@Override
+	public IValue[] encode(IValue value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-		for (int i = 0; i < set.inputsNum(); i++) {
-			maximumValues[i] = Double.MIN_VALUE;
-			minimumValues[i] = Double.MAX_VALUE;
-		}
+	@Override
+	public IValue decode(IValue[] values) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-		for (UnsupervisedPattern pattern : set.getPatterns()) {
-			for (int i = 0; i < set.inputsNum(); i++) {
-				if (pattern.getInputAt(i) > maximumValues[i])
-					maximumValues[i] = pattern.getInputAt(i);
-				if (pattern.getInputAt(i) < minimumValues[i])
-					minimumValues[i] = pattern.getInputAt(i);
-			}
-		}
-
-		for (UnsupervisedPattern patterns : set.getPatterns()) {
-			double[] normalizedVector = new double[set.inputsNum()];
-			for (int i = 0; i < patterns.getInputs().length; i++)
-				normalizedVector[i] = this.minimum + ((patterns.getInputAt(i) - minimumValues[i]) * (this.maximum - this.minimum)) / (maximumValues[i] - minimumValues[i]);
-			patterns.setInputs(normalizedVector);
-		}
-		*/
+	@Override
+	public int getLength() {
+		return 1;
 	}
 }

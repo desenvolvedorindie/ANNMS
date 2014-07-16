@@ -65,7 +65,7 @@ public class ListType implements IType {
 
 	@Override
 	public boolean valid(IValue value) {
-		return value instanceof ID && Arrays.asList(listValues).contains(value.getValue());
+		return value instanceof ID && listValues.contains(value.getValue());
 	}
 
 	@Override
@@ -77,14 +77,14 @@ public class ListType implements IType {
 		if (getClass() != obj.getClass())
 			return false;
 		ListType other = (ListType) obj;
-		if (this.getListValuesNum() != other.getListValuesNum())
-			return false;
-		boolean eq = true;
-		for (int i = 0; i < this.getListValuesNum(); i++) {
-			eq = eq && this.getValuesAt(i).equals(other.getValuesAt(i));
-			if (!eq)
+		if (listValues == null)
+			if (other.listValues != null)
 				return false;
-		}
+		if (listValues.size() != other.listValues.size())
+			return false;
+		for (int i = 0; i < listValues.size(); i++)
+			if (!listValues.get(i).equals(other.listValues.get(i)))
+				return false;
 		return true;
 	}
 
