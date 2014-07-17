@@ -49,7 +49,7 @@ public class CreateNeuralNetworkStatement implements SQLANNStatement {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CreateNeuralNetworkStatement.class);
 
-	public final ID id;
+	public final String name;
 
 	public final Param[] params;
 
@@ -57,12 +57,12 @@ public class CreateNeuralNetworkStatement implements SQLANNStatement {
 
 	public final boolean ifNotExists;
 
-	public final ID copy;
+	public final String copy;
 
 	public final String query;
 
-	public CreateNeuralNetworkStatement(ID id, Param[] params, String model, boolean ifNotExists, ID copyID, String query) {
-		this.id = id;
+	public CreateNeuralNetworkStatement(String id, Param[] params, String model, boolean ifNotExists, String copyID, String query) {
+		this.name = id;
 		this.params = params;
 		this.model = model;
 		this.ifNotExists = ifNotExists;
@@ -76,22 +76,28 @@ public class CreateNeuralNetworkStatement implements SQLANNStatement {
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
+		if (!ID.valid(this.name))
+			throw new ANNMSRequestValidationException(ANNMSExceptionCode.DATA, "Invalid neuralnetwork id");
+		if (this.copy != null && !ID.valid(this.copy))
+			throw new ANNMSRequestValidationException(ANNMSExceptionCode.DATA, "Invalid copy id");
 	}
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		if (Schema.instance.getNeuralnetworkInstance(this.id) != null)
+		ID id = ID.create(this.name);
+		if (Schema.instance.getNeuralnetworkInstance(id) != null)
 			if (ifNotExists)
 				return new CreateNeuralnetworkResultMessage(null, null);
 			else
-				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neural Network already %s exist", this.id));
+				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neural Network already %s exist", this.name));
 
 		Param[] paramsNew = null;
 		String modelNew = null;
 		INeuralNetwork neuralnetwork = null;
 
 		if (this.copy != null) {
-			NeuralnetworkWrapper wrapper = Schema.instance.getNeuralnetworkInstance(this.copy);
+			ID copyID = ID.create(this.copy);
+			NeuralnetworkWrapper wrapper = Schema.instance.getNeuralnetworkInstance(copyID);
 			if (wrapper == null)
 				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neuralnetwork %s doesn't exist", copy));
 
@@ -110,12 +116,13 @@ public class CreateNeuralNetworkStatement implements SQLANNStatement {
 			neuralnetwork.create(paramsNew);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neural network creation error cause: "));
+			String msg = e.getMessage() != null ? e.getMessage() : e.getCause().getMessage();
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neural network creation error cause: %s", msg));
 		}
 
-		Schema.instance.storeNeuralnetworkInstance(this.id, new NeuralnetworkWrapper(modelNew, paramsNew, neuralnetwork));
+		Schema.instance.storeNeuralnetworkInstance(id, new NeuralnetworkWrapper(modelNew, paramsNew, neuralnetwork));
 
-		LOGGER.info("Neuralnetwork {} of {} model created", this.id, modelNew);
-		return new CreateNeuralnetworkResultMessage(this.id, modelNew);
+		LOGGER.info("Neuralnetwork {} of {} model created", this.name, modelNew);
+		return new CreateNeuralnetworkResultMessage(id, modelNew);
 	}
 }

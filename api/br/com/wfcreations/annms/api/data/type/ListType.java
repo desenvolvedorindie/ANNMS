@@ -65,7 +65,7 @@ public class ListType implements IType {
 
 	@Override
 	public boolean valid(IValue value) {
-		return value instanceof ID && listValues.contains(value.getValue());
+		return value instanceof ID && listValues.contains(value);
 	}
 
 	@Override

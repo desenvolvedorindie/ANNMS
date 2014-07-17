@@ -57,8 +57,10 @@ public class ClientPropertiesConfigLoader implements IClientConfigurationLoader 
 	public ClientConfiguration load() throws ClientConfigurationException {
 		Properties properties = new Properties();
 
+		FileInputStream fis = null;
 		try {
-			properties.load(new FileInputStream(path));
+			fis = new FileInputStream(path);
+			properties.load(fis);
 		} catch (IOException e) {
 			throw new ClientConfigurationException(e.getMessage(), e);
 		}
@@ -88,6 +90,13 @@ public class ClientPropertiesConfigLoader implements IClientConfigurationLoader 
 				throw new ClientConfigurationException("Invalid " + element.getKey() + " property with value " + value);
 			}
 		}
+
+		if (fis != null)
+			try {
+				fis.close();
+			} catch (IOException e) {
+				throw new ClientConfigurationException(e.getMessage(), e);
+			}
 
 		return config;
 	}

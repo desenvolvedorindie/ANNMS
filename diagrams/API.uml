@@ -178,9 +178,9 @@
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">316</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">200</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">196</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">163</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">82</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">95</XPD:ATTR>
 <XPD:REF name="Model">r/U6c/OtOUeXvL+pl/iMVQAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="eURFMfVInk2S94TNxb/hWQAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="PnQVOUhGS0SFjrD50ClmIQAA">
@@ -2274,7 +2274,7 @@
 <XPD:REF name="Views[1]">hjSr+Mgm6Uyg51W2ZAb9/wAA</XPD:REF>
 <XPD:REF name="Views[2]">EZAv0+Z9GE299DNXXHiTiwAA</XPD:REF>
 <XPD:REF name="Views[3]">JWBgPL3Ffkuh6DEivP2TrwAA</XPD:REF>
-<XPD:ATTR name="#Operations" type="integer">2</XPD:ATTR>
+<XPD:ATTR name="#Operations" type="integer">3</XPD:ATTR>
 <XPD:OBJ name="Operations[0]" type="UMLOperation" guid="vpRaKgg4OUa045NKgS3i7gAA">
 <XPD:ATTR name="Name" type="string">create</XPD:ATTR>
 <XPD:REF name="Owner">r/U6c/OtOUeXvL+pl/iMVQAA</XPD:REF>
@@ -2297,6 +2297,16 @@
 <XPD:ATTR name="Name" type="string">values</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">IValue[]</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">iU2Q1+fer0KB5pf1arp8QQAA</XPD:REF>
+</XPD:OBJ>
+</XPD:OBJ>
+<XPD:OBJ name="Operations[2]" type="UMLOperation" guid="UumGrD1rLEijDMBZ5omtcQAA">
+<XPD:ATTR name="Name" type="string">status</XPD:ATTR>
+<XPD:REF name="Owner">r/U6c/OtOUeXvL+pl/iMVQAA</XPD:REF>
+<XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="61wTdnrPtUOzn325BH6RkwAA">
+<XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">Param[]</XPD:ATTR>
+<XPD:REF name="BehavioralFeature">UumGrD1rLEijDMBZ5omtcQAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
 <XPD:ATTR name="#TypedParameters" type="integer">4</XPD:ATTR>

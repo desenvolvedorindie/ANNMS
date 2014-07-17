@@ -57,10 +57,10 @@ public class Data implements Serializable {
 	}
 
 	public void validatePattern(Pattern pattern) throws IllegalArgumentException {
-		if (pattern.getValuesNum() != attributes.size())
+		if (pattern.getValuesNum() != this.attributes.size())
 			throw new IllegalArgumentException("Invalid values numbers");
-		for (int i = 0; i < attributes.size(); i++)
-			if (!attributes.get(i).validate(pattern.getValueAt(i)))
+		for (int i = 0; i < this.attributes.size(); i++)
+			if (!this.attributes.get(i).validate(pattern.getValueAt(i)))
 				throw new IllegalArgumentException("Invalid value type for attribute " + attributes.get(i).getID());
 	}
 

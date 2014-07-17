@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.wfcreations.annms.api.ANNMSAPI;
+import br.com.wfcreations.annms.api.thrift.ANNMSConstants;
 import br.com.wfcreations.annms.core.ANNMS;
 
 public class ShowStatusResultMessage extends ResultMessage {
@@ -14,6 +15,7 @@ public class ShowStatusResultMessage extends ResultMessage {
 		param.put("SERVER_VERSION", ANNMS.VERSION);
 		param.put("SQLANN_VERSION", ANNMS.SQLANN_VERSION);
 		param.put("API_VERSION", ANNMSAPI.VERSION);
+		param.put("API_THRIFT", ANNMSConstants.VERSION);
 		return param;
 	}
 

@@ -59,10 +59,12 @@ public class Auth {
 			if (user != null && admin.getUsername().equals(user.getUsername())) {
 				throw new AuthenticationException(AuthenticationException.ErrorType.USER_AMBIGUOUS, "Duplicated User");
 			} else if (admin.getUsername().equals(adapter.getIdentity())) {
-				if (admin.getPassword().equals(adapter.getCredential()))
+				if (admin.getPassword().equals(adapter.getCredential())) {
 					return admin;
-				else
+				} else
 					throw new AuthenticationException(AuthenticationException.ErrorType.PASSWORD_INVALID, "Invalid Password");
+			} else {
+				throw new AuthenticationException(AuthenticationException.ErrorType.USER_NOT_FOUND, "Invalid User");
 			}
 		} else if (ae != null) {
 			throw ae;

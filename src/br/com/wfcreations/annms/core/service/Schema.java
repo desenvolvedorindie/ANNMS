@@ -47,8 +47,8 @@ public class Schema {
 	private Schema() {
 	}
 
-	public String[] getDataNames() {
-		return dataInstances.keySet().toArray(new String[dataInstances.keySet().size()]);
+	public ID[] getDataNames() {
+		return dataInstances.keySet().toArray(new ID[dataInstances.keySet().size()]);
 	}
 
 	public Data getDataInstance(ID id) {

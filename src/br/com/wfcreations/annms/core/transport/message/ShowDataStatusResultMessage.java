@@ -13,10 +13,13 @@ public class ShowDataStatusResultMessage extends ResultMessage {
 
 	private ID name;
 
+	private int patternNum;
+
 	private Attribute[] attributes;
 
-	public ShowDataStatusResultMessage(ID name, Attribute[] attributesDescriptor) {
+	public ShowDataStatusResultMessage(ID name, int patternNum, Attribute[] attributesDescriptor) {
 		this.name = name;
+		this.patternNum = patternNum;
 		this.attributes = attributesDescriptor;
 	}
 
@@ -25,18 +28,19 @@ public class ShowDataStatusResultMessage extends ResultMessage {
 		Map<String, Object> param = new LinkedHashMap<String, Object>();
 		List<Map<String, Object>> attrs = new ArrayList<Map<String, Object>>();
 		Map<String, Object> properties;
-		ID[] listValues;
+		String[] listValues;
 		int i;
 
-		param.put("NAME", this.name);
+		param.put("NAME", this.name.getValue());
+		param.put("PATTERNS", this.patternNum);
 		for (Attribute attribute : attributes) {
 			properties = new LinkedHashMap<String, Object>();
-			properties.put("NAME", attribute.getID());
+			properties.put("NAME", attribute.getID().toString());
 			if (attribute.getType() instanceof ListType) {
 				ListType listDataType = (ListType) attribute.getType();
-				listValues = new ID[listDataType.getListValuesNum()];
+				listValues = new String[listDataType.getListValuesNum()];
 				for (i = 0; i < listDataType.getListValuesNum(); i++)
-					listValues[i] = listDataType.getValuesAt(i);
+					listValues[i] = listDataType.getValuesAt(i).getValue();
 
 				properties.put("TYPE", listValues);
 			} else {

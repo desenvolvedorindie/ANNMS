@@ -43,14 +43,14 @@ import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 
 public class InsertIntoStatement implements SQLANNStatement {
 
-	public final ID dataName;
+	public final String name;
 
 	public final IValue[] values;
 
 	public final String query;
 
-	public InsertIntoStatement(ID dataName, IValue[] values, String query) {
-		this.dataName = dataName;
+	public InsertIntoStatement(String name, IValue[] values, String query) {
+		this.name = name;
 		this.values = values;
 		this.query = query;
 	}
@@ -62,19 +62,17 @@ public class InsertIntoStatement implements SQLANNStatement {
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
-
+		if (!ID.valid(this.name))
+			throw new ANNMSRequestValidationException(ANNMSExceptionCode.DATA, "Invalid data id");
 	}
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		Data data = Schema.instance.getDataInstance(dataName);
+		ID id = ID.create(this.name);
+		Data data = Schema.instance.getDataInstance(id);
 		if (data == null)
-			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", dataName));
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", name));
 		try {
-			for (IValue value : values) {
-				System.out.println(value.getClass());
-			}
-
 			data.add(new Pattern(values));
 		} catch (IllegalArgumentException e) {
 			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, e.getMessage());

@@ -42,6 +42,7 @@ import org.apache.thrift.transport.TTransportException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.wfcreations.annms.api.thrift.ANNMSConstants;
 import br.com.wfcreations.annms.api.thrift.ANNMSService;
 import br.com.wfcreations.annms.api.thrift.AuthorizationException;
 import br.com.wfcreations.annms.api.thrift.SQLANNResults;
@@ -79,7 +80,7 @@ public class Client {
 			throw new RuntimeException("Exception connecting to " + host + ":" + port + ". " + error + ".");
 		}
 		TProtocol protocol = new TBinaryProtocol(transport);
-		client = new ANNMSService.Client(protocol);
+		client = new ANNMSService.Client.Factory().getClient(protocol);
 	}
 
 	public static void disconnect() {
@@ -106,17 +107,19 @@ public class Client {
 
 			System.out.println(String.format("Connected to %s:%s", configuration.host, configuration.port));
 
-			System.out.println(String.format("Welcome to ANNMS CLI version %s", VERSION));
+			System.out.println(String.format("Welcome to ANNMS CLI version %s (%s)", VERSION, ANNMSConstants.VERSION));
 
 			SQLANNResults result = client.execute("SHOW STATUS");
 
 			ObjectMapper mapper = new ObjectMapper();
-			JsonNode actualObj = mapper.readTree(result.data);
+			JsonNode showStatus = mapper.readTree(result.data).get(0).get("SHOW STATUS");
 
-			String severVersion = actualObj.get(0).get("SHOW STATUS").get("SERVER_VERSION").asText();
-			String sqlannVersion = actualObj.get(0).get("SHOW STATUS").get("SQLANN_VERSION").asText();
-			String apiVersion = actualObj.get(0).get("SHOW STATUS").get("API_VERSION").asText();
-			System.out.println(String.format("Server Version: %s (API: %s and SQLANN: %s) ", severVersion, apiVersion, sqlannVersion));
+			String severVersion = showStatus.get("SERVER_VERSION").asText();
+			String sqlannVersion = showStatus.get("SQLANN_VERSION").asText();
+			String apiVersion = showStatus.get("API_VERSION").asText();
+			String apiThrift = showStatus.get("API_THRIFT").asText();
+			System.out.println(String.format("Server Version: %s (API: %s / Thrift: %s) ", severVersion, apiVersion, apiThrift));
+			System.out.println(String.format("SQLANN Version: %s", sqlannVersion));
 
 			System.out.println(String.format("%s@%s", configuration.user_username, "localhost"));
 
@@ -132,8 +135,8 @@ public class Client {
 						try {
 							result = client.execute(sb.toString());
 							mapper = new ObjectMapper();
-							actualObj = mapper.readTree(result.data);
-							String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(actualObj);
+							showStatus = mapper.readTree(result.data);
+							String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(showStatus);
 							System.out.println(json);
 						} catch (AuthorizationException e1) {
 							System.out.println(e1.getMessage());

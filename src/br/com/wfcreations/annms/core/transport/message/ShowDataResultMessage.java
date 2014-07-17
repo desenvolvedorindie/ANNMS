@@ -3,19 +3,21 @@ package br.com.wfcreations.annms.core.transport.message;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowDataResultMessage extends ResultMessage {
-	
-	String dataNames[];
+import br.com.wfcreations.annms.api.data.value.ID;
 
-	public ShowDataResultMessage(String[] dataNames) {
+public class ShowDataResultMessage extends ResultMessage {
+
+	ID dataNames[];
+
+	public ShowDataResultMessage(ID[] dataNames) {
 		this.dataNames = dataNames;
 	}
 
 	@Override
 	public Object toThriftResult() {
-		List<String> list = new ArrayList<String>();
-		for (String dataName : dataNames)
-			list.add(dataName);
+		List<String> list = new ArrayList<>();
+		for (ID dataName : dataNames)
+			list.add(dataName.getValue());
 		return list;
 	}
 

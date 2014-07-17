@@ -180,8 +180,9 @@ public class AlgorithmsLoader {
 			try {
 				neuralNetwork = networkClass.newInstance();
 				return neuralNetwork;
-			} catch (InstantiationException | IllegalAccessException e1) {
-				LOGGER.error("Can't instantiate neural network for id {}", id);
+			} catch (Exception e) {
+				String msg = e.getMessage() != null ? e.getMessage() : e.getCause().getMessage();
+				LOGGER.error("Can't instantiate neural network for id {}, cause {}", id, msg);
 			}
 		}
 		return neuralNetwork;

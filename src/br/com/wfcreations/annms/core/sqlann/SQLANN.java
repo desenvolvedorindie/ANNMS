@@ -43,6 +43,7 @@ import br.com.wfcreations.annms.api.data.type.Primitive;
 import br.com.wfcreations.annms.api.data.value.Bool;
 import br.com.wfcreations.annms.api.data.value.ComplexList;
 import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.api.data.value.IParamValue;
 import br.com.wfcreations.annms.api.data.value.IValue;
 import br.com.wfcreations.annms.api.data.value.Int;
 import br.com.wfcreations.annms.api.data.value.Null;
@@ -88,7 +89,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public CreateDataStatement visitCreateDataStatement(@NotNull SQLANNParser.CreateDataStatementContext ctx) {
 		if (ctx != null && ctx.ID() != null && ctx.CREATE() != null && ctx.DATA() != null && ctx.ID().size() > 0) {
-			ID name = ID.create(ctx.ID(0).getText());
+			String name = ctx.ID(0).getText();
 
 			Attribute[] attributes = null;
 			if (ctx.dataAttributes() != null) {
@@ -98,9 +99,9 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 			boolean ifNotExists = ctx.IF() != null && ctx.NOT() != null && ctx.EXISTS() != null;
 
-			ID copy = ctx.ID().size() == 2 ? ID.create(ctx.ID().get(1).getText()) : null;
+			String copy = ctx.ID().size() == 2 ? ctx.ID().get(1).getText() : null;
 
-			String query = ctx.getText().toUpperCase();
+			String query = ctx.getText();
 
 			return new CreateDataStatement(name, attributes, ifNotExists, copy, query);
 		}
@@ -110,7 +111,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public CreateNeuralNetworkStatement visitCreateNeuralNetworkStatement(@NotNull SQLANNParser.CreateNeuralNetworkStatementContext ctx) {
 		if (ctx != null && ctx.CREATE() != null && ctx.NEURALNETWORK() != null && ctx.ID() != null && ctx.ID().size() > 0) {
-			ID id = ID.create(ctx.ID(0).getText());
+			String name = ctx.ID(0).getText();
 
 			Param[] params = null;
 			if (ctx.params() != null)
@@ -123,11 +124,11 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 			boolean ifNotExists = ctx.IF() != null && ctx.NOT() != null && ctx.EXISTS() != null;
 
-			ID copy = ctx.ID().size() == 2 && ctx.LIKE() != null ? ID.create(ctx.ID(1).getText()) : null;
+			String copy = ctx.ID().size() == 2 && ctx.LIKE() != null ? ctx.ID(1).getText() : null;
 
-			String query = ctx.getText().toUpperCase();
+			String query = ctx.getText();
 
-			return new CreateNeuralNetworkStatement(id, params, model, ifNotExists, copy, query);
+			return new CreateNeuralNetworkStatement(name, params, model, ifNotExists, copy, query);
 		}
 		return null;
 	}
@@ -135,15 +136,15 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public DropDataStatement visitDropDataStatement(@NotNull SQLANNParser.DropDataStatementContext ctx) {
 		if (ctx != null && ctx.DROP() != null && ctx.DATA() != null && ctx.ID() != null) {
-			ID[] dataList = new ID[ctx.ID().size()];
+			String[] dataList = new String[ctx.ID().size()];
 
 			for (int i = 0; i < ctx.ID().size(); i++) {
-				dataList[i] = ID.create(ctx.ID(i).getText());
+				dataList[i] = ctx.ID(i).getText();
 			}
 
 			boolean ifExits = ctx.IF() != null && ctx.EXISTS() != null;
 
-			String query = ctx.getText().toUpperCase();
+			String query = ctx.getText();
 
 			return new DropDataStatement(dataList, ifExits, query);
 		}
@@ -161,7 +162,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 			boolean ifExists = ctx.IF() != null && ctx.EXISTS() != null;
 
-			String query = ctx.getText().toUpperCase();
+			String query = ctx.getText();
 
 			return new DropNeuralNetworkStatement(neuralnetworkList, ifExists, query);
 		}
@@ -172,11 +173,11 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	public InsertIntoStatement visitInsertIntoStatement(@NotNull SQLANNParser.InsertIntoStatementContext ctx) {
 		if (ctx != null && ctx.INSERT() != null && ctx.INTO() != null && ctx.VALUES() != null && ctx.OPEN_PARENTHESIS() != null && ctx.CLOSE_PARENTHESIS() != null && ctx.ID() != null && ctx.values() != null) {
 
-			ID dataName = ID.create(ctx.ID().getText());
+			String dataName = ctx.ID().getText();
 
 			IValue[] values = (IValue[]) visit(ctx.values());
 
-			String query = ctx.getText().toUpperCase();
+			String query = ctx.getText();
 
 			return new InsertIntoStatement(dataName, values, query);
 		}
@@ -190,7 +191,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 			IValue[] values = (IValue[]) visit(ctx.values());
 
-			String query = ctx.getText().toUpperCase();
+			String query = ctx.getText();
 
 			return new RunStatement(modelName, values, query);
 		}
@@ -200,7 +201,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public ShowDataStatement visitShowDataStatement(@NotNull SQLANNParser.ShowDataStatementContext ctx) {
 		if (ctx != null && ctx.SHOW() != null && ctx.DATA() != null) {
-			String query = ctx.getText().toUpperCase();
+			String query = ctx.getText();
 
 			return new ShowDataStatement(query);
 		}
@@ -210,9 +211,9 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public ShowDataStatusStatement visitShowDataStatusStatement(@NotNull SQLANNParser.ShowDataStatusStatementContext ctx) {
 		if (ctx != null && ctx.SHOW() != null && ctx.DATA() != null && ctx.STATUS() != null && ctx.ID() != null) {
-			ID name = ID.create(ctx.ID().getText());
+			String name = ctx.ID().getText();
 
-			String query = ctx.getText().toUpperCase();
+			String query = ctx.getText();
 
 			return new ShowDataStatusStatement(name, query);
 		}
@@ -222,7 +223,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public ShowNeuralNetworksStatement visitShowNeuralNetworksStatement(@NotNull SQLANNParser.ShowNeuralNetworksStatementContext ctx) {
 		if (ctx != null && ctx.SHOW() != null && ctx.NEURALNETWORKS() != null) {
-			String query = ctx.getText().toUpperCase();
+			String query = ctx.getText();
 
 			return new ShowNeuralNetworksStatement(query);
 		}
@@ -232,7 +233,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public ShowNeuralNetworkStatusStatement visitShowNeuralNetworkStatusStatement(@NotNull SQLANNParser.ShowNeuralNetworkStatusStatementContext ctx) {
 		if (ctx != null && ctx.SHOW() != null && ctx.NEURALNETWORK() != null && ctx.STATUS() != null && ctx.ID() != null) {
-			String name = ctx.ID().getText().toUpperCase();
+			String name = ctx.ID().getText();
 
 			String query = ctx.getText().toUpperCase();
 
@@ -244,7 +245,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public ShowStatusStatement visitShowStatusStatement(@NotNull SQLANNParser.ShowStatusStatementContext ctx) {
 		if (ctx != null && ctx.SHOW() != null && ctx.STATUS() != null) {
-			String query = ctx.getText().toUpperCase();
+			String query = ctx.getText();
 
 			return new ShowStatusStatement(query);
 		}
@@ -254,13 +255,13 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public TrainStatement visitTrainStatement(@NotNull SQLANNParser.TrainStatementContext ctx) {
 		if (ctx != null && ctx.TRAIN() != null && ctx.LEARNINGRULE() != null && ctx.DATA() != null && ctx.INPUT() != null && ctx.OUTPUT() != null && ctx.ID() != null && ctx.ID().size() > 2 && ctx.list().size() > 0) {
-			String neuralNetworkName = ctx.ID(1).getText().toUpperCase();
+			String neuralNetworkName = ctx.ID(1).getText();
 
 			Param[] params = (Param[]) visit(ctx.params());
 
-			String learningRule = ctx.ID(1).getText().toUpperCase();
+			String learningRule = ctx.ID(1).getText();
 
-			String dataName = ctx.ID(2).getText().toUpperCase();
+			String dataName = ctx.ID(2).getText();
 
 			ID[] inputs = (ID[]) visit(ctx.list(0));
 
@@ -354,7 +355,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public ID[] visitList(@NotNull SQLANNParser.ListContext ctx) {
 		if (ctx != null && ctx.OPEN_BRACKETS() != null && ctx.CLOSE_BRACKETS() != null && ctx.ID() != null && ctx.ID().size() > 0) {
-			ArrayList<ID> ids = new ArrayList<ID>();
+			ArrayList<ID> ids = new ArrayList<>();
 			for (int i = 0; i < ctx.ID().size(); i++) {
 				ids.add(ID.create(ctx.ID(i).getText()));
 			}
@@ -378,9 +379,9 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public Param visitParam(@NotNull SQLANNParser.ParamContext ctx) {
 		if (ctx != null && ctx.ID() != null) {
-			IValue[] values = new IValue[ctx.paramValue() == null ? 0 : ctx.paramValue().size()];
+			IParamValue[] values = new IParamValue[ctx.paramValue() == null ? 0 : ctx.paramValue().size()];
 			for (int i = 0; i < ctx.paramValue().size(); i++) {
-				values[i] = (IValue) visit(ctx.paramValue(i));
+				values[i] = (IParamValue) visit(ctx.paramValue(i));
 			}
 
 			String id = ctx.ID().getText();

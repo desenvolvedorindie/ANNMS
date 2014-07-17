@@ -51,7 +51,7 @@ public class ID implements IValue {
 			throw new IllegalArgumentException("Invalid ID format");
 	}
 
-	private boolean valid(String value) {
+	public static boolean valid(String value) {
 		// TODO
 		return value.matches(REGEX);
 	}

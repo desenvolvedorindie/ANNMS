@@ -47,18 +47,18 @@ public class CreateDataStatement implements SQLANNStatement {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CreateDataStatement.class);
 
-	public final ID id;
+	public final String name;
 
 	public final Attribute[] attributes;
 
 	public final boolean ifNotExists;
 
-	public final ID copy;
+	public final String copy;
 
 	public final String query;
 
-	public CreateDataStatement(ID id, Attribute[] attributes, boolean ifNotExists, ID copy, String query) {
-		this.id = id;
+	public CreateDataStatement(String name, Attribute[] attributes, boolean ifNotExists, String copy, String query) {
+		this.name = name;
 		this.attributes = attributes;
 		this.ifNotExists = ifNotExists;
 		this.copy = copy;
@@ -71,29 +71,35 @@ public class CreateDataStatement implements SQLANNStatement {
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
+		if (!ID.valid(this.name))
+			throw new ANNMSRequestValidationException(ANNMSExceptionCode.DATA, "Invalid data id");
+		if (this.copy != null && !ID.valid(this.copy))
+			throw new ANNMSRequestValidationException(ANNMSExceptionCode.DATA, "Invalid copy id");
 	}
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
+		ID id = ID.create(this.name);
 		if (Schema.instance.getDataInstance(id) != null)
 			if (ifNotExists)
 				return new CreateDataResultMessage(null);
 			else
-				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.DATA, String.format("Data already %s exist", this.id));
+				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.DATA, String.format("Data already %s exist", this.name));
 
 		Data data;
 		if (copy != null) {
-			data = Schema.instance.getDataInstance(copy);
+			ID copyID = ID.create(copy);
+			data = Schema.instance.getDataInstance(copyID);
 			if (data == null)
 				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", copy));
 
 			data = data.clone();
 			data.setID(id);
 		} else {
-			data = new Data(this.id, this.attributes);
+			data = new Data(id, this.attributes);
 		}
 		Schema.instance.storeDataInstance(data);
-		LOGGER.info("Data {} created", this.id);
-		return new CreateDataResultMessage(this.id);
+		LOGGER.info("Data {} created", id);
+		return new CreateDataResultMessage(id);
 	}
 }

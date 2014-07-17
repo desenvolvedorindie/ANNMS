@@ -38,6 +38,12 @@ namespace php annms
 namespace perl ANNMS
 
 #
+# Constants
+#
+
+const string VERSION = "1.0.0"
+
+#
 # Types
 #
 

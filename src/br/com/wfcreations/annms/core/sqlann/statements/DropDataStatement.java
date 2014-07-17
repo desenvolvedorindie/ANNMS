@@ -50,13 +50,13 @@ public class DropDataStatement implements SQLANNStatement {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DropDataStatement.class);
 
-	public final ID[] dataList;
+	public final String[] dataList;
 
 	public final boolean ifExists;
 
 	public final String query;
 
-	public DropDataStatement(ID[] dataList, boolean ifExists, String query) {
+	public DropDataStatement(String[] dataList, boolean ifExists, String query) {
 		this.dataList = dataList;
 		this.ifExists = ifExists;
 		this.query = query;
@@ -68,7 +68,11 @@ public class DropDataStatement implements SQLANNStatement {
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
-		if (ArrayUtils.hasDuplicate(this.dataList))
+		ID[] ids = new ID[this.dataList.length];
+		int i = 0;
+		for (String dataName : this.dataList)
+			ids[i++] = ID.create(dataName);
+		if (ArrayUtils.hasDuplicate(ids))
 			throw new ANNMSRequestValidationException(ANNMSExceptionCode.STORAGE, "data list has duplicated data");
 	}
 
@@ -76,13 +80,16 @@ public class DropDataStatement implements SQLANNStatement {
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
 		List<ID> nonExistent = new ArrayList<ID>();
 		List<ID> removed = new ArrayList<ID>();
-		for (ID dataName : dataList)
-			if (Schema.instance.getDataInstance(dataName) != null) {
-				Schema.instance.removeDataInstance(dataName);
-				removed.add(dataName);
-			} else
-				nonExistent.add(dataName);
+		ID id;
 
+		for (String dataName : dataList) {
+			id = ID.create(dataName);
+			if (Schema.instance.getDataInstance(id) != null) {
+				Schema.instance.removeDataInstance(id);
+				removed.add(id);
+			} else
+				nonExistent.add(id);
+		}
 		if (removed.size() > 0)
 			LOGGER.info("Dropped data list: {}", Arrays.toString(new ID[removed.size()]));
 		if (nonExistent.size() > 0 && !ifExists)

@@ -1,9 +1,9 @@
-CREATE DATA IF NOT EXISTS iris (
-	sepallength REAL,
-	sepalwidth REAL,
-	petallength REAL,
-	petalwidth REAL,
-	class {Iris-setosa, Iris-versicolor, Iris-virginica}
+CREATE DATA iris (
+	sepallength REAL NOT NULL,
+	sepalwidth REAL NOT NULL,
+	petallength REAL NOT NULL,
+	petalwidth REAL NOT NULL,
+	class {Iris-setosa,Iris-versicolor,Iris-virginica} NOT NULL,
 );
 
 INSERT INTO iris VALUES (5.1, 3.5, 1.4, 0.2, Iris-setosa);
@@ -157,13 +157,17 @@ INSERT INTO iris VALUES (6.5, 3.0, 5.2, 2.0, Iris-virginica);
 INSERT INTO iris VALUES (6.2, 3.4, 5.4, 2.3, Iris-virginica);
 INSERT INTO iris VALUES (5.9, 3.0, 5.1, 1.8, Iris-virginica);
 
-CREATE NEURALNETWORK IF NOT EXISTS mlp1 (
-	HIDDENS {2, 4},
+SHOW DATA STATUS iris;
+
+CREATE DATA iris2 LIKE iris;
+
+CREATE NEURALNETWORK mlp1 (
+	HIDDENS 2 4,
 	ACTIVATIONFUNCTION TANH
-) MODEL = MLP;
+) MODEL MLP;
 
 TRAIN mlp1 (
 	EPOCH 20
-) LEARNRULE = BACKPROPAGATION, DATA = iris, INPUT = {sepallength, sepalwidth, petallength, petalwidth}, OUTPUT = {class};
+) ALGORITHM BACKPROPAGATION DATA iris;
 
-RUN mlp1 VALUES (5.0, 2.9, 5.0, 2);
+RUN mlp1 WITH VALUES (5.0, 2.9, 5.0, 2);

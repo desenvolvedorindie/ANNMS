@@ -42,12 +42,12 @@ import br.com.wfcreations.annms.core.transport.message.ShowDataStatusResultMessa
 
 public class ShowDataStatusStatement implements SQLANNStatement {
 
-	public final ID dataName;
+	public final String name;
 
 	public final String query;
 
-	public ShowDataStatusStatement(ID dataName, String query) {
-		this.dataName = dataName;
+	public ShowDataStatusStatement(String name, String query) {
+		this.name = name;
 		this.query = query;
 	}
 
@@ -58,19 +58,21 @@ public class ShowDataStatusStatement implements SQLANNStatement {
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
-
+		if (!ID.valid(this.name))
+			throw new ANNMSRequestValidationException(ANNMSExceptionCode.DATA, "Invalid data id");
 	}
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		Data data = Schema.instance.getDataInstance(dataName);
+		ID id = ID.create(this.name);
+		Data data = Schema.instance.getDataInstance(id);
 		if (data == null)
-			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", dataName));
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", name));
 
 		Attribute[] attributes = new Attribute[data.getAttributesNum()];
 		for (int i = 0; i < data.getAttributesNum(); i++) {
 			attributes[i] = data.getAttributeAt(i);
 		}
-		return new ShowDataStatusResultMessage(data.getID(), attributes);
+		return new ShowDataStatusResultMessage(data.getID(), data.getPatternsNum(), attributes);
 	}
 }

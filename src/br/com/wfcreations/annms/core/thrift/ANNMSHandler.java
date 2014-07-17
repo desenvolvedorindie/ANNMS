@@ -64,7 +64,12 @@ public class ANNMSHandler implements IServerHandler {
 
 	@Override
 	public void connect(String username, String password) throws AuthenticationException, TException {
-		ThriftSessionManager.authenticate(username, password);
+		try {
+			ThriftSessionManager.authenticate(username, password);
+		} catch (AuthenticationException e) {
+			LOGGER.warn("A thrift connection authentication fail: {}", username);
+			throw e;
+		}
 		ThriftSessionManager.getInstance().currentSession().setUsername(username);
 		ThriftSessionManager.getInstance().currentSession().setPassword(password);
 		LOGGER.info("A thrift connection, username: {}", ThriftSessionManager.getInstance().currentSession().getUsername());
@@ -90,7 +95,8 @@ public class ANNMSHandler implements IServerHandler {
 
 	@Override
 	public void deleteContext(ServerContext serverContext, TProtocol input, TProtocol output) {
-		LOGGER.info("A thrift connection closed, username: {}", ThriftSessionManager.getInstance().currentSession().getUsername());
+		if (ThriftSessionManager.getInstance().currentSession().getUsername() != null)
+			LOGGER.info("A thrift connection closed, username: {}", ThriftSessionManager.getInstance().currentSession().getUsername());
 		ThriftSessionManager.getInstance().complete(((TSocket) input.getTransport()).getSocket().getRemoteSocketAddress());
 	}
 
