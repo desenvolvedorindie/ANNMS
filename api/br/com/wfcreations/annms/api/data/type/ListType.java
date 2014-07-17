@@ -35,7 +35,7 @@ import java.util.List;
 
 import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.api.data.value.IValue;
-import br.com.wfcreations.lang.ArrayUtils;
+import br.com.wfcreations.annms.api.lang.ArrayUtils;
 
 public class ListType implements IType {
 

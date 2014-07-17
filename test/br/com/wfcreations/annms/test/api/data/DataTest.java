@@ -29,8 +29,6 @@
  */
 package br.com.wfcreations.annms.test.api.data;
 
-import java.util.LinkedHashMap;
-
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -38,14 +36,9 @@ import org.junit.Test;
 
 import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
-import br.com.wfcreations.annms.api.data.Pattern;
-import br.com.wfcreations.annms.api.data.Select;
 import br.com.wfcreations.annms.api.data.type.ListType;
 import br.com.wfcreations.annms.api.data.type.Primitive;
-import br.com.wfcreations.annms.api.data.utils.DataUtils;
 import br.com.wfcreations.annms.api.data.value.ID;
-import br.com.wfcreations.annms.api.data.value.IValue;
-import br.com.wfcreations.annms.api.data.value.Str;
 
 public class DataTest {
 
@@ -213,73 +206,6 @@ public class DataTest {
 		assertEquals(3.2, dataSlice.getPatternAt(1).getValueAt(1).getValue());
 		assertEquals(4.7, dataSlice.getPatternAt(1).getValueAt(2).getValue());
 		assertEquals(1.4, dataSlice.getPatternAt(1).getValueAt(3).getValue());
-
-		data.removeAllPatterns();
-	}
-
-	public void testIfMargeCorrectly() {
-		Data data2 = new Data(ID.create("classes"), new Attribute[] { new Attribute(ID.create("class"), new ListType(new ID[] { ID.create("Iris-setosa"), ID.create("Iris-versicolor"), ID.create("Iris-virginica") }), true) });
-		data2.add(new Pattern(new IValue[] { new Str("Iris-setosa") }));
-		data2.add(new Pattern(new IValue[] { new Str("Iris-versicolor") }));
-		data2.add(new Pattern(new IValue[] { new Str("Iris-virginica") }));
-
-		Data dataSlice = data.slice(0, 4);
-
-		Data marged = DataUtils.merge(dataSlice, data2);
-
-		assertEquals("iris_classes", marged.getID());
-		assertEquals(5, data.getAttributesNum());
-		assertEquals("sepallenght", marged.getAttributeAt(0).getID());
-		assertEquals("sepalwidth", marged.getAttributeAt(1).getID());
-		assertEquals("petallenght", marged.getAttributeAt(2).getID());
-		assertEquals("petalwidth", marged.getAttributeAt(3).getID());
-		assertEquals("class", marged.getAttributeAt(4).getID());
-		// Class
-		assertEquals("Iris-setosa", ((ListType) marged.getAttributeAt(4).getType()).getValuesAt(0));
-		assertEquals("Iris-versicolor", ((ListType) marged.getAttributeAt(4).getType()).getValuesAt(1));
-		assertEquals("Iris-virginica", ((ListType) marged.getAttributeAt(4).getType()).getValuesAt(2));
-
-		assertEquals(3, marged.getPatternsNum());
-		for (int i = 0; i < marged.getPatternsNum(); i++) {
-			assertEquals(5, marged.getPatternAt(i).getValuesNum());
-		}
-
-		assertEquals(5.1, marged.getPatternAt(0).getValueAt(0).getValue());
-		assertEquals(3.5, marged.getPatternAt(0).getValueAt(1).getValue());
-		assertEquals(1.4, marged.getPatternAt(0).getValueAt(2).getValue());
-		assertEquals(0.2, marged.getPatternAt(0).getValueAt(3).getValue());
-		assertEquals("Iris-setosa", marged.getPatternAt(0).getValueAt(4).getValue());
-
-		assertEquals(7.0, marged.getPatternAt(1).getValueAt(0).getValue());
-		assertEquals(3.2, marged.getPatternAt(1).getValueAt(1).getValue());
-		assertEquals(4.7, marged.getPatternAt(1).getValueAt(2).getValue());
-		assertEquals(1.4, marged.getPatternAt(1).getValueAt(3).getValue());
-		assertEquals("Iris-versicolor", marged.getPatternAt(1).getValueAt(4).getValue());
-
-		assertEquals(7.0, marged.getPatternAt(1).getValueAt(0).getValue());
-		assertEquals(3.2, marged.getPatternAt(1).getValueAt(1).getValue());
-		assertEquals(4.7, marged.getPatternAt(1).getValueAt(2).getValue());
-		assertEquals(1.4, marged.getPatternAt(1).getValueAt(3).getValue());
-		assertEquals("Iris-versicolor", marged.getPatternAt(1).getValueAt(4).getValue());
-
-		assertEquals(7.0, marged.getPatternAt(1).getValueAt(0).getValue());
-		assertEquals(3.2, marged.getPatternAt(1).getValueAt(1).getValue());
-		assertEquals(4.7, marged.getPatternAt(1).getValueAt(2).getValue());
-		assertEquals(1.4, marged.getPatternAt(1).getValueAt(3).getValue());
-		assertEquals("Iris-versicolor", marged.getPatternAt(1).getValueAt(4).getValue());
-		data.removeAllPatterns();
-	}
-
-	public void testForDataSelect() {
-		Select where = new Select();
-		LinkedHashMap<ID, ID> col = new LinkedHashMap<ID, ID>();
-		col.put(ID.create("sepallenght"), ID.create("ls"));
-		col.put(ID.create("sepalwidth"), ID.create("sw"));
-		col.put(ID.create("class"), ID.create("c"));
-		where.columns(col);
-		Data dataSelected = DataUtils.fetch(data, where);
-
-		System.out.println(DataUtils.dump(dataSelected));
 
 		data.removeAllPatterns();
 	}

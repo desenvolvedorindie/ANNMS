@@ -27,34 +27,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.filter.attribute;
+package br.com.wfcreations.annms.api.lang;
 
-import br.com.wfcreations.annms.api.data.Attribute;
-import br.com.wfcreations.annms.api.data.value.IValue;
+import java.util.ArrayList;
 
-public class Default implements IAttributeFilter {
+public abstract class ListUtils {
 
-	private static final long serialVersionUID = 1L;
-
-	@Override
-	public boolean acceptAttribute(Attribute attribute) {
-		return true;
-	}
-
-	@Override
-	public IValue[] encode(IValue value) {
-		return new IValue[] { value };
-	}
-
-	@Override
-	public IValue decode(IValue[] values) {
-		if (values.length != 1)
-			throw new IllegalArgumentException("Invalid value lenght");
-		return values[0];
-	}
-
-	@Override
-	public int getLength() {
-		return 1;
+	public static <E> ArrayList<ArrayList<E>> createArrayListOfArrayList(int size) {
+		ArrayList<ArrayList<E>> arrayList = new ArrayList<ArrayList<E>>(size);
+		for (int i = 0; i < size; i++) {
+			arrayList.add(new ArrayList<E>());
+		}
+		return arrayList;
 	}
 }

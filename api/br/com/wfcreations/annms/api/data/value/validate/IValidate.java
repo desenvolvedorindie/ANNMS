@@ -30,13 +30,10 @@
 package br.com.wfcreations.annms.api.data.value.validate;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import br.com.wfcreations.annms.api.data.value.IParamValue;
 
 public interface IValidate extends Serializable {
 
-	public boolean isValid(IParamValue value);
-
-	public Map<String, Object> getMessage();
+	public boolean isValid(IParamValue[] value);
 }

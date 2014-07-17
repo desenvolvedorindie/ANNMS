@@ -52,7 +52,7 @@ public class Param implements Serializable {
 		return id;
 	};
 
-	public boolean idIs(ID id) {
+	public boolean idEquals(ID id) {
 		return this.id.equals(id);
 	}
 

@@ -29,42 +29,28 @@
  */
 package br.com.wfcreations.annms.api.data.value.validate;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import br.com.wfcreations.annms.api.data.value.IParamValue;
+import br.com.wfcreations.annms.api.data.value.IValue;
 
-public abstract class ValidateAbstract implements IValidate {
+public class ValueValidate implements IValidate {
 
 	private static final long serialVersionUID = 1L;
 
-	protected Map<String, Object> messages = new LinkedHashMap<String, Object>();
+	protected Class<? extends IValue> valueClass;
 
-	protected ArrayList<String> errors = new ArrayList<String>();
-
-	private Object value;
-
-	protected void error(Map<String, String> messageTemplates, String key, Object value) {
-		errors.add(key);
-		if (value == null)
-			value = this.value;
-		// this.messages.put(key, messageTemplates.get(key).replace("%value",
-		// value.toString()));
+	public ValueValidate(Class<? extends IValue> valueClass) {
+		this.valueClass = valueClass;
 	}
 
-	public Map<String, Object> getMessage() {
-		return this.messages;
-	}
+	@Override
+	public boolean isValid(IParamValue[] value) {
+		boolean result = value.length > 0;
 
-	public int messageLength() {
-		return this.messages.size();
-	}
-
-	public Object getValue() {
-		return value;
-	}
-
-	public ValidateAbstract setValue(Object value) {
-		this.value = value;
-		return this;
+		for (IParamValue v : value)
+			if (this.valueClass.isAssignableFrom(v.getClass()))
+				result &= true;
+			else
+				return false;
+		return result;
 	}
 }

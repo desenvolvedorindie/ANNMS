@@ -20,7 +20,6 @@
 	<classpathentry kind="lib" path="lib/javassist.jar"/>
 	<classpathentry kind="lib" path="lib/antlr-4.3-complete.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang3-3.3.2.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/javalib-lang"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ANNMS-MLP"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
