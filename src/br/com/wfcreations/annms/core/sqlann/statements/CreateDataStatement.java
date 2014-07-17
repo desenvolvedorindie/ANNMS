@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
+import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
@@ -46,18 +47,18 @@ public class CreateDataStatement implements SQLANNStatement {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CreateDataStatement.class);
 
-	public final String name;
+	public final ID id;
 
 	public final Attribute[] attributes;
 
 	public final boolean ifNotExists;
 
-	public final String copy;
+	public final ID copy;
 
 	public final String query;
 
-	public CreateDataStatement(String name, Attribute[] attributes, boolean ifNotExists, String copy, String query) {
-		this.name = name;
+	public CreateDataStatement(ID id, Attribute[] attributes, boolean ifNotExists, ID copy, String query) {
+		this.id = id;
 		this.attributes = attributes;
 		this.ifNotExists = ifNotExists;
 		this.copy = copy;
@@ -74,25 +75,25 @@ public class CreateDataStatement implements SQLANNStatement {
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		if (Schema.instance.getDataInstance(name) != null)
+		if (Schema.instance.getDataInstance(id) != null)
 			if (ifNotExists)
 				return new CreateDataResultMessage(null);
 			else
-				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.DATA, String.format("Data already %s exist", this.name));
+				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.DATA, String.format("Data already %s exist", this.id));
 
 		Data data;
-		if (copy != null && !copy.isEmpty()) {
+		if (copy != null) {
 			data = Schema.instance.getDataInstance(copy);
 			if (data == null)
 				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", copy));
 
 			data = data.clone();
-			data.setName(name);
+			data.setID(id);
 		} else {
-			data = new Data(this.name, this.attributes);
+			data = new Data(this.id, this.attributes);
 		}
 		Schema.instance.storeDataInstance(data);
-		LOGGER.info("Data {} created", this.name);
-		return new CreateDataResultMessage(this.name);
+		LOGGER.info("Data {} created", this.id);
+		return new CreateDataResultMessage(this.id);
 	}
 }

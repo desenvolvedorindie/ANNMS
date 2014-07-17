@@ -15,12 +15,11 @@ public class ParamTest {
 
 	@Before
 	public void setUp() throws Exception {
-		param1 = new Param(new ID(PARAM1_ID), new IParamValue[] {});
+		param1 = new Param(ID.create(PARAM1_ID), new IParamValue[] {});
 	}
 
 	@Test
 	public void test() {
 
 	}
-
 }

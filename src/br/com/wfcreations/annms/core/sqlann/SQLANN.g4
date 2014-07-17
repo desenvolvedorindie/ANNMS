@@ -177,7 +177,7 @@ dataType
     |   INTEGER                                                                 #integerDataType
     |   REAL                                                                    #realDataType
     |   STRING                                                                  #stringDataType
-    |   DATE String                                                             #dateDataType
+    |   DATE (String)?                                                          #dateDataType
     |   list                                                                    #listDataType
     ;
 

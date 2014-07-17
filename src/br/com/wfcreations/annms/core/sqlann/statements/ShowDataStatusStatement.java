@@ -31,6 +31,7 @@ package br.com.wfcreations.annms.core.sqlann.statements;
 
 import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
+import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
@@ -41,11 +42,11 @@ import br.com.wfcreations.annms.core.transport.message.ShowDataStatusResultMessa
 
 public class ShowDataStatusStatement implements SQLANNStatement {
 
-	public final String dataName;
+	public final ID dataName;
 
 	public final String query;
 
-	public ShowDataStatusStatement(String dataName, String query) {
+	public ShowDataStatusStatement(ID dataName, String query) {
 		this.dataName = dataName;
 		this.query = query;
 	}
@@ -70,6 +71,6 @@ public class ShowDataStatusStatement implements SQLANNStatement {
 		for (int i = 0; i < data.getAttributesNum(); i++) {
 			attributes[i] = data.getAttributeAt(i);
 		}
-		return new ShowDataStatusResultMessage(data.getName(), attributes);
+		return new ShowDataStatusResultMessage(data.getID(), attributes);
 	}
 }

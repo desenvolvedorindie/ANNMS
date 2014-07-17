@@ -45,7 +45,7 @@ public class ID implements IValue {
 
 	private final String value;
 
-	public ID(String value) {
+	private ID(String value) {
 		this.value = value.toUpperCase();
 		if (!valid(this.value))
 			throw new IllegalArgumentException("Invalid ID format");

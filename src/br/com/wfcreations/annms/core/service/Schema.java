@@ -33,15 +33,16 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import br.com.wfcreations.annms.api.data.Data;
+import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.core.neuralnetwork.NeuralnetworkWrapper;
 
 public class Schema {
 
 	public static final Schema instance = new Schema();
 
-	private final Map<String, Data> dataInstances = new ConcurrentHashMap<String, Data>();
+	private final Map<ID, Data> dataInstances = new ConcurrentHashMap<>();
 
-	private final Map<String, NeuralnetworkWrapper> neuralnetworkInstances = new ConcurrentHashMap<String, NeuralnetworkWrapper>();
+	private final Map<ID, NeuralnetworkWrapper> neuralnetworkInstances = new ConcurrentHashMap<>();
 
 	private Schema() {
 	}
@@ -50,20 +51,20 @@ public class Schema {
 		return dataInstances.keySet().toArray(new String[dataInstances.keySet().size()]);
 	}
 
-	public Data getDataInstance(String name) {
-		if (name == null || name.isEmpty())
-			throw new IllegalArgumentException("Name can't be empty or null");
-		return dataInstances.get(name);
+	public Data getDataInstance(ID id) {
+		if (id == null)
+			throw new IllegalArgumentException("ID can't be empty or null");
+		return dataInstances.get(id);
 	}
 
 	public void storeDataInstance(Data data) {
-		if (dataInstances.containsKey(data.getName()))
-			throw new IllegalArgumentException(String.format("Data %s was already initialized.", data.getName()));
-		dataInstances.put(data.getName(), data);
+		if (dataInstances.containsKey(data.getID()))
+			throw new IllegalArgumentException(String.format("Data %s was already initialized.", data.getID()));
+		dataInstances.put(data.getID(), data);
 	}
 
-	public Data removeDataInstance(String name) {
-		return dataInstances.remove(name);
+	public Data removeDataInstance(ID id) {
+		return dataInstances.remove(id);
 	}
 
 	public void clearDataInstance() {
@@ -74,20 +75,20 @@ public class Schema {
 		return neuralnetworkInstances.keySet().toArray(new String[dataInstances.keySet().size()]);
 	}
 
-	public NeuralnetworkWrapper getNeuralnetworkInstance(String name) {
-		if (name == null || name.isEmpty())
-			throw new IllegalArgumentException("Name can't be empty or null");
-		return neuralnetworkInstances.get(name);
+	public NeuralnetworkWrapper getNeuralnetworkInstance(ID id) {
+		if (id == null)
+			throw new IllegalArgumentException("ID can't be empty or null");
+		return neuralnetworkInstances.get(id);
 	}
 
-	public void storeNeuralnetworkInstance(String name, NeuralnetworkWrapper neuralnetwork) {
-		if (neuralnetworkInstances.containsKey(name))
-			throw new IllegalArgumentException(String.format("Data %s was already initialized.", name));
-		neuralnetworkInstances.put(name, neuralnetwork);
+	public void storeNeuralnetworkInstance(ID id, NeuralnetworkWrapper neuralnetwork) {
+		if (neuralnetworkInstances.containsKey(id))
+			throw new IllegalArgumentException(String.format("Data %s was already initialized.", id));
+		neuralnetworkInstances.put(id, neuralnetwork);
 	}
 
-	public NeuralnetworkWrapper removeNeuralnetworkInstance(String name) {
-		return neuralnetworkInstances.remove(name);
+	public NeuralnetworkWrapper removeNeuralnetworkInstance(ID id) {
+		return neuralnetworkInstances.remove(id);
 	}
 
 	public void clearNeuralNetworkInstance() {

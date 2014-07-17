@@ -33,16 +33,16 @@ public class ValueTest {
 
 	@Test
 	public void testIDValue() {
-		ID idv1 = new ID("class1");
-		ID idv2 = new ID("class2");
+		ID idv1 = ID.create("class1");
+		ID idv2 = ID.create("class2");
 
 		assertEquals("CLASS1", idv1.getValue());
 		assertEquals("CLASS2", idv2.getValue());
 		assertEquals("CLASS1", idv1.toString());
 		assertEquals("CLASS2", idv2.toString());
-		assertEquals(new ID("class1"), idv1);
-		assertEquals(new ID("CLASS1"), idv1);
-		assertEquals(new ID("ClAsS1"), idv1);
+		assertEquals(ID.create("class1"), idv1);
+		assertEquals(ID.create("CLASS1"), idv1);
+		assertEquals(ID.create("ClAsS1"), idv1);
 		assertEquals("CLASS1", ID.getValueFor(idv1));
 	}
 
@@ -68,13 +68,13 @@ public class ValueTest {
 	@Test
 	public void testInvalidIDFormat() {
 		try {
-			new ID("");
+			ID.create("");
 		} catch (Exception e) {
 			assertEquals(IllegalArgumentException.class, e.getClass());
 		}
 
 		try {
-			new ID("asdsad a sd");
+			ID.create("asdsad a sd");
 		} catch (Exception e) {
 			assertEquals(IllegalArgumentException.class, e.getClass());
 		}

@@ -37,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.com.wfcreations.lang.ArrayUtils;
+import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
@@ -49,13 +50,13 @@ public class DropDataStatement implements SQLANNStatement {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DropDataStatement.class);
 
-	public final String[] dataList;
+	public final ID[] dataList;
 
 	public final boolean ifExists;
 
 	public final String query;
 
-	public DropDataStatement(String[] dataList, boolean ifExists, String query) {
+	public DropDataStatement(ID[] dataList, boolean ifExists, String query) {
 		this.dataList = dataList;
 		this.ifExists = ifExists;
 		this.query = query;
@@ -73,9 +74,9 @@ public class DropDataStatement implements SQLANNStatement {
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		List<String> nonExistent = new ArrayList<String>();
-		List<String> removed = new ArrayList<String>();
-		for (String dataName : dataList)
+		List<ID> nonExistent = new ArrayList<ID>();
+		List<ID> removed = new ArrayList<ID>();
+		for (ID dataName : dataList)
 			if (Schema.instance.getDataInstance(dataName) != null) {
 				Schema.instance.removeDataInstance(dataName);
 				removed.add(dataName);
@@ -83,7 +84,7 @@ public class DropDataStatement implements SQLANNStatement {
 				nonExistent.add(dataName);
 
 		if (removed.size() > 0)
-			LOGGER.info("Dropped data list: {}", Arrays.toString(new String[removed.size()]));
+			LOGGER.info("Dropped data list: {}", Arrays.toString(new ID[removed.size()]));
 		if (nonExistent.size() > 0 && !ifExists)
 			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Non existent data: %s", Arrays.toString(nonExistent.toArray(new String[nonExistent.size()]))));
 		return new DropDataResultMessage(removed.size());

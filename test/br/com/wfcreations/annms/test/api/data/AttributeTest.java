@@ -24,8 +24,8 @@ public class AttributeTest {
 
 	@Before
 	public void setUp() throws Exception {
-		id1 = new ID(ATTR1_ID);
-		id2 = new ID(ATTR2_ID);
+		id1 = ID.create(ATTR1_ID);
+		id2 = ID.create(ATTR2_ID);
 
 		attr1 = new Attribute(id1, Primitive.BOOL, true);
 		attr2 = new Attribute(id2, Primitive.INT, false);

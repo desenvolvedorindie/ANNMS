@@ -42,13 +42,13 @@ public class Data implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected String name;
+	protected ID name;
 
 	protected List<Attribute> attributes = new ArrayList<Attribute>();
 
 	protected List<Pattern> patterns = new ArrayList<Pattern>();
 
-	public Data(String name, Attribute[] attributes) {
+	public Data(ID name, Attribute[] attributes) {
 		if (ArrayUtils.hasDuplicate(attributes))
 			throw new IllegalArgumentException("Attributes are not unique!");
 		this.name = name;
@@ -64,11 +64,11 @@ public class Data implements Serializable {
 				throw new IllegalArgumentException("Invalid value type for attribute " + attributes.get(i).getID());
 	}
 
-	public String getName() {
+	public ID getID() {
 		return this.name;
 	}
 
-	public Data setName(String name) {
+	public Data setID(ID name) {
 		this.name = name;
 		return this;
 	}

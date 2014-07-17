@@ -71,23 +71,23 @@ public class DataTest {
 
 	@Before
 	public void setUp() {
-		list = new ID[] { new ID(LIST_VALUE1), new ID(LIST_VALUE2), new ID(LIST_VALUE3) };
+		list = new ID[] { ID.create(LIST_VALUE1), ID.create(LIST_VALUE2), ID.create(LIST_VALUE3) };
 
 		Attribute[] attr = new Attribute[5];
-		attr[0] = new Attribute(new ID(ATTR1), Primitive.BOOL, true);
-		attr[1] = new Attribute(new ID(ATTR2), Primitive.INT, true);
-		attr[2] = new Attribute(new ID(ATTR3), Primitive.REAL, true);
-		attr[3] = new Attribute(new ID(ATTR4), Primitive.STR, true);
-		attr[4] = new Attribute(new ID(ATTR5), new ListType(list), true);
+		attr[0] = new Attribute(ID.create(ATTR1), Primitive.BOOL, true);
+		attr[1] = new Attribute(ID.create(ATTR2), Primitive.INT, true);
+		attr[2] = new Attribute(ID.create(ATTR3), Primitive.REAL, true);
+		attr[3] = new Attribute(ID.create(ATTR4), Primitive.STR, true);
+		attr[4] = new Attribute(ID.create(ATTR5), new ListType(list), true);
 
-		data = new Data("", attr);
+		data = new Data(ID.create(""), attr);
 	}
 
 	@Test
 	public void testIfIsDefinedCorrectly() {
 		assertNotNull(data);
 
-		assertEquals("iris", data.getName());
+		assertEquals("iris", data.getID());
 		assertEquals(5, data.getAttributesNum());
 		assertEquals("sepallenght", data.getAttributeAt(0).getID());
 		assertEquals("sepalwidth", data.getAttributeAt(1).getID());
@@ -136,7 +136,7 @@ public class DataTest {
 	public void testIfCloneCorrectly() {
 		Data dataClone = data.clone();
 
-		assertEquals("iris", dataClone.getName());
+		assertEquals("iris", dataClone.getID());
 		assertEquals("sepallenght", dataClone.getAttributeAt(0).getID());
 		assertEquals("sepalwidth", dataClone.getAttributeAt(1).getID());
 		assertEquals("petallenght", dataClone.getAttributeAt(2).getID());
@@ -181,7 +181,7 @@ public class DataTest {
 
 	public void testIfSliceCorrectly() {
 		Data dataSlice = data.slice(0, 4);
-		assertEquals("iris", dataSlice.getName());
+		assertEquals("iris", dataSlice.getID());
 		assertEquals(4, dataSlice.getAttributesNum());
 
 		assertEquals("sepallenght", dataSlice.getAttributeAt(0).getID());
@@ -218,7 +218,7 @@ public class DataTest {
 	}
 
 	public void testIfMargeCorrectly() {
-		Data data2 = new Data("classes", new Attribute[] { new Attribute(new ID("class"), new ListType(new ID[] { new ID("Iris-setosa"), new ID("Iris-versicolor"), new ID("Iris-virginica") }), true) });
+		Data data2 = new Data(ID.create("classes"), new Attribute[] { new Attribute(ID.create("class"), new ListType(new ID[] { ID.create("Iris-setosa"), ID.create("Iris-versicolor"), ID.create("Iris-virginica") }), true) });
 		data2.add(new Pattern(new IValue[] { new Str("Iris-setosa") }));
 		data2.add(new Pattern(new IValue[] { new Str("Iris-versicolor") }));
 		data2.add(new Pattern(new IValue[] { new Str("Iris-virginica") }));
@@ -227,7 +227,7 @@ public class DataTest {
 
 		Data marged = DataUtils.merge(dataSlice, data2);
 
-		assertEquals("iris_classes", marged.getName());
+		assertEquals("iris_classes", marged.getID());
 		assertEquals(5, data.getAttributesNum());
 		assertEquals("sepallenght", marged.getAttributeAt(0).getID());
 		assertEquals("sepalwidth", marged.getAttributeAt(1).getID());
@@ -273,9 +273,9 @@ public class DataTest {
 	public void testForDataSelect() {
 		Select where = new Select();
 		LinkedHashMap<ID, ID> col = new LinkedHashMap<ID, ID>();
-		col.put(new ID("sepallenght"), new ID("ls"));
-		col.put(new ID("sepalwidth"), new ID("sw"));
-		col.put(new ID("class"), new ID("c"));
+		col.put(ID.create("sepallenght"), ID.create("ls"));
+		col.put(ID.create("sepalwidth"), ID.create("sw"));
+		col.put(ID.create("class"), ID.create("c"));
 		where.columns(col);
 		Data dataSelected = DataUtils.fetch(data, where);
 

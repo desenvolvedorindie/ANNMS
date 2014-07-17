@@ -3,11 +3,13 @@ package br.com.wfcreations.annms.core.transport.message;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import br.com.wfcreations.annms.api.data.value.ID;
+
 public class CreateDataResultMessage extends ResultMessage {
 
-	private String name;
+	private ID name;
 
-	public CreateDataResultMessage(String name) {
+	public CreateDataResultMessage(ID name) {
 		this.name = name;
 	}
 

@@ -31,6 +31,7 @@ package br.com.wfcreations.annms.core.sqlann.statements;
 
 import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.api.data.Pattern;
+import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.api.data.value.IValue;
 import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
@@ -42,13 +43,13 @@ import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 
 public class InsertIntoStatement implements SQLANNStatement {
 
-	public final String dataName;
+	public final ID dataName;
 
 	public final IValue[] values;
 
 	public final String query;
 
-	public InsertIntoStatement(String dataName, IValue[] values, String query) {
+	public InsertIntoStatement(ID dataName, IValue[] values, String query) {
 		this.dataName = dataName;
 		this.values = values;
 		this.query = query;

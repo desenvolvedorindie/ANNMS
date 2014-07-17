@@ -11,11 +11,11 @@ import br.com.wfcreations.annms.api.data.value.ID;
 
 public class ShowDataStatusResultMessage extends ResultMessage {
 
-	private String name;
+	private ID name;
 
 	private Attribute[] attributes;
 
-	public ShowDataStatusResultMessage(String name, Attribute[] attributesDescriptor) {
+	public ShowDataStatusResultMessage(ID name, Attribute[] attributesDescriptor) {
 		this.name = name;
 		this.attributes = attributesDescriptor;
 	}

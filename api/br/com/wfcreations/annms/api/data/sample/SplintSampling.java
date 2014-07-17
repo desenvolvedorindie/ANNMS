@@ -35,6 +35,7 @@ import java.util.Vector;
 
 import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.api.data.utils.AttributeUtils;
+import br.com.wfcreations.annms.api.data.value.ID;
 
 public class SplintSampling implements ISampling {
 
@@ -61,12 +62,12 @@ public class SplintSampling implements ISampling {
 		if (this.isShuffle())
 			Collections.shuffle(randomIndices);
 
-		Data data1 = new Data(data.getName() + "_1", AttributeUtils.cloneAttributes(data));
+		Data data1 = new Data(ID.create(data.getID() + "_1"), AttributeUtils.cloneAttributes(data));
 
 		for (int i = 0; i < data1PatternCount; i++)
 			data1.add(data.getPatternAt(randomIndices.get(i)).clone());
 
-		Data data2 = new Data(data.getName() + "_2", AttributeUtils.cloneAttributes(data1));
+		Data data2 = new Data(ID.create(data.getID() + "_2"), AttributeUtils.cloneAttributes(data1));
 
 		int totalPatternCount = data1PatternCount + data2PatternCount;
 

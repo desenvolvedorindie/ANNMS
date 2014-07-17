@@ -44,7 +44,7 @@ public abstract class DataUtils {
 	public static String dump(Data data) {
 		StringBuffer sb = new StringBuffer();
 		sb.append('#');
-		sb.append(data.getName());
+		sb.append(data.getID());
 		sb.append(String.format("%n"));
 		for (int i = 0; i < data.getAttributesNum(); i++) {
 			sb.append(data.getAttributeAt(i).getID());
@@ -85,7 +85,7 @@ public abstract class DataUtils {
 		for (int i = 0; i < first.getPatternsNum(); i++)
 			patterns.add(new Pattern(ArrayUtils.addAll(first.getPatternAt(i).cloneValues(), first.getPatternAt(i).cloneValues())));
 
-		return new Data(first.getName() + "_" + second.getName(), ArrayUtils.addAll(attr1, attr2)).addAll(patterns);
+		return new Data(ID.create(first.getID() + "_" + second.getID()), ArrayUtils.addAll(attr1, attr2)).addAll(patterns);
 	}
 
 	public static Data fetch(Data dataSource, Select where) {
@@ -115,7 +115,7 @@ public abstract class DataUtils {
 				data2.renameAttribute(0, value[i]);
 				data = DataUtils.merge(data, data2);
 			}
-			data.setName(dataSource.getName());
+			data.setID(dataSource.getID());
 		}
 		return data;
 	}

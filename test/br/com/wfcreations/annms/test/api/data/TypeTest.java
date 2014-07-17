@@ -63,19 +63,19 @@ public class TypeTest {
 
 	@Test
 	public void testListType() {
-		ListType list = new ListType(new ID[] { new ID(L_VALUE1), new ID(L_VALUE2), new ID(L_VALUE3) });
+		ListType list = new ListType(new ID[] { ID.create(L_VALUE1), ID.create(L_VALUE2), ID.create(L_VALUE3) });
 
 		assertEquals(3, list.getListValuesNum());
-		assertEquals(new ID(L_VALUE1), list.getValuesAt(0));
-		assertEquals(new ID(L_VALUE2), list.getValuesAt(1));
-		assertEquals(new ID(L_VALUE3), list.getValuesAt(2));
+		assertEquals(ID.create(L_VALUE1), list.getValuesAt(0));
+		assertEquals(ID.create(L_VALUE2), list.getValuesAt(1));
+		assertEquals(ID.create(L_VALUE3), list.getValuesAt(2));
 	}
 
 	@Test
 	public void testListTypeEquals() {
-		ListType l1 = new ListType(new ID[] { new ID(L_VALUE1), new ID(L_VALUE2), new ID(L_VALUE3) });
-		ListType l2 = new ListType(new ID[] { new ID(L_VALUE1), new ID(L_VALUE2), new ID(L_VALUE3) });
-		ListType l3 = new ListType(new ID[] { new ID(L_VALUE1), new ID(L_VALUE2) });
+		ListType l1 = new ListType(new ID[] { ID.create(L_VALUE1), ID.create(L_VALUE2), ID.create(L_VALUE3) });
+		ListType l2 = new ListType(new ID[] { ID.create(L_VALUE1), ID.create(L_VALUE2), ID.create(L_VALUE3) });
+		ListType l3 = new ListType(new ID[] { ID.create(L_VALUE1), ID.create(L_VALUE2) });
 
 		assertTrue(l1.equals(l2));
 		assertFalse(l1.equals(l3));
@@ -88,11 +88,11 @@ public class TypeTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testListDuplicatedValue() {
-		new ListType(new ID[] { new ID("v"), new ID("v") });
+		new ListType(new ID[] { ID.create("v"), ID.create("v") });
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testListNullValue() {
-		new ListType(new ID[] { new ID("v"), null });
+		new ListType(new ID[] { ID.create("v"), null });
 	}
 }
