@@ -27,15 +27,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data;
+package br.com.wfcreations.annms.api.data.statistic.descriptions;
 
 import java.io.Serializable;
 
-import br.com.wfcreations.annms.api.data.value.IValue;
+import br.com.wfcreations.annms.api.data.Data;
 
-public interface IPattern extends Serializable {
+public interface IDescription extends Serializable {
 
-	public IValue getValueAt(int index);
-
-	public int getValuesNum();
+	public void describe(Data data, int attributeIndex);
 }

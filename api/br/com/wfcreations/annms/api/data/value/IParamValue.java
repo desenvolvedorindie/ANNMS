@@ -33,5 +33,4 @@ import java.io.Serializable;
 
 public interface IParamValue extends Serializable {
 
-	public boolean equals(Object obj);
 }

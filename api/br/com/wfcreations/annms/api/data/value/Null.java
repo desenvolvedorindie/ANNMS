@@ -29,7 +29,7 @@
  */
 package br.com.wfcreations.annms.api.data.value;
 
-public class Null implements IValue {
+public final class Null implements IValue {
 
 	private static final long serialVersionUID = 1L;
 

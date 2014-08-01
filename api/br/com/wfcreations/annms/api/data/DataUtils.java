@@ -27,15 +27,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.utils;
+package br.com.wfcreations.annms.api.data;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
-import br.com.wfcreations.annms.api.data.Attribute;
-import br.com.wfcreations.annms.api.data.Data;
-import br.com.wfcreations.annms.api.data.Pattern;
-import br.com.wfcreations.annms.api.data.Select;
 import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.api.lang.ArrayUtils;
 
@@ -88,16 +85,16 @@ public abstract class DataUtils {
 		return new Data(ID.create(first.getID() + "_" + second.getID()), ArrayUtils.addAll(attr1, attr2)).addAll(patterns);
 	}
 
-	public static Data fetch(Data dataSource, Select where) {
+	public static Data fetch(Data dataSource, LinkedHashMap<ID, ID> columns) {
 		Data data = null;
-		if (where == null)
+		if (columns == null)
 			data = dataSource.clone();
 		else {
 			Data data2 = null;
 			int index;
 
-			ID[] key = where.columns().keySet().toArray(new ID[where.columns().size()]);
-			ID[] value = where.columns().values().toArray(new ID[where.columns().size()]);
+			ID[] key = columns.keySet().toArray(new ID[columns.size()]);
+			ID[] value = columns.values().toArray(new ID[columns.size()]);
 
 			index = dataSource.indexOfAttribute(key[0]);
 			if (index < 0)
@@ -106,7 +103,7 @@ public abstract class DataUtils {
 			data = dataSource.slice(index);
 			data.renameAttribute(0, value[0]);
 
-			for (int i = 1; i < where.columns().size(); i++) {
+			for (int i = 1; i < columns.size(); i++) {
 				index = dataSource.indexOfAttribute(key[i]);
 				if (index < 0)
 					throw new IllegalArgumentException(String.format("Attribute %s not found", key[i]));

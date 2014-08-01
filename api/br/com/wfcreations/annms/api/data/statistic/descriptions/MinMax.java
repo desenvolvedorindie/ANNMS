@@ -1,16 +1,16 @@
-package br.com.wfcreations.annms.api.data.statistic;
+package br.com.wfcreations.annms.api.data.statistic.descriptions;
 
 import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
 import br.com.wfcreations.annms.api.data.type.Primitive;
 
-public class MinMax extends AbstractStatistic {
+public class MinMax extends AbstractDescription {
 
 	private static final long serialVersionUID = 1L;
 
-	protected double minimum;
+	protected double minimum = Double.NaN;
 
-	protected double maximum;
+	protected double maximum = Double.NaN;
 
 	@Override
 	public boolean acceptAttribute(Attribute attribute) {
@@ -18,8 +18,8 @@ public class MinMax extends AbstractStatistic {
 	}
 
 	@Override
-	public void calculate(Data data, int attributeIndex) {
-		super.calculate(data, attributeIndex);
+	public void describe(Data data, int attributeIndex) {
+		super.describe(data, attributeIndex);
 		if (data.getAttributesNum() == 0)
 			throw new IllegalArgumentException("Don't have patterns to calculate");
 

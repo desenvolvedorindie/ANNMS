@@ -37,11 +37,11 @@ import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.api.data.value.IValue;
 import br.com.wfcreations.annms.api.lang.ArrayUtils;
 
-public class ListType implements IType {
+public final class ListType implements IType {
 
 	private static final long serialVersionUID = 1L;
 
-	private final List<ID> listValues;
+	final List<ID> listValues;
 
 	public ListType(ID[] listValues) {
 		if (listValues.length == 0)
@@ -50,8 +50,7 @@ public class ListType implements IType {
 			throw new IllegalArgumentException("Duplicated value");
 		for (ID id : listValues)
 			if (id == null)
-				throw new IllegalArgumentException("Null or empty value");
-
+				throw new IllegalArgumentException("Null ID at:");
 		this.listValues = new ArrayList<>(Arrays.asList(listValues));
 	}
 

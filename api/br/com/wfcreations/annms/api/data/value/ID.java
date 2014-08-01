@@ -29,31 +29,32 @@
  */
 package br.com.wfcreations.annms.api.data.value;
 
-public class ID implements IValue {
+public final class ID implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String REGEX = "^[a-zA-Z][a-zA-Z0-9$_-]*$";
+	public static final String REGEX = "^[a-zA-Z][a-zA-Z0-9$_-]*$";
+
+	final String value;
 
 	public static ID create(String value) {
 		return new ID(value);
 	}
 
 	public static String getValueFor(IValue value) {
+		if (!(value instanceof ID))
+			throw new IllegalArgumentException("Value isn't a ID");
 		return (String) value.getValue();
 	}
 
-	private final String value;
+	public static boolean valid(String value) {
+		return value.matches(REGEX);
+	}
 
 	private ID(String value) {
 		this.value = value.toUpperCase();
 		if (!valid(this.value))
 			throw new IllegalArgumentException("Invalid ID format");
-	}
-
-	public static boolean valid(String value) {
-		// TODO
-		return value.matches(REGEX);
 	}
 
 	@Override

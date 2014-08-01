@@ -47,9 +47,9 @@ public enum Primitive implements IType {
 
 	private static final long serialVersionUID = 1L;
 
-	protected final String name;
+	final String name;
 
-	protected final Class<? extends IValue> representation;
+	final Class<? extends IValue> representation;
 
 	private Primitive(String name, Class<? extends IValue> representation) {
 		this.name = name;

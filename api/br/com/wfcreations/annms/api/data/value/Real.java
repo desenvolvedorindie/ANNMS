@@ -29,15 +29,17 @@
  */
 package br.com.wfcreations.annms.api.data.value;
 
-public class Real implements IValue {
+public final class Real implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
+	final double value;
+
 	public static double getValueFor(IValue value) {
+		if (!(value instanceof Real))
+			throw new IllegalArgumentException("Value isn't a Real");
 		return (double) value.getValue();
 	}
-
-	private final double value;
 
 	public Real() {
 		this(0);

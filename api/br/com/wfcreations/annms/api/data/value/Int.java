@@ -29,15 +29,17 @@
  */
 package br.com.wfcreations.annms.api.data.value;
 
-public class Int implements IValue {
+public final class Int implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
+	final int value;
+
 	public static int getValueFor(IValue value) {
+		if (!(value instanceof Int))
+			throw new IllegalArgumentException("Value isn't a Integer");
 		return (int) value.getValue();
 	}
-
-	private final int value;
 
 	public Int() {
 		this(0);

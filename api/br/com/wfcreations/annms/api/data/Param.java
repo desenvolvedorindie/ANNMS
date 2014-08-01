@@ -35,13 +35,13 @@ import java.io.Serializable;
 import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.api.data.value.IParamValue;
 
-public class Param implements Serializable {
+public final class Param implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final ID id;
+	final ID id;
 
-	private final IParamValue[] values;
+	final IParamValue[] values;
 
 	public Param(ID id, IParamValue[] values) {
 		this.id = id;

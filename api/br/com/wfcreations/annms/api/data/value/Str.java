@@ -29,15 +29,17 @@
  */
 package br.com.wfcreations.annms.api.data.value;
 
-public class Str implements IValue {
+public final class Str implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
+	final String value;
+
 	public static String getValueFor(IValue value) {
+		if (!(value instanceof Str))
+			throw new IllegalArgumentException("Value isn't a String");
 		return (String) value.getValue();
 	}
-
-	private final String value;
 
 	public Str() {
 		this("");
@@ -70,6 +72,6 @@ public class Str implements IValue {
 
 	@Override
 	public String toString() {
-		return this.value;
+		return String.format("\"%s\"", this.value);
 	}
 }

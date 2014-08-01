@@ -27,14 +27,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.sample;
+package br.com.wfcreations.annms.api.data.statistic.sample;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
+import br.com.wfcreations.annms.api.data.AttributeUtils;
 import br.com.wfcreations.annms.api.data.Data;
-import br.com.wfcreations.annms.api.data.utils.AttributeUtils;
 import br.com.wfcreations.annms.api.data.value.ID;
 
 public class SplintSampling implements ISampling {
@@ -55,9 +55,8 @@ public class SplintSampling implements ISampling {
 		int data2PatternCount = data.getPatternsNum() - data1PatternCount;
 
 		List<Integer> randomIndices = new Vector<Integer>(data.getPatternsNum());
-		for (int i = 0; i < data.getPatternsNum(); i++) {
+		for (int i = 0; i < data.getPatternsNum(); i++)
 			randomIndices.add(i);
-		}
 
 		if (this.isShuffle())
 			Collections.shuffle(randomIndices);

@@ -27,50 +27,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package br.com.wfcreations.annms.api.data.utils;
+package br.com.wfcreations.annms.api.data.statistic.sample;
 
 import java.util.List;
 
-import br.com.wfcreations.annms.api.data.Attribute;
 import br.com.wfcreations.annms.api.data.Data;
-import br.com.wfcreations.annms.api.data.type.IType;
 
-public abstract class AttributeUtils {
+public interface ISampling {
 
-	public static boolean checkDuplicateAttribute(Attribute[] attributes1, Attribute[] attributes2) {
-		for (Attribute attr1 : attributes1)
-			for (Attribute attr2 : attributes2)
-				if (attr1.getID().equals(attr2.getID()))
-					return true;
-		return false;
-	}
-
-	public static boolean checkDuplicateAttribute(List<Attribute> attributes1, List<Attribute> attributes2) {
-		for (Attribute attr1 : attributes1)
-			for (Attribute attr2 : attributes2)
-				if (attr1.getID().equals(attr2.getID()))
-					return true;
-		return false;
-	}
-
-	public static String[] getAttributesNames(Data data) {
-		String[] attributeNames = new String[data.getAttributesNum()];
-		for (int i = 0; i < data.getAttributesNum(); i++)
-			attributeNames[i] = data.getAttributeAt(i).getID().getValue();
-		return attributeNames;
-	}
-
-	public static boolean hasAttributeType(Data data, IType dataType) {
-		for (int i = 0; i < data.getAttributesNum(); i++)
-			if (data.getAttributeAt(i).getType().equals(dataType))
-				return true;
-		return false;
-	}
-
-	public static Attribute[] cloneAttributes(Data data) {
-		Attribute[] attributes = new Attribute[data.getAttributesNum()];
-		for (int i = 0; i < data.getAttributesNum(); i++)
-			attributes[i] = data.getAttributeAt(i);
-		return attributes;
-	}
+	public List<Data> sample(Data data);
 }

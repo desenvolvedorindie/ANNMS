@@ -38,20 +38,20 @@ import java.util.List;
 import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.api.lang.ArrayUtils;
 
-public class Data implements Serializable {
+public final class Data implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected ID name;
+	ID id;
 
-	protected List<Attribute> attributes = new ArrayList<Attribute>();
+	List<Attribute> attributes = new ArrayList<>();
 
-	protected List<Pattern> patterns = new ArrayList<Pattern>();
+	List<Pattern> patterns = new ArrayList<>();
 
-	public Data(ID name, Attribute[] attributes) {
+	public Data(ID id, Attribute[] attributes) {
 		if (ArrayUtils.hasDuplicate(attributes))
 			throw new IllegalArgumentException("Attributes are not unique!");
-		this.name = name;
+		this.id = id;
 		for (Attribute attr : attributes)
 			this.attributes.add(attr);
 	}
@@ -65,11 +65,11 @@ public class Data implements Serializable {
 	}
 
 	public ID getID() {
-		return this.name;
+		return this.id;
 	}
 
 	public Data setID(ID name) {
-		this.name = name;
+		this.id = name;
 		return this;
 	}
 
@@ -93,7 +93,7 @@ public class Data implements Serializable {
 			if (i == index)
 				continue;
 			if (attributes.get(i).getID().equals(newID))
-				throw new IllegalArgumentException("Attribute name '" + name + "' already present at position #" + i);
+				throw new IllegalArgumentException("Attribute name '" + id + "' already present at position #" + i);
 		}
 		this.attributes.set(index, new Attribute(newID, attributes.get(index).getType(), attributes.get(index).isNotNull()));
 		return this;
@@ -158,7 +158,7 @@ public class Data implements Serializable {
 
 	public Data slice(int from, int to) {
 		List<Attribute> newAttributes = attributes.subList(from, to);
-		Data data = new Data(name, newAttributes.toArray(new Attribute[newAttributes.size()]));
+		Data data = new Data(id, newAttributes.toArray(new Attribute[newAttributes.size()]));
 		List<Pattern> newPatterns = new ArrayList<>(patterns.size());
 		for (Pattern pattern : patterns)
 			newPatterns.add(new Pattern(Arrays.copyOfRange(pattern.values, from, to)));
@@ -172,7 +172,7 @@ public class Data implements Serializable {
 
 	@Override
 	public Data clone() {
-		Data clone = new Data(this.name, new ArrayList<Attribute>(this.attributes).toArray(new Attribute[this.attributes.size()]));
+		Data clone = new Data(this.id, new ArrayList<Attribute>(this.attributes).toArray(new Attribute[this.attributes.size()]));
 		clone.patterns = new ArrayList<Pattern>(this.patterns);
 		return clone;
 	}

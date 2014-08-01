@@ -29,13 +29,15 @@
  */
 package br.com.wfcreations.annms.api.data;
 
+import java.io.Serializable;
+
 import br.com.wfcreations.annms.api.data.value.IValue;
 
-public class Pattern implements IPattern {
+public final class Pattern implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected final IValue[] values;
+	final IValue[] values;
 
 	public Pattern(IValue[] values) {
 		this.values = values.clone();

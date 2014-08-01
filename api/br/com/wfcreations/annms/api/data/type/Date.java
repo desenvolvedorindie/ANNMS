@@ -35,16 +35,16 @@ import java.text.SimpleDateFormat;
 import br.com.wfcreations.annms.api.data.value.IValue;
 import br.com.wfcreations.annms.api.data.value.Str;
 
-public class Date implements IType {
+public final class Date implements IType {
 
 	private static final long serialVersionUID = 1L;
 
-	private final SimpleDateFormat sdf;
+	final SimpleDateFormat simpleDataFormat;
 
-	private final String dateFormat;
+	final String dateFormat;
 
 	public Date(String dateFormat) {
-		this.sdf = new SimpleDateFormat(dateFormat);
+		this.simpleDataFormat = new SimpleDateFormat(dateFormat);
 		this.dateFormat = dateFormat;
 	}
 
@@ -53,9 +53,9 @@ public class Date implements IType {
 		if (!(value instanceof Str))
 			return false;
 
-		sdf.setLenient(false);
+		simpleDataFormat.setLenient(false);
 		try {
-			sdf.parse((String) value.getValue());
+			simpleDataFormat.parse((String) value.getValue());
 			return true;
 		} catch (ParseException e) {
 			return false;

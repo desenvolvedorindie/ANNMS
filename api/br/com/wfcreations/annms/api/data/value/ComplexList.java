@@ -31,11 +31,11 @@ package br.com.wfcreations.annms.api.data.value;
 
 import java.util.Arrays;
 
-public class ComplexList implements IParamValue {
+public final class ComplexList implements IParamValue {
 
 	private static final long serialVersionUID = 1L;
 
-	private final IParamValue[] values;
+	final IParamValue[] values;
 
 	public ComplexList(IParamValue[] values) {
 		this.values = values;

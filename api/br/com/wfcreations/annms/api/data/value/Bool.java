@@ -29,7 +29,7 @@
  */
 package br.com.wfcreations.annms.api.data.value;
 
-public class Bool implements IValue {
+public final class Bool implements IValue {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,11 +37,13 @@ public class Bool implements IValue {
 
 	public static Bool FALSE = new Bool(false);
 
+	final boolean value;
+
 	public static boolean getValueFor(IValue value) {
+		if (!(value instanceof Bool))
+			throw new IllegalArgumentException("Value isn't a Boolean");
 		return (boolean) value.getValue();
 	}
-
-	private final boolean value;
 
 	private Bool(boolean value) {
 		this.value = value;

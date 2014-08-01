@@ -36,15 +36,15 @@ import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.api.data.value.IValue;
 import br.com.wfcreations.annms.api.data.value.Null;
 
-public class Attribute implements Serializable {
+public final class Attribute implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final ID id;
+	final ID id;
 
-	private final IType type;
+	final IType type;
 
-	private final boolean notNull;
+	final boolean notNull;
 
 	public Attribute(ID id, IType type, boolean notNull) {
 		if (id == null)
@@ -54,7 +54,7 @@ public class Attribute implements Serializable {
 		this.id = id;
 		this.type = type;
 		this.notNull = notNull;
-	};
+	}
 
 	public ID getID() {
 		return id;
