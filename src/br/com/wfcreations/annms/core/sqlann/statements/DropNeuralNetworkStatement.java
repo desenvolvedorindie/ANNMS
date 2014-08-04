@@ -29,12 +29,26 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.api.lang.ArrayUtils;
+import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
+import br.com.wfcreations.annms.core.transport.message.DropDataResultMessage;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 
 public class DropNeuralNetworkStatement implements SQLANNStatement {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(DropDataStatement.class);
 
 	public final String[] neuralnetworkList;
 
@@ -50,18 +64,36 @@ public class DropNeuralNetworkStatement implements SQLANNStatement {
 
 	@Override
 	public void checkAccess() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
-		// TODO Auto-generated method stub
-
+		ID[] ids = new ID[this.neuralnetworkList.length];
+		int i = 0;
+		for (String dataID : this.neuralnetworkList)
+			ids[i++] = ID.create(dataID);
+		if (ArrayUtils.hasDuplicate(ids))
+			throw new ANNMSRequestValidationException(ANNMSExceptionCode.STORAGE, "data list has duplicated data");
 	}
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		return null;
+		List<ID> nonExistent = new ArrayList<ID>();
+		List<ID> removed = new ArrayList<ID>();
+		ID id;
+
+		for (String neuralnetworkID : neuralnetworkList) {
+			id = ID.create(neuralnetworkID);
+			if (Schema.instance.getNeuralnetworkInstance(id) != null) {
+				Schema.instance.removeNeuralnetworkInstance(id);
+				removed.add(id);
+			} else
+				nonExistent.add(id);
+		}
+		if (removed.size() > 0)
+			LOGGER.info("Dropped neuralnetwork list: {}", Arrays.toString(new ID[removed.size()]));
+		if (nonExistent.size() > 0 && !ifExists)
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Non existent neuralnetwork: %s", Arrays.toString(nonExistent.toArray(new String[nonExistent.size()]))));
+		return new DropDataResultMessage(removed.size());
 	}
 }
