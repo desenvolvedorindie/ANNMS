@@ -54,7 +54,6 @@ public class ShowNeuralNetworksStatement implements SQLANNStatement {
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		System.out.println("HERE");
 		return new ShowNeuralnetworksResultMessage(Schema.instance.getNeuralnetworksIDs());
 	}
 }
