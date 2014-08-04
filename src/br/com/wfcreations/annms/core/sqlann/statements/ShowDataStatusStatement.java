@@ -67,7 +67,7 @@ public class ShowDataStatusStatement implements SQLANNStatement {
 		ID id = ID.create(this.name);
 		Data data = Schema.instance.getDataInstance(id);
 		if (data == null)
-			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", name));
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.DATA, String.format("Data %s doesn't exist", name));
 
 		Attribute[] attributes = new Attribute[data.getAttributesNum()];
 		for (int i = 0; i < data.getAttributesNum(); i++) {

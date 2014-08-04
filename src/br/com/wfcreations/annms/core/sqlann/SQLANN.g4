@@ -162,7 +162,7 @@ statement
     |   SHOW NEURALNETWORKS                                                                                                                                                 #showNeuralNetworksStatement
     |   SHOW NEURALNETWORK STATUS ID                                                                                                                                        #showNeuralNetworkStatusStatement
     |   SHOW STATUS                                                                                                                                                         #showStatusStatement
-    |   TRAIN ID (OPEN_PARENTHESIS params CLOSE_PARENTHESIS)? LEARNINGRULE (EQUALS)? ID COMMA? DATA (EQUALS)? ID COMMA? INPUT (EQUALS)? list (COMMA? OUTPUT (EQUALS) list)?    #trainStatement
+    |   TRAIN ID (OPEN_PARENTHESIS params CLOSE_PARENTHESIS)? LEARNINGRULE (EQUALS)? ID COMMA? DATA (EQUALS)? ID COMMA? INPUT (EQUALS)? list (COMMA? OUTPUT (EQUALS) list)? #trainStatement
     ;
 
 dataAttributes

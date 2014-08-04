@@ -11,14 +11,14 @@ import br.com.wfcreations.annms.api.data.value.ID;
 
 public class ShowDataStatusResultMessage extends ResultMessage {
 
-	private ID name;
+	private ID id;
 
 	private int patternNum;
 
 	private Attribute[] attributes;
 
 	public ShowDataStatusResultMessage(ID name, int patternNum, Attribute[] attributesDescriptor) {
-		this.name = name;
+		this.id = name;
 		this.patternNum = patternNum;
 		this.attributes = attributesDescriptor;
 	}
@@ -31,11 +31,11 @@ public class ShowDataStatusResultMessage extends ResultMessage {
 		String[] listValues;
 		int i;
 
-		param.put("NAME", this.name.getValue());
+		param.put("ID", this.id.getValue());
 		param.put("PATTERNS", this.patternNum);
 		for (Attribute attribute : attributes) {
 			properties = new LinkedHashMap<String, Object>();
-			properties.put("NAME", attribute.getID().toString());
+			properties.put("ID", attribute.getID().toString());
 			if (attribute.getType() instanceof ListType) {
 				ListType listDataType = (ListType) attribute.getType();
 				listValues = new String[listDataType.getListValuesNum()];

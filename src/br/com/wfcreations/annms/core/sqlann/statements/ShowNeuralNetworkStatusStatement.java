@@ -29,10 +29,15 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
+import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.neuralnetwork.NeuralnetworkWrapper;
+import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
+import br.com.wfcreations.annms.core.transport.message.ShowNeuralnetworkStatusResultMessage;
 
 public class ShowNeuralNetworkStatusStatement implements SQLANNStatement {
 
@@ -47,18 +52,21 @@ public class ShowNeuralNetworkStatusStatement implements SQLANNStatement {
 
 	@Override
 	public void checkAccess() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
-		// TODO Auto-generated method stub
-
+		if (!ID.valid(this.name))
+			throw new ANNMSRequestValidationException(ANNMSExceptionCode.NEURALNETWORK, "Invalid neuralnetwork id");
 	}
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		return null;
+		ID id = ID.create(this.name);
+		NeuralnetworkWrapper neuralnetwork = Schema.instance.getNeuralnetworkInstance(id);
+		if (neuralnetwork == null)
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neuralnetwork %s doesn't exist", name));
+		
+		return new ShowNeuralnetworkStatusResultMessage(id, neuralnetwork.getModel(), neuralnetwork.getNeuralnetwork().status());
 	}
 }
