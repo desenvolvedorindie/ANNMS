@@ -47,7 +47,7 @@ public class Schema {
 	private Schema() {
 	}
 
-	public ID[] getDataNames() {
+	public ID[] getDataIDs() {
 		return dataInstances.keySet().toArray(new ID[dataInstances.keySet().size()]);
 	}
 
@@ -71,8 +71,8 @@ public class Schema {
 		dataInstances.clear();
 	}
 
-	public String[] getNeuralnetworksName() {
-		return neuralnetworkInstances.keySet().toArray(new String[dataInstances.keySet().size()]);
+	public ID[] getNeuralnetworksIDs() {
+		return neuralnetworkInstances.keySet().toArray(new ID[neuralnetworkInstances.keySet().size()]);
 	}
 
 	public NeuralnetworkWrapper getNeuralnetworkInstance(ID id) {

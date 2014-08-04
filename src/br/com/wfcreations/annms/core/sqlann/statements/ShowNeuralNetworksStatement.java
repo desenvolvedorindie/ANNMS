@@ -31,8 +31,10 @@ package br.com.wfcreations.annms.core.sqlann.statements;
 
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
+import br.com.wfcreations.annms.core.transport.message.ShowNeuralnetworksResultMessage;
 
 public class ShowNeuralNetworksStatement implements SQLANNStatement {
 
@@ -44,18 +46,15 @@ public class ShowNeuralNetworksStatement implements SQLANNStatement {
 
 	@Override
 	public void checkAccess() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		return null;
+		System.out.println("HERE");
+		return new ShowNeuralnetworksResultMessage(Schema.instance.getNeuralnetworksIDs());
 	}
 }

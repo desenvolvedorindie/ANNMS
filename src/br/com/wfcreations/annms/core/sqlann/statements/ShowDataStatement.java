@@ -54,6 +54,6 @@ public class ShowDataStatement implements SQLANNStatement {
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		return new ShowDataResultMessage(Schema.instance.getDataNames());
+		return new ShowDataResultMessage(Schema.instance.getDataIDs());
 	}
 }
