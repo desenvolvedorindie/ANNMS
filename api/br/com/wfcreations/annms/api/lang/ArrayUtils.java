@@ -42,6 +42,11 @@ public abstract class ArrayUtils {
 				return true;
 		return false;
 	}
+	
+	@SafeVarargs
+	public static <T> T[] createArray(T... values){
+		return values;
+	}
 
 	/*
 	 * Copy from apache/commons-lang (ArrayUtils)
