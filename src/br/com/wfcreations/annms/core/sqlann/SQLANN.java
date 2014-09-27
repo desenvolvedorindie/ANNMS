@@ -337,9 +337,13 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 
 	@Override
 	public Date visitDateDataType(@NotNull SQLANNParser.DateDataTypeContext ctx) {
-		if (ctx != null && ctx.DATE() != null && ctx.String() != null) {
-			return new Date(SQLANNUtils.formatString(ctx.String().getText()));
+		if (ctx != null && ctx.DATE() != null) {
+			if (ctx.String() != null)
+				return new Date(SQLANNUtils.formatString(ctx.String().getText()));
+			else
+				return new Date(SQLANNUtils.formatString(Date.DEFAULT_DATE_FORMAT));
 		}
+		System.out.println(ctx.getText().toString());
 		return null;
 	}
 

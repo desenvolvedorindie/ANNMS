@@ -39,6 +39,8 @@ public final class Date implements IType {
 
 	private static final long serialVersionUID = 1L;
 
+	public final static String DEFAULT_DATE_FORMAT = "YYYY-MM-dd'T'HH:mm:ss";
+	
 	final SimpleDateFormat simpleDataFormat;
 
 	final String dateFormat;
