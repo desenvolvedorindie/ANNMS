@@ -20,7 +20,7 @@ public class CreateNeuralnetworkResultMessage extends ResultMessage {
 	public Object toThriftResult() {
 		Map<String, Object> param = new LinkedHashMap<String, Object>();
 		if (this.name != null) {
-			param.put("NAME", this.name);
+			param.put("NAME", this.name.getValue());
 			param.put("MODEL", this.model);
 		}
 		return param;

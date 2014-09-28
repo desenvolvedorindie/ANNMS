@@ -29,40 +29,63 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
+import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.api.data.value.IValue;
+import br.com.wfcreations.annms.api.neuralnetwork.INeuralNetwork;
+import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.neuralnetwork.NeuralnetworkWrapper;
+import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
+import br.com.wfcreations.annms.core.transport.message.RunResultMessage;
 
 public class RunStatement implements SQLANNStatement {
 
-	public final String modelName;
+	public final String model;
 
 	public final IValue[] values;
 
 	public final String query;
 
-	public RunStatement(String modelName, IValue[] values, String query) {
-		this.modelName = modelName;
+	public RunStatement(String model, IValue[] values, String query) {
+		this.model = model;
 		this.values = values;
 		this.query = query;
 	}
 
 	@Override
 	public void checkAccess() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
-		// TODO Auto-generated method stub
-
+		if (!ID.valid(this.model))
+			throw new ANNMSRequestValidationException(ANNMSExceptionCode.NEURALNETWORK, "Invalid neuralnetwork id");
 	}
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		return null;
+		ID id = ID.create(this.model);
+		NeuralnetworkWrapper neuralnetworkWrapper = Schema.instance.getNeuralnetworkInstance(id);
+		if (neuralnetworkWrapper == null)
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neuralnetwork %s doesn't exist", id.getValue()));
+		
+		INeuralNetwork neuralnetwork = neuralnetworkWrapper.getNeuralnetwork();
+		
+		IValue[] outputs = null;
+		
+		try {
+			outputs = neuralnetwork.run(this.values);
+		} catch (Exception e) {
+			String msg = e.getMessage() != null ? e.getMessage() : e.getCause().getMessage();
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neural network run error cause: %s", msg));
+		}
+		
+		if(outputs == null || outputs.length == 0)
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, "Neural network run return nothing");
+		
+		return new RunResultMessage(outputs);
 	}
 }

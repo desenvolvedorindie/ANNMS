@@ -71,7 +71,7 @@ public class InsertIntoStatement implements SQLANNStatement {
 		ID id = ID.create(this.name);
 		Data data = Schema.instance.getDataInstance(id);
 		if (data == null)
-			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", name));
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Data %s doesn't exist", id.getValue()));
 		try {
 			data.add(new Pattern(values));
 		} catch (IllegalArgumentException e) {

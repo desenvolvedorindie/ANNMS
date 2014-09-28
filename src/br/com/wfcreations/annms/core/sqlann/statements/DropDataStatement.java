@@ -93,7 +93,7 @@ public class DropDataStatement implements SQLANNStatement {
 		if (removed.size() > 0)
 			LOGGER.info("Dropped data list: {}", Arrays.toString(new ID[removed.size()]));
 		if (nonExistent.size() > 0 && !ifExists)
-			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Non existent data: %s", Arrays.toString(nonExistent.toArray(new String[nonExistent.size()]))));
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.STORAGE, String.format("Non existent data: %s", Arrays.toString(nonExistent.toArray(new ID[nonExistent.size()]))));
 		return new DropDataResultMessage(removed.size());
 	}
 }

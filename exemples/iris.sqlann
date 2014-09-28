@@ -178,4 +178,4 @@ TRAIN mlp1 (
   INPUT = {sepallength, sepalwidth, petallength, petalwidth},
   OUTPUT = {class};
 
-RUN mlp1 WITH VALUES (5.0, 2.9, 5.0, 2);
+RUN mlp1 VALUES (5.0, 2.9, 5.0, 2);

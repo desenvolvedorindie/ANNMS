@@ -77,9 +77,9 @@ public class CreateNeuralNetworkStatement implements SQLANNStatement {
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
 		if (!ID.valid(this.name))
-			throw new ANNMSRequestValidationException(ANNMSExceptionCode.DATA, "Invalid neuralnetwork id");
+			throw new ANNMSRequestValidationException(ANNMSExceptionCode.NEURALNETWORK, "Invalid neuralnetwork id");
 		if (this.copy != null && !ID.valid(this.copy))
-			throw new ANNMSRequestValidationException(ANNMSExceptionCode.DATA, "Invalid copy id");
+			throw new ANNMSRequestValidationException(ANNMSExceptionCode.NEURALNETWORK, "Invalid copy id");
 	}
 
 	@Override
@@ -115,7 +115,6 @@ public class CreateNeuralNetworkStatement implements SQLANNStatement {
 		try {
 			neuralnetwork.create(paramsNew);
 		} catch (Exception e) {
-			e.printStackTrace();
 			String msg = e.getMessage() != null ? e.getMessage() : e.getCause().getMessage();
 			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neural network creation error cause: %s", msg));
 		}
