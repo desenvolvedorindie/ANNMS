@@ -35,7 +35,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import br.com.wfcreations.annms.api.data.type.Primitive;
 import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.api.data.value.IValue;
+import br.com.wfcreations.annms.api.data.value.Int;
+import br.com.wfcreations.annms.api.data.value.Real;
 import br.com.wfcreations.annms.api.lang.ArrayUtils;
 
 public final class Data implements Serializable {
@@ -130,8 +134,17 @@ public final class Data implements Serializable {
 
 	public Data add(Pattern pattern) throws IllegalArgumentException {
 		validatePattern(pattern);
-		patterns.add(pattern);
+		Pattern p = castIntegerToReal(pattern);
+		patterns.add(p);
 		return this;
+	}
+
+	private Pattern castIntegerToReal(Pattern pattern) {
+		IValue[] p = pattern.values;
+		for(int i = 0; i < pattern.getValuesNum(); i++)
+			if(pattern.getValueAt(i) instanceof Int && attributes.get(i).getType().equals(Primitive.REAL))
+				p[i] = new Real(Int.getValueFor(pattern.getValueAt(i)));
+		return new Pattern(p);
 	}
 
 	public Data addAll(List<Pattern> patterns) {

@@ -37,32 +37,25 @@ import br.com.wfcreations.annms.api.data.value.Str;
 
 public enum Primitive implements IType {
 
-	BOOL("BOOLEAN", Bool.class),
+	BOOL("BOOLEAN"),
 
-	INT("INTEGER", Int.class),
+	INT("INTEGER"),
 
-	REAL("REAL", Real.class),
+	REAL("REAL"),
 
-	STR("STRING", Str.class);
+	STR("STRING");
 
 	private static final long serialVersionUID = 1L;
 
 	final String name;
 
-	final Class<? extends IValue> representation;
-
-	private Primitive(String name, Class<? extends IValue> representation) {
+	private Primitive(String name) {
 		this.name = name;
-		this.representation = representation;
-	}
-
-	public Class<? extends IValue> getRepresentation() {
-		return representation;
 	}
 
 	@Override
 	public boolean valid(IValue value) {
-		return (value.getClass().equals(getRepresentation()));
+		return (this.equals(BOOL) && value.getClass().equals(Bool.class)) || (this.equals(INT) && value.getClass().equals(Int.class)) || (this.equals(REAL) && (value.getClass().equals(Int.class) || value.getClass().equals(Real.class)) || (this.equals(REAL) && value.getClass().equals(Real.class)) || (this.equals(STR) && value.getClass().equals(Str.class)));
 	}
 
 	@Override

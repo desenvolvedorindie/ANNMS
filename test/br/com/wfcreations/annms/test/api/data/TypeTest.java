@@ -26,7 +26,6 @@ public class TypeTest {
 		assertTrue(Primitive.BOOL.valid(Bool.TRUE));
 		assertTrue(Primitive.BOOL.valid(Bool.FALSE));
 		assertFalse(Primitive.BOOL.valid(Null.VALUE));
-		assertEquals(Bool.class, Primitive.BOOL.getRepresentation());
 		assertEquals("BOOLEAN", Primitive.BOOL.toString());
 	}
 
@@ -38,7 +37,6 @@ public class TypeTest {
 		assertTrue(Primitive.INT.valid(new Int(0)));
 		assertFalse(Primitive.INT.valid(new Real()));
 		assertFalse(Primitive.INT.valid(Null.VALUE));
-		assertEquals(Int.class, Primitive.INT.getRepresentation());
 		assertEquals("INTEGER", Primitive.INT.toString());
 	}
 
@@ -49,7 +47,6 @@ public class TypeTest {
 		assertTrue(Primitive.REAL.valid(new Real(-10)));
 		assertTrue(Primitive.REAL.valid(new Real(0)));
 		assertFalse(Primitive.REAL.valid(new Int()));
-		assertEquals(Real.class, Primitive.REAL.getRepresentation());
 		assertEquals("REAL", Primitive.REAL.toString());
 	}
 
@@ -57,7 +54,6 @@ public class TypeTest {
 	public void testPrimitiveString() {
 		assertTrue(Primitive.STR.valid(new Str()));
 		assertTrue(Primitive.STR.valid(new Str("value")));
-		assertEquals(Str.class, Primitive.STR.getRepresentation());
 		assertEquals("STRING", Primitive.STR.toString());
 	}
 
