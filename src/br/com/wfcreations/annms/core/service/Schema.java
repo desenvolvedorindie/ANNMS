@@ -81,10 +81,10 @@ public class Schema {
 		return neuralnetworkInstances.get(id);
 	}
 
-	public void storeNeuralnetworkInstance(ID id, NeuralnetworkWrapper neuralnetwork) {
-		if (neuralnetworkInstances.containsKey(id))
-			throw new IllegalArgumentException(String.format("Data %s was already initialized.", id));
-		neuralnetworkInstances.put(id, neuralnetwork);
+	public void storeNeuralnetworkInstance(NeuralnetworkWrapper neuralnetworkWrapper) {
+		if (neuralnetworkInstances.containsKey(neuralnetworkWrapper.getID()))
+			throw new IllegalArgumentException(String.format("Data %s was already initialized.", neuralnetworkWrapper.getID()));
+		neuralnetworkInstances.put(neuralnetworkWrapper.getID(), neuralnetworkWrapper);
 	}
 
 	public NeuralnetworkWrapper removeNeuralnetworkInstance(ID id) {

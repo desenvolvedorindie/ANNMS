@@ -35,6 +35,14 @@ import java.util.Set;
 
 public abstract class ArrayUtils {
 
+	public static int findMax(double[] arr) {
+		int max = 0;
+		for(int i = 1; i < arr.length; i++)
+		      if(arr[i] > arr[max])
+		         max = i;
+		return max;
+	}
+	
 	public static <T> boolean hasDuplicate(T[] array) {
 		Set<T> tempSet = new HashSet<T>();
 		for (T element : array)

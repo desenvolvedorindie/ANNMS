@@ -29,13 +29,18 @@
  */
 package br.com.wfcreations.annms.core.service;
 
+import java.io.File;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.wfcreations.annms.core.concurrent.NamedThreadFactory;
+import br.com.wfcreations.annms.core.utils.GenericExtFilter;
 
 public class StorageService {
 
-	//private static final Logger LOGGER = LoggerFactory.getLogger(StorageService.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(StorageService.class);
 
 	public static final ScheduledThreadPoolExecutor scheduledTasks = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("ScheduledTasks"));
 
@@ -45,5 +50,26 @@ public class StorageService {
 
 	static {
 		tasks.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
+	}
+
+	public static String[] listFiles(String folder, String ext) {
+
+		GenericExtFilter filter = new GenericExtFilter(ext);
+
+		File dir = new File(folder);
+
+		if (!dir.isDirectory())
+			return new String[0];
+
+		String[] list = dir.list(filter);
+
+		if (list.length == 0)
+			return new String[0];
+		
+		return list;
+	}
+	
+	public static File getFile(String pathname) {
+		return new File(pathname);
 	}
 }

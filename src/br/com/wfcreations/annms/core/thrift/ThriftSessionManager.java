@@ -36,6 +36,8 @@ public class ThriftSessionManager {
 
 	public ClientState currentSession() {
 		SocketAddress socket = remoteSocket.get();
+		if(socket == null)
+			return null;
 		ClientState clientState = activeSocketSessions.get(socket);
 		if (clientState == null) {
 			clientState = new ClientState();

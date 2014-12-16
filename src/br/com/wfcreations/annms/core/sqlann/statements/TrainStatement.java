@@ -29,12 +29,22 @@
  */
 package br.com.wfcreations.annms.core.sqlann.statements;
 
+import br.com.wfcreations.annms.api.data.Data;
+import br.com.wfcreations.annms.api.data.DataUtils;
 import br.com.wfcreations.annms.api.data.Param;
 import br.com.wfcreations.annms.api.data.value.ID;
+import br.com.wfcreations.annms.api.neuralnetwork.INeuralNetwork;
+import br.com.wfcreations.annms.api.neuralnetwork.ISupervisedLearningRule;
+import br.com.wfcreations.annms.api.neuralnetwork.IUnsupervisedLearningRule;
+import br.com.wfcreations.annms.core.exception.ANNMSExceptionCode;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.neuralnetwork.NeuralnetworkWrapper;
+import br.com.wfcreations.annms.core.service.AlgorithmsLoader;
+import br.com.wfcreations.annms.core.service.Schema;
 import br.com.wfcreations.annms.core.sqlann.SQLANNStatement;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
+import br.com.wfcreations.annms.core.transport.message.TrainResultMessage;
 
 public class TrainStatement implements SQLANNStatement {
 
@@ -64,18 +74,70 @@ public class TrainStatement implements SQLANNStatement {
 
 	@Override
 	public void checkAccess() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void validate() throws ANNMSRequestValidationException {
-		// TODO Auto-generated method stub
-
+		if (!ID.valid(this.neuralNetworkName))
+			throw new ANNMSRequestValidationException(ANNMSExceptionCode.NEURALNETWORK, "Invalid neuralnetwork id");
 	}
 
 	@Override
 	public ResultMessage execute() throws ANNMSRequestExecutionException {
-		return null;
+		ID neuralnetworkID = ID.create(this.neuralNetworkName);
+		NeuralnetworkWrapper wrapper = Schema.instance.getNeuralnetworkInstance(neuralnetworkID);
+		if (wrapper == null)
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neuralnetwork %s doesn't exist", this.neuralNetworkName));
+
+		ID dataID = ID.create(this.dataName);
+		Data data = Schema.instance.getDataInstance(dataID);
+		if (data == null)
+			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.DATA, String.format("Data doesn't %s exist", this.dataName));
+
+		if (inputs != null && inputs.length > 0 && outputs != null && outputs.length > 0) {
+			ISupervisedLearningRule supervisedLearnRule = AlgorithmsLoader.instance.instantiateSupervisedLearningRule(learnRule);
+			if (supervisedLearnRule == null)
+				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.LEARNINGRULE, String.format("Supervisied Learning Rule %s doesn't exist", this.learnRule));
+
+			try {
+				supervisedLearnRule.create(this.params);
+			} catch (Exception e) {
+				String msg = e.getMessage() != null ? e.getMessage() : e.getCause().getMessage();
+				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.LEARNINGRULE, String.format("Learning rule creation error cause: %s", msg));
+			}
+
+			
+			Data inputsData = DataUtils.sliceByAttributess(data, inputs);
+			Data outputsData = DataUtils.sliceByAttributess(data, outputs);
+			try {
+				INeuralNetwork neuralnetwork = supervisedLearnRule.train(wrapper.getNeuralnetwork(), inputsData, outputsData);
+				if (neuralnetwork != null) {
+					Schema.instance.removeNeuralnetworkInstance(neuralnetworkID);
+					NeuralnetworkWrapper newWrapper = new NeuralnetworkWrapper(neuralnetworkID, wrapper.getModel(), wrapper.getParams(), neuralnetwork);
+					Schema.instance.storeNeuralnetworkInstance(newWrapper);
+				} else {
+					throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, "Neuralnetwork not trained");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				String msg = "";//e.getMessage() != null ? e.getMessage() : e.getCause().getMessage();
+				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.LEARNINGRULE, String.format("Learning rule training error cause: %s", msg));
+			}
+
+			return new TrainResultMessage();
+		} else if (inputs != null && inputs.length > 0) {
+			IUnsupervisedLearningRule unsupervisedLearnRule = AlgorithmsLoader.instance.instantiateUnsupervisedLearningRule(learnRule);
+			if (unsupervisedLearnRule == null)
+				throw new ANNMSRequestExecutionException(ANNMSExceptionCode.LEARNINGRULE, String.format("Unsupervised Learning Rule %s doesn't exist", this.learnRule));
+			try {
+				unsupervisedLearnRule.create(this.params);
+				unsupervisedLearnRule.train(wrapper.getNeuralnetwork(), DataUtils.sliceByAttributess(data, inputs));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return new TrainResultMessage();
+		}
+		throw new ANNMSRequestExecutionException(ANNMSExceptionCode.SYNTAXE_ERROR, "Invalid train");
 	}
 }

@@ -34,7 +34,6 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.server.ServerContext;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +43,7 @@ import br.com.wfcreations.annms.api.thrift.SQLANNResults;
 import br.com.wfcreations.annms.api.thrift.TimedOutException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestExecutionException;
 import br.com.wfcreations.annms.core.exception.ANNMSRequestValidationException;
+import br.com.wfcreations.annms.core.service.ClientState;
 import br.com.wfcreations.annms.core.sqlann.SQLANNProcessor;
 import br.com.wfcreations.annms.core.transport.message.ResultMessage;
 
@@ -95,9 +95,13 @@ public class ANNMSHandler implements IServerHandler {
 
 	@Override
 	public void deleteContext(ServerContext serverContext, TProtocol input, TProtocol output) {
-		if (ThriftSessionManager.getInstance().currentSession().getUsername() != null)
-			LOGGER.info("A thrift connection closed, username: {}", ThriftSessionManager.getInstance().currentSession().getUsername());
-		ThriftSessionManager.getInstance().complete(((TSocket) input.getTransport()).getSocket().getRemoteSocketAddress());
+		ClientState clientState = ThriftSessionManager.getInstance().currentSession();
+		if (clientState != null) {
+			if (clientState.getUsername() != null)
+				LOGGER.info("A thrift connection closed, username: {}", ThriftSessionManager.getInstance().currentSession().getUsername());
+			ThriftSessionManager.getInstance().complete(((TSocket) input.getTransport()).getSocket().getRemoteSocketAddress());
+		}
+
 	}
 
 	@Override

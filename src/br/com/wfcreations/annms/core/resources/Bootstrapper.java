@@ -87,4 +87,6 @@ public abstract class Bootstrapper {
 	}
 	
 	public abstract void init();
+	
+	public abstract void finish();
 }

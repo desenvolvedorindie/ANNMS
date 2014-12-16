@@ -29,6 +29,12 @@
  */
 package br.com.wfcreations.annms.core.service;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,6 +79,7 @@ public class ANNMSDaemon extends Application {
 
 	public void start() {
 		thriftServer.start();
+		new Window();
 	}
 
 	public void stop() {
@@ -81,6 +88,7 @@ public class ANNMSDaemon extends Application {
 	}
 
 	public void destroy() {
+		bootstrap.finish();
 		LOGGER.info("BYE");
 	}
 
@@ -101,5 +109,35 @@ public class ANNMSDaemon extends Application {
 
 	public static void main(String[] args) {
 		instance.activate(args);
+	}
+
+	public static class Window extends JFrame implements KeyListener {
+
+		private static final long serialVersionUID = 1L;
+		
+		JLabel closeLabel = new JLabel("Press the x key to close!");
+
+		public Window() {
+			super("ANNMS");
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.addKeyListener(this);
+			add(closeLabel);
+			pack();
+			setVisible(true);
+		}
+
+		public void keyTyped(KeyEvent input) {
+			char key = input.getKeyChar();
+			if (key == 'x')
+				System.exit(0);
+		}
+
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+		}
 	}
 }

@@ -34,7 +34,7 @@ public abstract class ANNMSException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	private final ANNMSExceptionCode code;
-
+	
 	protected ANNMSException(ANNMSExceptionCode code, String msg) {
 		super(msg);
 		this.code = code;

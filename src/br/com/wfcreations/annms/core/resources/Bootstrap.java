@@ -30,21 +30,35 @@
 package br.com.wfcreations.annms.core.resources;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import br.com.wfcreations.annms.api.data.Data;
+import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.core.ANNMS;
 import br.com.wfcreations.annms.core.auth.Auth;
 import br.com.wfcreations.annms.core.auth.User;
 import br.com.wfcreations.annms.core.config.ConfigurationException;
 import br.com.wfcreations.annms.core.config.PropertiesConfigurationLoader;
+import br.com.wfcreations.annms.core.neuralnetwork.NeuralnetworkWrapper;
 import br.com.wfcreations.annms.core.service.AlgorithmsLoader;
+import br.com.wfcreations.annms.core.service.Schema;
+import br.com.wfcreations.annms.core.service.StorageService;
 
 public class Bootstrap extends Bootstrapper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Bootstrap.class);
+
+	private static final String DATA_EXT = "DATA";
+
+	private static final String NETWORK_EXT = "NET";
 
 	public Bootstrap() {
 		super();
@@ -62,7 +76,6 @@ public class Bootstrap extends Bootstrapper {
 		initData();
 		initAlgorithms();
 		initNeuralNetworks();
-		initLearningRules();
 	}
 
 	protected void initFilesAndFolders() {
@@ -99,7 +112,21 @@ public class Bootstrap extends Bootstrapper {
 	}
 
 	protected void initData() {
-
+		String[] dataList = StorageService.listFiles(ANNMS.instance.configuration.data_path, DATA_EXT);
+		for (String file : dataList) {
+			try {
+				LOGGER.info("Loading {} file...", file, DATA_EXT);
+				FileInputStream readFile = new FileInputStream(ANNMS.instance.configuration.data_path + File.separator + file);
+				ObjectInputStream restore = new ObjectInputStream(readFile);
+				Object obj = restore.readObject();
+				Schema.instance.storeDataInstance((Data) obj);
+				restore.close();
+			} catch (IOException | ClassNotFoundException e) {
+				LOGGER.info("Error to load {}.{} file, cause: {}", file, DATA_EXT, e.getMessage());
+				continue;
+			}
+			LOGGER.info("{} loaded", file, DATA_EXT);
+		}
 	}
 
 	protected void initAlgorithms() {
@@ -109,10 +136,70 @@ public class Bootstrap extends Bootstrapper {
 	}
 
 	protected void initNeuralNetworks() {
-
+		String[] dataList = StorageService.listFiles(ANNMS.instance.configuration.neuralnetworks_path, NETWORK_EXT);
+		for (String file : dataList) {
+			try {
+				LOGGER.info("Loading {} file...", file, NETWORK_EXT);
+				FileInputStream readFile = new FileInputStream(ANNMS.instance.configuration.neuralnetworks_path + File.separator + file);
+				ObjectInputStream restore = new ObjectInputStream(readFile);
+				Object obj = restore.readObject();
+				Schema.instance.storeNeuralnetworkInstance((NeuralnetworkWrapper) obj);
+				restore.close();
+			} catch (IOException | ClassNotFoundException e) {
+				LOGGER.info("Error to load {}.{} file, cause: {}", file, NETWORK_EXT, e.getMessage());
+				continue;
+			}
+			LOGGER.info("{} loaded", file, NETWORK_EXT);
+		}
 	}
 
-	protected void initLearningRules() {
+	@Override
+	public void finish() {
+		saveData();
+		saveModels();
+	}
 
+	protected void saveData() {
+		try {
+			FileUtils.cleanDirectory(new File(ANNMS.instance.configuration.data_path));
+		} catch (IOException e1) {
+			LOGGER.info("Error to clean data folder");
+		}
+		ID[] ids = Schema.instance.getDataIDs();
+		for (ID id : ids) {
+			LOGGER.info("Saving {}.{} file...", id.getValue(), DATA_EXT);
+			try {
+				FileOutputStream saveFile = new FileOutputStream(ANNMS.instance.configuration.data_path + File.separator + id.getValue() + "." + DATA_EXT);
+				ObjectOutputStream save = new ObjectOutputStream(saveFile);
+				save.writeObject(Schema.instance.getDataInstance(id));
+				save.close();
+			} catch (IOException e) {
+				LOGGER.info("Error to save {}.{} file, cause: {}", id.getValue(), DATA_EXT, e.getMessage());
+				continue;
+			}
+			LOGGER.info("{}.{} saved", id.getValue(), DATA_EXT);
+		}
+	}
+
+	protected void saveModels() {
+		try {
+			FileUtils.cleanDirectory(new File(ANNMS.instance.configuration.neuralnetworks_path));
+		} catch (IOException e1) {
+			LOGGER.info("Error to clean data folder");
+		}
+		ID[] ids = Schema.instance.getNeuralnetworksIDs();
+		for (ID id : ids) {
+			LOGGER.info("Saving {}.{} file...", id.getValue(), NETWORK_EXT);
+			try {
+				FileOutputStream saveFile = new FileOutputStream(ANNMS.instance.configuration.neuralnetworks_path + File.separator + id.getValue() + "." + NETWORK_EXT);
+				ObjectOutputStream save = new ObjectOutputStream(saveFile);
+				save.writeObject(Schema.instance.getNeuralnetworkInstance(id));
+				save.close();
+			} catch (IOException e) {
+				LOGGER.info("Error to save {}.{} file, cause: {}", id.getValue(), DATA_EXT, e.getMessage());
+				continue;
+			}
+			LOGGER.info("{}.{} saved", id.getValue(), DATA_EXT);
+		}
 	}
 }

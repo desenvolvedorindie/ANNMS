@@ -32,6 +32,7 @@ package br.com.wfcreations.annms.core.neuralnetwork;
 import java.io.Serializable;
 
 import br.com.wfcreations.annms.api.data.Param;
+import br.com.wfcreations.annms.api.data.value.ID;
 import br.com.wfcreations.annms.api.neuralnetwork.INeuralNetwork;
 
 public class NeuralnetworkWrapper implements Serializable {
@@ -44,7 +45,10 @@ public class NeuralnetworkWrapper implements Serializable {
 
 	private final INeuralNetwork neuralnetwork;
 
-	public NeuralnetworkWrapper(String model, Param[] params, INeuralNetwork neuralnetwork) {
+	private ID id;
+
+	public NeuralnetworkWrapper(ID id, String model, Param[] params, INeuralNetwork neuralnetwork) {
+		this.id = id;
 		this.model = model;
 		this.params = params;
 		this.neuralnetwork = neuralnetwork;
@@ -60,5 +64,9 @@ public class NeuralnetworkWrapper implements Serializable {
 
 	public INeuralNetwork getNeuralnetwork() {
 		return neuralnetwork;
+	}
+
+	public ID getID() {
+		return id;
 	}
 }

@@ -80,7 +80,7 @@ public abstract class DataUtils {
 
 		List<Pattern> patterns = new ArrayList<Pattern>(first.getPatternsNum());
 		for (int i = 0; i < first.getPatternsNum(); i++)
-			patterns.add(new Pattern(ArrayUtils.addAll(first.getPatternAt(i).cloneValues(), first.getPatternAt(i).cloneValues())));
+			patterns.add(new Pattern(ArrayUtils.addAll(first.getPatternAt(i).cloneValues(), second.getPatternAt(i).cloneValues())));
 
 		return new Data(ID.create(first.getID() + "_" + second.getID()), ArrayUtils.addAll(attr1, attr2)).addAll(patterns);
 	}
@@ -115,5 +115,13 @@ public abstract class DataUtils {
 			data.setID(dataSource.getID());
 		}
 		return data;
+	}
+
+	public static Data sliceByAttributess(Data data, ID[] attributes) {
+		Data result = data.slice(data.indexOfAttribute(attributes[0]));
+		for (int i = 1; i < attributes.length; i++) {
+			result = DataUtils.merge(result, data.slice(data.indexOfAttribute(attributes[i])));
+		}
+		return result;
 	}
 }

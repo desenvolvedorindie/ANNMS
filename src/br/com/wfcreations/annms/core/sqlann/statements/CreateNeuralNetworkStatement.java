@@ -119,7 +119,7 @@ public class CreateNeuralNetworkStatement implements SQLANNStatement {
 			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neural network creation error cause: %s", msg));
 		}
 
-		Schema.instance.storeNeuralnetworkInstance(id, new NeuralnetworkWrapper(modelNew, paramsNew, neuralnetwork));
+		Schema.instance.storeNeuralnetworkInstance(new NeuralnetworkWrapper(id, modelNew, paramsNew, neuralnetwork));
 
 		LOGGER.info("Neuralnetwork {} of {} model created", this.name, modelNew);
 		return new CreateNeuralnetworkResultMessage(id, modelNew);

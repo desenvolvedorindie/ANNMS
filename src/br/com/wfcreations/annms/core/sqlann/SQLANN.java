@@ -255,7 +255,7 @@ public class SQLANN extends SQLANNBaseVisitor<Object> {
 	@Override
 	public TrainStatement visitTrainStatement(@NotNull SQLANNParser.TrainStatementContext ctx) {
 		if (ctx != null && ctx.TRAIN() != null && ctx.LEARNINGRULE() != null && ctx.DATA() != null && ctx.INPUT() != null && ctx.OUTPUT() != null && ctx.ID() != null && ctx.ID().size() > 2 && ctx.list().size() > 0) {
-			String neuralNetworkName = ctx.ID(1).getText();
+			String neuralNetworkName = ctx.ID(0).getText();
 
 			Param[] params = (Param[]) visit(ctx.params());
 

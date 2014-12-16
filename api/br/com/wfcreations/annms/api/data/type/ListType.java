@@ -58,6 +58,10 @@ public final class ListType implements IType {
 		return listValues.get(index);
 	}
 
+	public int getIndexOf(ID id) {
+		return listValues.indexOf(id);
+	}
+
 	public int getListValuesNum() {
 		return listValues.size();
 	}
@@ -89,6 +93,6 @@ public final class ListType implements IType {
 
 	@Override
 	public String toString() {
-		return Arrays.toString(listValues.toArray(new String[listValues.size()])).replace('[', '{').replace(']', '}');
+		return "ListType " + listValues;
 	}
 }

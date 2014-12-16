@@ -71,21 +71,21 @@ public class RunStatement implements SQLANNStatement {
 		NeuralnetworkWrapper neuralnetworkWrapper = Schema.instance.getNeuralnetworkInstance(id);
 		if (neuralnetworkWrapper == null)
 			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neuralnetwork %s doesn't exist", id.getValue()));
-		
+
 		INeuralNetwork neuralnetwork = neuralnetworkWrapper.getNeuralnetwork();
-		
+
 		IValue[] outputs = null;
-		
+
 		try {
 			outputs = neuralnetwork.run(this.values);
 		} catch (Exception e) {
 			String msg = e.getMessage() != null ? e.getMessage() : e.getCause().getMessage();
 			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, String.format("Neural network run error cause: %s", msg));
 		}
-		
-		if(outputs == null || outputs.length == 0)
+
+		if (outputs == null || outputs.length == 0)
 			throw new ANNMSRequestExecutionException(ANNMSExceptionCode.NEURALNETWORK, "Neural network run return nothing");
-		
+
 		return new RunResultMessage(outputs);
 	}
-}
+} 
